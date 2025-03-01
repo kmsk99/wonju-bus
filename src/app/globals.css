@@ -29,3 +29,89 @@ body {
     @apply bg-primary text-white hover:bg-blue-600;
   }
 }
+
+@layer utilities {
+  /* 페이드인 애니메이션 */
+  .animate-fadeIn {
+    animation: fadeIn 0.5s ease-in-out;
+  }
+
+  /* 슬라이드 다운 애니메이션 */
+  .animate-slideDown {
+    animation: slideDown 0.3s ease-out;
+  }
+
+  /* 스케일 업 애니메이션 */
+  .animate-scaleUp {
+    animation: scaleUp 0.3s ease-out;
+  }
+
+  /* 슬라이드 인 애니메이션 */
+  .animate-slideIn {
+    animation: slideIn 0.3s ease-out;
+  }
+
+  /* 플립 애니메이션 */
+  .animate-flip {
+    animation: flip 0.5s ease-out;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideDown {
+  from {
+    transform: translateY(-10px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes scaleUp {
+  from {
+    transform: scale(0.95);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateX(-20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes flip {
+  0% {
+    transform: perspective(400px) rotateY(90deg);
+    opacity: 0;
+  }
+  40% {
+    transform: perspective(400px) rotateY(-10deg);
+  }
+  70% {
+    transform: perspective(400px) rotateY(10deg);
+  }
+  100% {
+    transform: perspective(400px) rotateY(0deg);
+    opacity: 1;
+  }
+}
