@@ -22,6 +22,7 @@ export interface BusData {
   routeInfo: BusRouteInfo;
   operationInfo: BusOperationInfo[];
   fileName?: string; // 파일 이름 정보 추가
+  operatesToday?: boolean; // 오늘 운행 여부
 }
 
 // 개별 요일 타입

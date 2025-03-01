@@ -1,5 +1,5 @@
 import { getCurrentDayTypes, isDayTypeMatch, parseBusFileName } from "../model/dayTypeUtils";
-import { BusData } from "../model/types";
+import { BusData, DayType } from "../model/types";
 
 // 전역 캐시 객체 - 데이터를 한 번만 로드하기 위함
 const dataCache: {
@@ -75,46 +75,54 @@ export async function loadAllBusData(): Promise<BusData[]> {
       dataCache.busFilesByRoute[fileInfo.routeNumber].push(filename);
     });
 
-    // 각 파일의 데이터 가져오기
-    const busDataPromises = busFiles
-      .filter((filename) => {
-        // 파일명에서 dayType 정보 추출
+    // 각 파일의 데이터 가져오기 - 모든 파일을 로드하고 운행 여부만 표시
+    const busDataPromises = busFiles.map(async (filename) => {
+      try {
+        const fileUrl = `/data/${filename}`;
+        console.log(`파일 로드 중: ${fileUrl}`);
+        const dataResponse = await fetch(fileUrl);
+
+        if (!dataResponse.ok) {
+          console.error(
+            `파일 로드 실패: ${filename}, 상태: ${dataResponse.status}`
+          );
+          throw new Error(`${filename} 데이터를 가져오는데 실패했습니다.`);
+        }
+
+        const data = (await dataResponse.json()) as BusData;
+        // 파일명 정보 추가
+        data.fileName = filename;
+
+        // 현재 요일과 일치하는지 확인
         const fileInfo = parseBusFileName(filename);
-        // 현재 dayType과 일치하는 파일만 가져오기
-        return isDayTypeMatch(
+        const operatesToday = isDayTypeMatch(
           fileInfo.dayTypeGroup,
           dataCache.isVacation,
           dataCache.isHoliday
         );
-      })
-      .map(async (filename) => {
-        try {
-          const fileUrl = `/data/${filename}`;
-          console.log(`파일 로드 중: ${fileUrl}`);
-          const dataResponse = await fetch(fileUrl);
 
-          if (!dataResponse.ok) {
-            console.error(
-              `파일 로드 실패: ${filename}, 상태: ${dataResponse.status}`
-            );
-            throw new Error(`${filename} 데이터를 가져오는데 실패했습니다.`);
-          }
+        // 버스 데이터에 operatesToday 정보 추가
+        data.operatesToday = operatesToday;
 
-          const data = (await dataResponse.json()) as BusData;
-          // 파일명 정보 추가
-          data.fileName = filename;
-          console.log(`파일 로드 성공: ${filename}`);
+        console.log(
+          `파일 로드 성공: ${filename} (오늘 운행: ${
+            operatesToday ? "예" : "아니오"
+          })`
+        );
 
-          // 캐시에 저장
-          const routeNumber = data.routeInfo.routeNumber;
+        // 캐시에 저장 - 노선별로 첫 번째 파일만 캐시 (우선순위: 오늘 운행하는 파일)
+        const routeNumber = data.routeInfo.routeNumber;
+        if (!dataCache.busData[routeNumber] || operatesToday) {
+          // 아직 캐시에 없거나, 오늘 운행하는 데이터가 들어오면 교체
           dataCache.busData[routeNumber] = data;
-
-          return data;
-        } catch (error) {
-          console.error(`${filename} 파일 처리 중 오류:`, error);
-          return null;
         }
-      });
+
+        return data;
+      } catch (error) {
+        console.error(`${filename} 파일 처리 중 오류:`, error);
+        return null;
+      }
+    });
 
     const results = await Promise.all(busDataPromises);
     const validResults = results.filter((item) => item !== null) as BusData[];
@@ -152,8 +160,10 @@ export async function loadBusData(
       return null;
     }
 
-    // 현재 날짜에 맞는 파일 찾기
-    let matchedFile: string | null = null;
+    // 현재 요일에 맞는 파일과 그렇지 않은 파일 분류
+    let matchingFiles: string[] = [];
+    let nonMatchingFiles: string[] = [];
+
     for (const file of files) {
       const fileInfo = parseBusFileName(file);
       if (
@@ -163,21 +173,18 @@ export async function loadBusData(
           dataCache.isHoliday
         )
       ) {
-        matchedFile = file;
-        break;
+        matchingFiles.push(file);
+      } else {
+        nonMatchingFiles.push(file);
       }
     }
 
-    // 맞는 파일이 없으면 아무 파일이나 사용
-    if (!matchedFile) {
-      console.warn(
-        `버스 노선 ${routeNumber}에 현재 날짜에 맞는 파일이 없어 첫 번째 파일을 사용합니다.`
-      );
-      matchedFile = files[0];
-    }
+    // 일치하는 파일이 있으면 사용, 없으면 아무 파일이나 사용
+    let fileToLoad = matchingFiles.length > 0 ? matchingFiles[0] : files[0];
+    let operatesToday = matchingFiles.length > 0;
 
     // 파일 로드
-    const fileUrl = `/data/${matchedFile}`;
+    const fileUrl = `/data/${fileToLoad}`;
     console.log(`버스 노선 데이터 로드 중: ${fileUrl}`);
     const response = await fetch(fileUrl);
 
@@ -189,9 +196,15 @@ export async function loadBusData(
     }
 
     const busData = (await response.json()) as BusData;
-    // 파일명 정보 추가
-    busData.fileName = matchedFile;
-    console.log(`버스 노선 ${routeNumber} 로드 성공 (파일: ${matchedFile})`);
+    // 파일명과 운행 여부 정보 추가
+    busData.fileName = fileToLoad;
+    busData.operatesToday = operatesToday;
+
+    console.log(
+      `버스 노선 ${routeNumber} 로드 성공 (파일: ${fileToLoad}, 오늘 운행: ${
+        operatesToday ? "예" : "아니오"
+      })`
+    );
 
     // 캐시에 저장
     dataCache.busData[routeNumber] = busData;
@@ -204,36 +217,53 @@ export async function loadBusData(
 }
 
 /**
- * 현재 요일과 상황(방학, 공휴일 등)에 따른 데이터 로드 여부를 확인합니다.
- * @param routeNumber 버스 노선 번호
- * @returns 오늘 운행 여부
+ * 해당 노선이 오늘 운행하는지 확인합니다
  */
 export async function isRouteOperatingToday(
   routeNumber: string
 ): Promise<boolean> {
-  // 노선에 대한 데이터 로드
   const busData = await loadBusData(routeNumber);
   if (!busData) return false;
 
-  // 파일 이름에서 요일 정보 확인
+  // operatesToday 속성이 이미 설정되어 있으면 그 값을 반환
+  if (busData.operatesToday !== undefined) {
+    return busData.operatesToday;
+  }
+
+  // 파일 이름에서 요일 정보 가져오기
   if (busData.fileName) {
     const fileInfo = parseBusFileName(busData.fileName);
-    return isDayTypeMatch(
-      fileInfo.dayTypeGroup,
+    if (
+      isDayTypeMatch(
+        fileInfo.dayTypeGroup,
+        dataCache.isVacation,
+        dataCache.isHoliday
+      )
+    ) {
+      return true;
+    }
+  }
+
+  // operationInfo를 기반으로 확인
+  if (busData.operationInfo && busData.operationInfo.length > 0) {
+    // 현재 dayType 상태 가져오기
+    const currentDayTypes = getCurrentDayTypes(
       dataCache.isVacation,
       dataCache.isHoliday
     );
+
+    // 현재 dayType과 일치하는 운행 정보가 있는지 확인
+    const hasMatchingOperation = busData.operationInfo.some(
+      (op) =>
+        currentDayTypes.includes(op.category as DayType) ||
+        op.category === "공통"
+    );
+
+    return hasMatchingOperation;
   }
 
-  // 파일 이름 정보가 없으면 operationInfo에서 확인
-  const currentDayTypes = getCurrentDayTypes(
-    dataCache.isVacation,
-    dataCache.isHoliday
-  );
-  return busData.operationInfo.some(
-    (op) =>
-      currentDayTypes.includes(op.category as any) || op.category === "공통"
-  );
+  // 정보가 없으면 기본적으로 운행한다고 가정
+  return true;
 }
 
 /**
