@@ -37,7 +37,7 @@ export default function StopsPage() {
   );
 
   return (
-    <div className="container mx-auto p-4">
+    <div className="container mx-auto p-3">
       <div className="flex flex-col items-center mb-6">
         <h1 className="text-2xl font-bold mb-2">원주 버스 종점</h1>
         <Clock />
@@ -59,10 +59,10 @@ export default function StopsPage() {
           <div className="mt-2">종점 목록을 불러오는 중...</div>
         </div>
       ) : error ? (
-        <div className="p-4 bg-red-50 text-red-500 rounded-lg">
+        <div className="p-3 bg-red-50 text-red-500 rounded-lg">
           <p>{error}</p>
           <button
-            className="mt-2 px-4 py-2 bg-red-500 text-white rounded"
+            className="mt-2 px-3 py-1.5 bg-red-500 text-white rounded"
             onClick={() => window.location.reload()}
           >
             다시 시도

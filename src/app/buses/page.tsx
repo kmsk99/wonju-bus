@@ -70,7 +70,7 @@ export default function BusListPage() {
   };
 
   return (
-    <div className="container mx-auto p-4">
+    <div className="container mx-auto p-3">
       <div className="flex flex-col items-center mb-6">
         <h1 className="text-2xl font-bold mb-2">원주 버스 노선</h1>
         <Clock />
@@ -159,12 +159,12 @@ export default function BusListPage() {
               </p>
             </div>
           ) : (
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3">
               {filteredRoutes.map((route, index) => (
                 <Link
                   key={route}
                   href={`/buses/${route}`}
-                  className={`bg-white rounded-lg p-4 transform transition-all duration-300 shadow-md hover:shadow-lg hover:bg-blue-50 hover:scale-105 flex flex-col justify-between items-center relative overflow-hidden ${
+                  className={`bg-white rounded-lg p-3 transform transition-all duration-300 shadow-md hover:shadow-lg hover:bg-blue-50 hover:scale-105 flex flex-col justify-between items-center relative overflow-hidden ${
                     animateCards
                       ? "opacity-100 translate-y-0"
                       : "opacity-0 translate-y-4"

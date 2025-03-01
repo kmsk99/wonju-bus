@@ -21,6 +21,7 @@ interface DepartureInfo {
   category: string;
   isFromTerminal: boolean;
   isNextDay?: boolean;
+  tripIndex?: number;
 }
 
 interface GroupedDeparture {
@@ -46,12 +47,43 @@ export default function StopDetailPage() {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [activeTab, setActiveTab] = useState<"all" | "from" | "to">("all");
+  const [isInitialLoad, setIsInitialLoad] = useState(true);
+
+  // 클라이언트 사이드에서만 렌더링에 영향을 미치는 상태 추가
+  const [clientSideMount, setClientSideMount] = useState(false);
+  const [renderReady, setRenderReady] = useState(false);
+
+  // 초기 마운트 후 클라이언트 사이드 상태 업데이트
+  useEffect(() => {
+    setClientSideMount(true);
+    // 강제로 정적 초기 화면 보여줌
+    setTimeout(() => {
+      setRenderReady(true);
+    }, 10); // 매우 짧은 지연으로 렌더링 사이클 보장
+  }, []);
 
   // 1분마다 현재 시간 및 시간표 업데이트
   useEffect(() => {
     // 초기 로드
     updateDayTypes();
 
+    // Next.js에서는 useEffect 내에서만 window를 참조해야 함
+    if (typeof window !== "undefined") {
+      // 페이지 위치 강제 리셋 (여러 방법으로 시도)
+      window.scrollTo(0, 0);
+
+      // 강제로 뷰포트 맨 위로 스크롤
+      window.scrollTo({
+        top: 0,
+        behavior: "auto",
+      });
+
+      // 스크롤 이벤트 강제 발생
+      const scrollEvent = new Event("scroll");
+      window.dispatchEvent(scrollEvent);
+    }
+
+    // 시간표 업데이트 인터벌 설정
     const interval = setInterval(() => {
       updateDayTypes();
       // 시간표 다시 로드
@@ -68,13 +100,15 @@ export default function StopDetailPage() {
         console.log(`${stopName} 종점의 노선 목록 로딩 시작...`);
         setIsLoading(true);
 
-        // 출발 노선
-        const fromRoutes = await loadRoutesByTerminal(stopName);
+        // 비동기 작업을 병렬로 처리
+        const [fromRoutes, toRoutes] = await Promise.all([
+          loadRoutesByTerminal(stopName),
+          loadRoutesToTerminal(stopName),
+        ]);
+
         setDepartureRoutes(fromRoutes);
         console.log(`${stopName}에서 출발하는 노선: ${fromRoutes.length}개`);
 
-        // 도착 노선
-        const toRoutes = await loadRoutesToTerminal(stopName);
         setArrivalRoutes(toRoutes);
         console.log(`${stopName}에 도착하는 노선: ${toRoutes.length}개`);
 
@@ -85,6 +119,7 @@ export default function StopDetailPage() {
         setError("버스 노선 데이터를 로드하는 중 오류가 발생했습니다.");
       } finally {
         setIsLoading(false);
+        setIsInitialLoad(false);
         console.log(`${stopName} 종점의 노선 목록 로딩 완료`);
       }
     }
@@ -121,6 +156,20 @@ export default function StopDetailPage() {
         const routeTimes = times.filter(
           (time) => time.routeNumber === routeNumber
         );
+
+        // 시간순 정렬
+        routeTimes.sort((a, b) => {
+          // 시간을 분으로 변환
+          const getTimeMinutes = (time: string) => {
+            const [hours, minutes] = time.split(":").map(Number);
+            return hours * 60 + minutes;
+          };
+
+          // 항상 오름차순 정렬
+          return (
+            getTimeMinutes(a.departureTime) - getTimeMinutes(b.departureTime)
+          );
+        });
 
         // 아직 출발하지 않은 시간들
         const remainingTimes = routeTimes.filter(
@@ -164,39 +213,21 @@ export default function StopDetailPage() {
       return true;
     })
     .sort((a, b) => {
-      // 1. 오늘 운행하지 않는 노선은 맨 뒤로
-      if (a[1].operatesToday && !b[1].operatesToday) return -1;
-      if (!a[1].operatesToday && b[1].operatesToday) return 1;
-
-      // 2. 운행하는 노선 중에서 추가 분류
-      if (a[1].operatesToday) {
-        // 2.1 아직 운행할 버스가 남아있는지 확인
-        const aHasRemainingBuses = a[1].remainingCount > 0;
-        const bHasRemainingBuses = b[1].remainingCount > 0;
-
-        // 운행 중인 노선이 먼저 오도록
-        if (aHasRemainingBuses !== bHasRemainingBuses) {
-          return aHasRemainingBuses ? -1 : 1;
-        }
-
-        // 2.2 두 노선 모두 운행 중인 경우, 남은 시간 순으로 정렬
-        if (aHasRemainingBuses) {
-          const aMinutes = a[1].nextDeparture.nextDepartureMinutes;
-          const bMinutes = b[1].nextDeparture.nextDepartureMinutes;
-
-          // 이미 지난 시간은 뒤로
-          if (aMinutes >= 0 && bMinutes < 0) return -1;
-          if (aMinutes < 0 && bMinutes >= 0) return 1;
-
-          // 둘 다 지난 시간이거나 둘 다 안 지난 경우, 시간순 정렬
-          return aMinutes - bMinutes;
-        }
+      // 1. 운행일 기준 정렬 (운행하는 날이 먼저 오도록)
+      if (a[1].operatesToday !== b[1].operatesToday) {
+        return a[1].operatesToday ? -1 : 1;
       }
 
-      // 3. 다른 경우 출발 시간 기준으로 정렬
-      return a[1].nextDeparture.departureTime.localeCompare(
-        b[1].nextDeparture.departureTime
-      );
+      // 시간 문자열을 분 단위로 변환 (예: "08:30" -> 510)
+      const getTimeMinutes = (time: string) => {
+        const [hours, minutes] = time.split(":").map(Number);
+        return hours * 60 + minutes;
+      };
+
+      // 시간 기준으로 항상 오름차순 정렬
+      const timeA = getTimeMinutes(a[1].nextDeparture.departureTime);
+      const timeB = getTimeMinutes(b[1].nextDeparture.departureTime);
+      return timeA - timeB;
     })
     .map(([routeNumber, data]) => ({
       routeNumber,
@@ -207,6 +238,7 @@ export default function StopDetailPage() {
       remainingCount: data.remainingCount,
       operatesToday: data.operatesToday,
       isNextDay: data.nextDeparture.isNextDay,
+      tripIndex: data.nextDeparture.tripIndex,
     }));
 
   // 노선 목록 데이터 변환
@@ -224,37 +256,123 @@ export default function StopDetailPage() {
   });
 
   return (
-    <div className="container mx-auto p-4">
-      <StopDetailHeader stopName={stopName} />
-
-      <StopDetailTabs
-        activeTab={activeTab}
-        departureRoutesCount={departureRoutes.length}
-        arrivalRoutesCount={arrivalRoutes.length}
-        onTabChange={setActiveTab}
-      />
-
-      <div>
-        <div className="mb-6">
-          <h2 className="text-xl font-bold mb-3">다음 출발 시간</h2>
-          <BusDepartureTable
-            departures={filteredDepartures}
-            isLoading={isLoading}
-            error={error}
-          />
-        </div>
-
-        <div>
-          <h2 className="text-xl font-bold mb-3">노선 목록</h2>
-          <RoutesList routes={routeListData} />
-        </div>
+    <div className="container mx-auto p-3">
+      {/* 고정된 헤더 영역 (항상 표시) */}
+      <div className="mb-6">
+        <StopDetailHeader stopName={stopName} />
       </div>
 
-      <div className="mt-6 text-center">
-        <Link href="/stops" className="text-blue-500 hover:underline mr-4">
+      {/* 탭 영역 */}
+      <div className="mb-4">
+        <StopDetailTabs
+          activeTab={activeTab}
+          departureRoutesCount={departureRoutes.length}
+          arrivalRoutesCount={arrivalRoutes.length}
+          onTabChange={setActiveTab}
+        />
+      </div>
+
+      {/* 동적 콘텐츠 영역 - 조건부 렌더링은 여기에서 처리 */}
+      <div>
+        {/* 초기 렌더링 및 로딩 상태 표시 */}
+        {(!renderReady || !clientSideMount) && (
+          <div className="space-y-4">
+            <div className="bg-white rounded-lg p-4 shadow-sm animate-pulse">
+              <div className="h-6 w-1/3 bg-gray-200 rounded mb-4"></div>
+              <div className="space-y-3">
+                <div className="h-20 bg-gray-100 rounded-lg"></div>
+                <div className="h-20 bg-gray-100 rounded-lg"></div>
+                <div className="h-20 bg-gray-100 rounded-lg"></div>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* 로딩 상태 표시 */}
+        {renderReady && clientSideMount && isLoading && (
+          <div className="my-8 flex flex-col items-center justify-center bg-white rounded-lg shadow-sm py-8">
+            <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500 mb-4"></div>
+            <p className="text-gray-600 text-center">
+              "{stopName}" 정류장 정보를 불러오는 중입니다.
+              <br />
+              잠시만 기다려주세요.
+            </p>
+          </div>
+        )}
+
+        {/* 에러 상태 표시 */}
+        {renderReady && clientSideMount && !isLoading && error && (
+          <div className="my-8 bg-red-50 text-red-500 p-4 rounded-lg text-center">
+            <p className="mb-3">{error}</p>
+            <button
+              className="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600"
+              onClick={() => window.location.reload()}
+            >
+              다시 시도
+            </button>
+          </div>
+        )}
+
+        {/* 콘텐츠 표시 */}
+        {renderReady && clientSideMount && !isLoading && !error && (
+          <>
+            {/* 출발 시간 영역 */}
+            <div className="mb-8">
+              <h2 className="text-xl font-bold mb-3">다음 출발 시간</h2>
+              <BusDepartureTable
+                departures={filteredDepartures}
+                isLoading={false}
+                error={null}
+              />
+            </div>
+
+            {/* 노선 목록 영역 */}
+            <div className="mb-8">
+              <h2 className="text-xl font-bold mb-3">노선 목록</h2>
+              <RoutesList routes={routeListData} />
+            </div>
+          </>
+        )}
+      </div>
+
+      {/* 하단 네비게이션 영역 (항상 표시) */}
+      <div className="mt-8 text-center py-4">
+        <Link
+          href="/stops"
+          className="text-blue-500 hover:underline mr-6 inline-flex items-center"
+        >
+          <svg
+            className="w-4 h-4 mr-1"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M15 19l-7-7 7-7"
+            />
+          </svg>
           종점 목록으로 돌아가기
         </Link>
-        <Link href="/" className="text-blue-500 hover:underline">
+        <Link
+          href="/"
+          className="text-blue-500 hover:underline inline-flex items-center"
+        >
+          <svg
+            className="w-4 h-4 mr-1"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"
+            />
+          </svg>
           홈으로 돌아가기
         </Link>
       </div>

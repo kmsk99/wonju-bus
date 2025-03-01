@@ -29,11 +29,11 @@ export function ClientLayout({ children }: { children: React.ReactNode }) {
   return (
     <div className="min-h-screen bg-gray-50">
       <header
-        className={`bg-primary text-white p-4 sticky top-0 z-50 shadow-lg transition-all duration-300 ${
-          scrolled ? "py-2 bg-opacity-95 backdrop-blur-sm" : "py-4"
+        className={`bg-primary text-white p-3 sticky top-0 z-50 shadow-lg transition-all duration-300 ${
+          scrolled ? "py-1.5 bg-opacity-95 backdrop-blur-sm" : "py-3"
         }`}
       >
-        <div className="container mx-auto px-4">
+        <div className="container mx-auto px-3">
           <Link
             href="/"
             className="group flex items-center hover:text-blue-100 transition-colors"
@@ -55,9 +55,9 @@ export function ClientLayout({ children }: { children: React.ReactNode }) {
           </Link>
         </div>
       </header>
-      <main className="container mx-auto p-4 relative z-10">{children}</main>
-      <footer className="bg-gray-100 py-4 mt-8 text-xs">
-        <div className="container mx-auto text-center text-gray-600 px-4">
+      <main className="container mx-auto p-3 relative z-10">{children}</main>
+      <footer className="bg-gray-100 py-3 mt-8 text-xs">
+        <div className="container mx-auto text-center text-gray-600 px-3">
           <p>© 2025 원주시 버스 종점 정보 서비스</p>
         </div>
       </footer>

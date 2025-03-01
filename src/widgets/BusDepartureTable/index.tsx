@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useRef } from "react";
+import { useRef } from "react";
 
 import { useDayTypeStore } from "@/entities/bus/model/dayTypeState";
 import { WaitingTime } from "@/shared/ui/WaitingTime";
@@ -15,6 +15,7 @@ export interface BusDepartureInfo {
   remainingCount?: number;
   operatesToday?: boolean;
   isNextDay?: boolean;
+  tripIndex?: number;
 }
 
 export interface BusDepartureTableProps {
@@ -34,74 +35,27 @@ export function BusDepartureTable({
   const { dayTypeText } = useDayTypeStore();
   const containerRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            // 컨테이너가 보이면 애니메이션 시작
-            const cards = containerRef.current?.querySelectorAll(".bus-card");
-            cards?.forEach((card, index) => {
-              setTimeout(() => {
-                card.classList.add("opacity-100", "translate-y-0");
-                card.classList.remove("opacity-0", "translate-y-4");
-              }, index * 50); // 각 카드마다 지연시간을 주어 순차적으로 나타나게 함
-            });
-            // 한 번 관찰 후 더 이상 관찰하지 않음
-            observer.unobserve(entry.target);
-          }
-        });
-      },
-      {
-        threshold: 0.1,
-      }
-    );
+  // 시간을 분으로 변환하는 유틸리티 함수
+  const getTimeMinutes = (time: string) => {
+    const [hours, minutes] = time.split(":").map(Number);
+    return hours * 60 + minutes;
+  };
 
-    if (containerRef.current) {
-      observer.observe(containerRef.current);
-    }
+  // 현재 시간을 분으로 계산
+  const now = new Date();
+  const currentMinutes = now.getHours() * 60 + now.getMinutes();
 
-    return () => {
-      if (containerRef.current) {
-        observer.unobserve(containerRef.current);
-      }
-    };
-  }, [departures]);
-
-  // 오늘 운행하는 노선은 상단에, 운행하지 않는 노선은 하단에 정렬
+  // 시간표 정렬 (운행 예정/운행 완료 기준)
   const sortedDepartures = [...departures].sort((a, b) => {
-    // 1. 운행 여부에 따른 1차 분류 (운행하는 노선이 먼저 오도록)
+    // 1. 운행일 기준 정렬 (운행하는 날이 먼저 오도록)
     if (a.operatesToday !== b.operatesToday) {
       return a.operatesToday ? -1 : 1;
     }
 
-    // 2. 운행하는 노선 중에서 추가 분류
-    if (a.operatesToday) {
-      // 2.1 운행 중인지, 운행 종료인지 확인
-      const aIsActive =
-        (a.nextDepartureMinutes !== undefined && a.nextDepartureMinutes >= 0) ||
-        (a.remainingCount !== undefined && a.remainingCount > 0);
-      const bIsActive =
-        (b.nextDepartureMinutes !== undefined && b.nextDepartureMinutes >= 0) ||
-        (b.remainingCount !== undefined && b.remainingCount > 0);
-
-      // 운행 중인 노선이 먼저 오도록
-      if (aIsActive !== bIsActive) {
-        return aIsActive ? -1 : 1;
-      }
-
-      // 2.2 둘 다 운행 중이면 출발 대기 시간순으로 정렬
-      if (
-        aIsActive &&
-        a.nextDepartureMinutes !== undefined &&
-        b.nextDepartureMinutes !== undefined
-      ) {
-        return a.nextDepartureMinutes - b.nextDepartureMinutes;
-      }
-    }
-
-    // 3. 같은 카테고리 내에서는 출발 시간으로 정렬
-    return a.departureTime.localeCompare(b.departureTime);
+    // 2. 시간 기준으로 항상 오름차순 정렬
+    const timeA = getTimeMinutes(a.departureTime);
+    const timeB = getTimeMinutes(b.departureTime);
+    return timeA - timeB;
   });
 
   if (isLoading) {
@@ -125,11 +79,11 @@ export function BusDepartureTable({
   }
 
   return (
-    <div className="space-y-3" ref={containerRef}>
+    <div className="space-y-3">
       {sortedDepartures.map((bus, index) => (
         <div
           key={`${bus.routeNumber}-${bus.departureTime}-${index}`}
-          className={`bus-card rounded-lg border p-3 shadow-sm transition-all duration-300 transform opacity-0 translate-y-4 hover:shadow-md ${
+          className={`rounded-lg border p-3 shadow-sm hover:shadow-md ${
             bus.operatesToday
               ? "bg-white hover:bg-blue-50"
               : "bg-gray-50 hover:bg-gray-100"
@@ -147,6 +101,11 @@ export function BusDepartureTable({
               >
                 {bus.routeNumber}번
               </Link>
+              {bus.tripIndex && (
+                <span className="rounded bg-blue-100 px-2 py-1 text-xs text-blue-700 font-medium">
+                  회차 {bus.tripIndex}
+                </span>
+              )}
               <span className="rounded bg-gray-100 px-2 py-1 text-xs text-gray-600 transition-colors duration-300 hover:bg-gray-200">
                 {bus.isFromTerminal ? "기점" : "경유"}
               </span>

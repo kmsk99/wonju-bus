@@ -103,19 +103,7 @@ export default function BusDetailPage() {
     ...filteredOperations.map((op) => parseInt(op.operationNumber))
   );
 
-  // 시간과 회차 번호로 다음날 버스인지 판단
-  function isNextDayOperation(opNumber: string, timeStr: string): boolean {
-    if (timeStr === "-") return false;
-
-    const opNum = parseInt(opNumber);
-    const [hours, minutes] = timeStr.split(":").map(Number);
-    const timeInMinutes = hours * 60 + minutes;
-
-    // 회차 번호가 낮으면서 시간이 작은 경우(오전) 다음날로 간주
-    return opNum < maxOpNum / 2 && timeInMinutes < 12 * 60;
-  }
-
-  // 현재 시간 기준으로 출발 시간 분류
+  // 현재 시간 기준으로 출발 시간 분류 (간단화된 버전)
   function getTimeStatus(
     timeStr: string,
     opNumber: string
@@ -126,18 +114,13 @@ export default function BusDetailPage() {
     const timeDate = new Date();
     timeDate.setHours(hours, minutes, 0);
 
-    const now = currentTime; // 현재 시간 사용
+    const now = currentTime;
 
-    // 다음날 버스인 경우 날짜를 하루 추가
-    if (isNextDayOperation(opNumber, timeStr)) {
-      timeDate.setDate(timeDate.getDate() + 1);
-    }
-
+    // 30분 전후로 current 간주
     const diffMinutes = Math.floor(
       (timeDate.getTime() - now.getTime()) / (60 * 1000)
     );
 
-    // 30분 전후로 current 간주
     if (diffMinutes >= -30 && diffMinutes <= 30) {
       return "current";
     }
@@ -145,7 +128,7 @@ export default function BusDetailPage() {
     return timeDate < now ? "past" : "future";
   }
 
-  // 운행 회차 전체 상태 판별
+  // 운행 회차 전체 상태 판별 (간단화된 버전)
   function getOperationStatus(
     departureTime: string,
     arrivalTime: string,
@@ -153,11 +136,6 @@ export default function BusDetailPage() {
   ): "current" | "past" | "future" {
     const departureStatus = getTimeStatus(departureTime, operationNumber);
     const arrivalStatus = getTimeStatus(arrivalTime, operationNumber);
-
-    // 다음날 회차는 항상 미래로 간주
-    if (isNextDayOperation(operationNumber, departureTime)) {
-      return "future";
-    }
 
     // 현재 운행 중
     if (departureStatus === "current" || arrivalStatus === "current") {
@@ -178,105 +156,11 @@ export default function BusDetailPage() {
     return "future";
   }
 
-  // 운행 회차 정렬 함수 - 현재 시점을 기준으로 원형 순서대로 정렬
+  // 운행 회차 정렬 함수 - 단순 회차 번호순 정렬
   const sortedOperations = [...filteredOperations].sort((a, b) => {
-    // 각 회차의 운행 상태를 미리 계산
-    const aOperationStatus = getOperationStatus(
-      a.departureTime,
-      a.arrivalTime,
-      a.operationNumber
-    );
-    const bOperationStatus = getOperationStatus(
-      b.departureTime,
-      b.arrivalTime,
-      b.operationNumber
-    );
-
-    // 먼저 operationStatus가 current인 것을 최우선으로 정렬
-    if (aOperationStatus === "current" && bOperationStatus !== "current") {
-      return -1;
-    }
-    if (aOperationStatus !== "current" && bOperationStatus === "current") {
-      return 1;
-    }
-
-    // 운행 시간을 기준으로 각 버스의 상대적 순서 결정
-    const [aHours, aMinutes] = a.departureTime.split(":").map(Number);
-    const [bHours, bMinutes] = b.departureTime.split(":").map(Number);
-
-    // 출발 시간을 분 단위로 변환
-    const aTime = aHours * 60 + aMinutes;
-    const bTime = bHours * 60 + bMinutes;
-
-    // 현재 시간 (분 단위로 변환)
-    const now = currentTime;
-    const currentHour = now.getHours();
-    const currentMinute = now.getMinutes();
-    const currentTimeInMinutes = currentHour * 60 + currentMinute;
-
-    // 회차 번호를 숫자로 변환
+    // 회차 번호를 숫자로 변환하여 오름차순 정렬
     const aOpNum = parseInt(a.operationNumber);
     const bOpNum = parseInt(b.operationNumber);
-
-    // 다음날 회차 여부 확인
-    const isANextDay = isNextDayOperation(a.operationNumber, a.departureTime);
-    const isBNextDay = isNextDayOperation(b.operationNumber, b.departureTime);
-
-    // 현재 시간과의 차이 계산 (양수: 미래, 음수: 과거)
-    let aDiff = aTime - currentTimeInMinutes;
-    let bDiff = bTime - currentTimeInMinutes;
-
-    // 날짜 변경선을 고려
-    if (isANextDay) {
-      aDiff += 1440; // 다음날이면 24시간(1440분) 추가
-    } else if (aDiff < -720 && !isANextDay) {
-      aDiff += 1440; // 12시간 이상 전이고 다음날이 아니면 당일 나중 시간으로 간주
-    }
-
-    if (isBNextDay) {
-      bDiff += 1440; // 다음날이면 24시간(1440분) 추가
-    } else if (bDiff < -720 && !isBNextDay) {
-      bDiff += 1440; // 12시간 이상 전이고 다음날이 아니면 당일 나중 시간으로 간주
-    }
-
-    // 다음날 회차는 항상 미래로 간주 (정렬에서 다른 회차보다 나중에)
-    if (isANextDay && !isBNextDay) return 1; // a만 다음날이면 b를 앞으로
-    if (!isANextDay && isBNextDay) return -1; // b만 다음날이면 a를 앞으로
-
-    // 현재 운행중인 버스는 이미 위에서 최우선 처리되었음
-    // 여기서는 둘 다 current이거나 둘 다 current가 아닌 경우만 처리
-
-    // 둘 다 current인 경우 회차 번호순
-    if (aOperationStatus === "current" && bOperationStatus === "current") {
-      return aOpNum - bOpNum;
-    }
-
-    // 둘 다 current가 아닌 경우:
-    if (aOperationStatus !== "current" && bOperationStatus !== "current") {
-      // 둘 다 미래 운행인 경우, 시간 순서대로 (다음날은 나중에)
-      if (aOperationStatus === "future" && bOperationStatus === "future") {
-        // 하나만 다음날인 경우 이미 위에서 처리됨
-        // 둘 다 다음날이거나 둘 다 오늘인 경우 시간순
-        return aDiff - bDiff;
-      }
-
-      // 둘 다 과거 운행인 경우, 최근 것부터 (역순)
-      if (aOperationStatus === "past" && bOperationStatus === "past") {
-        return bDiff - aDiff;
-      }
-
-      // a는 미래, b는 과거인 경우, a를 앞으로
-      if (aOperationStatus === "future" && bOperationStatus === "past") {
-        return -1;
-      }
-
-      // a는 과거, b는 미래인 경우, b를 앞으로
-      if (aOperationStatus === "past" && bOperationStatus === "future") {
-        return 1;
-      }
-    }
-
-    // 기본 정렬: 회차 번호순
     return aOpNum - bOpNum;
   });
 
@@ -310,7 +194,7 @@ export default function BusDetailPage() {
   }
 
   return (
-    <div className="container mx-auto p-4">
+    <div className="container mx-auto p-3">
       <div className="flex flex-col items-center mb-6">
         <h1 className="text-2xl font-bold mb-2">{routeNumber}번 버스</h1>
         <Clock />
@@ -327,9 +211,9 @@ export default function BusDetailPage() {
         <div className="text-red-500 text-center my-4">{error}</div>
       ) : busData ? (
         <div>
-          <div className="bg-white shadow-md rounded-lg p-4 mb-6">
+          <div className="bg-white shadow-md rounded-lg p-3 mb-6">
             <h2 className="text-xl font-bold mb-3">노선 정보</h2>
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-2 gap-3">
               <div>
                 <p className="font-semibold">출발 종점</p>
                 <p>{busData.routeInfo.origin}</p>
@@ -357,12 +241,12 @@ export default function BusDetailPage() {
             </div>
           </div>
 
-          <div className="bg-white shadow-md rounded-lg p-4">
+          <div className="bg-white shadow-md rounded-lg p-3">
             <div className="flex mb-4 space-x-2 overflow-x-auto">
               {availableTabs.map((tab) => (
                 <button
                   key={tab}
-                  className={`px-4 py-2 rounded-md ${
+                  className={`px-3 py-1.5 rounded-md ${
                     activeTab === tab
                       ? "bg-blue-500 text-white"
                       : "bg-gray-200 text-gray-700"
@@ -383,7 +267,7 @@ export default function BusDetailPage() {
                 이 날짜에는 운행 정보가 없습니다.
               </p>
             ) : (
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
                 {sortedOperations.map((op, index) => {
                   const departureStatus = getTimeStatus(
                     op.departureTime,
@@ -466,7 +350,7 @@ export default function BusDetailPage() {
                       </div>
 
                       {/* 카드 콘텐츠 */}
-                      <div className="p-4">
+                      <div className="p-3">
                         {/* 출발지 정보 */}
                         <div className="flex items-start mb-3">
                           <div

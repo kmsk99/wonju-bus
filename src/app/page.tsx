@@ -106,7 +106,7 @@ export default function Home() {
 
       <div
         ref={cardsRef}
-        className="grid grid-cols-1 md:grid-cols-2 gap-8 px-4 mb-12 opacity-0 translate-y-4 transition-all duration-700 delay-100"
+        className="grid grid-cols-1 md:grid-cols-2 gap-8 px-3 mb-12 opacity-0 translate-y-4 transition-all duration-700 delay-100"
       >
         <Link
           href="/stops"
@@ -225,7 +225,7 @@ export default function Home() {
               <span className="font-bold">2025년 3월 1일</span> 기준입니다.
             </p>
           </div>
-          <div className="bg-white shadow-sm rounded-lg px-4 py-3 flex items-center hover:shadow-md transition-all duration-300 hover:bg-blue-50">
+          <div className="bg-white shadow-sm rounded-lg px-3 py-2.5 flex items-center hover:shadow-md transition-all duration-300 hover:bg-blue-50">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               className="h-5 w-5 text-blue-600 mr-2"
@@ -247,7 +247,7 @@ export default function Home() {
         </div>
       </div>
 
-      <footer className="text-center text-gray-500 px-4 mb-8">
+      <footer className="text-center text-gray-500 px-3 mb-8">
         <p>© 2025 원주 버스 시간표 서비스</p>
       </footer>
     </div>

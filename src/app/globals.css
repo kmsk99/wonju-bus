@@ -20,10 +20,10 @@ body {
 
 @layer components {
   .card {
-    @apply bg-white rounded-lg shadow-md p-4 hover:shadow-lg transition-shadow;
+    @apply bg-white rounded-lg shadow-md p-3 hover:shadow-lg transition-shadow;
   }
   .btn {
-    @apply px-4 py-2 rounded-md font-medium;
+    @apply px-3 py-1.5 rounded-md font-medium;
   }
   .btn-primary {
     @apply bg-primary text-white hover:bg-blue-600;
