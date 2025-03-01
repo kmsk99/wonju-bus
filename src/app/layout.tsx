@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import "./globals.css";
 
 import { Inter } from "next/font/google";
+import Link from "next/link";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -34,13 +35,15 @@ export default function RootLayout({
         <div className="min-h-screen bg-gray-50">
           <header className="bg-primary text-white p-4 sticky top-0 z-10 shadow-md">
             <div className="container mx-auto px-4">
-              <h1 className="text-xl font-bold">원주시 버스 종점 정보</h1>
+              <Link href="/" className="hover:text-blue-100 transition-colors">
+                <h1 className="text-xl font-bold">원주시 버스 종점 정보</h1>
+              </Link>
             </div>
           </header>
           <main className="container mx-auto p-4">{children}</main>
           <footer className="bg-gray-100 py-4 mt-8 text-xs">
             <div className="container mx-auto text-center text-gray-600 px-4">
-              <p>© 2023 원주시 버스 종점 정보 서비스</p>
+              <p>© 2025 원주시 버스 종점 정보 서비스</p>
             </div>
           </footer>
         </div>

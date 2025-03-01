@@ -68,116 +68,106 @@ export function BusDepartureTable({
 
   if (isLoading) {
     return (
-      <div className="flex justify-center py-8">
+      <div className="flex justify-center py-4">
         <div className="h-8 w-8 animate-spin rounded-full border-2 border-blue-600 border-t-transparent"></div>
       </div>
     );
   }
 
   if (error) {
-    return <div className="py-4 text-center text-red-500">{error}</div>;
+    return <div className="py-3 text-center text-red-500">{error}</div>;
   }
 
   if (departures.length === 0) {
     return (
-      <div className="py-4 text-center text-gray-500">
+      <div className="py-3 text-center text-gray-500">
         시간표 정보가 없습니다.
       </div>
     );
   }
 
   return (
-    <div className="overflow-x-auto">
-      <table className="w-full min-w-full divide-y divide-gray-200">
-        <thead className="bg-gray-50">
-          <tr>
-            <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500">
-              노선번호
-            </th>
-            <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500">
-              종류
-            </th>
-            <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500">
-              다음 출발
-            </th>
-            <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500">
-              대기 시간
-            </th>
-            <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500">
-              구분
-            </th>
-            <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500">
-              남은 운행
-            </th>
-          </tr>
-        </thead>
-        <tbody className="divide-y divide-gray-200 bg-white">
-          {sortedDepartures.map((bus, index) => (
-            <tr
-              key={`${bus.routeNumber}-${bus.departureTime}-${index}`}
-              className={bus.operatesToday ? "" : "bg-gray-50"}
-            >
-              <td className="whitespace-nowrap px-6 py-4">
-                <Link
-                  href={`/buses/${bus.routeNumber}`}
-                  className={`font-medium ${
-                    bus.operatesToday
-                      ? "text-blue-600 hover:text-blue-800"
-                      : "text-gray-500 hover:text-gray-700"
-                  }`}
-                >
-                  {bus.routeNumber}번
-                </Link>
-                {!bus.operatesToday && (
-                  <div className="mt-1 text-xs text-gray-500">
-                    ({dayTypeText} 미운행)
-                  </div>
-                )}
-              </td>
-              <td className="whitespace-nowrap px-6 py-4 text-sm text-gray-500">
+    <div className="space-y-3">
+      {sortedDepartures.map((bus, index) => (
+        <div
+          key={`${bus.routeNumber}-${bus.departureTime}-${index}`}
+          className={`rounded-lg border p-3 shadow-sm ${
+            bus.operatesToday ? "bg-white" : "bg-gray-50"
+          }`}
+        >
+          <div className="flex items-center justify-between">
+            <div className="flex items-center space-x-2">
+              <Link
+                href={`/buses/${bus.routeNumber}`}
+                className={`text-lg font-medium ${
+                  bus.operatesToday
+                    ? "text-blue-600 hover:text-blue-800"
+                    : "text-gray-500 hover:text-gray-700"
+                }`}
+              >
+                {bus.routeNumber}번
+              </Link>
+              <span className="rounded bg-gray-100 px-2 py-1 text-xs text-gray-600">
                 {bus.isFromTerminal ? "기점" : "경유"}
-              </td>
-              <td
-                className={`whitespace-nowrap px-6 py-4 text-sm ${
+              </span>
+              {bus.category && (
+                <span className="rounded bg-gray-100 px-2 py-1 text-xs text-gray-600">
+                  {bus.category}
+                </span>
+              )}
+            </div>
+
+            {bus.operatesToday && bus.remainingCount !== undefined && (
+              <span
+                className={`rounded px-2 py-1 text-xs ${
+                  bus.remainingCount > 0
+                    ? "bg-green-100 text-green-800"
+                    : "bg-gray-100 text-gray-600"
+                }`}
+              >
+                {bus.remainingCount > 0
+                  ? `${bus.remainingCount}회`
+                  : "운행 종료"}
+              </span>
+            )}
+          </div>
+
+          {!bus.operatesToday && (
+            <div className="mt-1 text-xs text-gray-500">
+              ({dayTypeText} 미운행)
+            </div>
+          )}
+
+          <div className="mt-2 flex flex-wrap items-center justify-between">
+            <div className="flex items-center space-x-1">
+              <span className="text-sm font-medium">출발:</span>
+              <span
+                className={`text-sm ${
                   bus.operatesToday ? "text-gray-900" : "text-gray-500"
                 }`}
               >
                 {bus.departureTime}
                 {bus.isNextDay && (
-                  <span className="ml-1 text-blue-600 font-medium">(내일)</span>
-                )}
-              </td>
-              <td className="whitespace-nowrap px-6 py-4 text-sm">
-                {bus.operatesToday && bus.nextDepartureMinutes !== undefined ? (
-                  <WaitingTime minutes={bus.nextDepartureMinutes} />
-                ) : (
-                  <span className="text-gray-500">-</span>
-                )}
-              </td>
-              <td className="whitespace-nowrap px-6 py-4 text-sm text-gray-500">
-                {bus.category || "-"}
-              </td>
-              <td className="whitespace-nowrap px-6 py-4 text-sm">
-                {bus.operatesToday && bus.remainingCount !== undefined ? (
-                  <span
-                    className={`${
-                      bus.remainingCount > 0
-                        ? "text-green-600"
-                        : "text-gray-500"
-                    }`}
-                  >
-                    {bus.remainingCount > 0
-                      ? `${bus.remainingCount}회`
-                      : "운행 종료"}
+                  <span className="ml-1 text-xs text-blue-600 font-medium">
+                    (내일)
                   </span>
-                ) : (
-                  <span className="text-gray-500">-</span>
                 )}
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+              </span>
+            </div>
+
+            <div className="mt-1">
+              <span className="text-sm font-medium">대기 시간:</span>{" "}
+              {bus.isNextDay ? (
+                <span className="text-gray-500">운행 종료</span>
+              ) : bus.nextDepartureMinutes !== undefined ? (
+                <WaitingTime minutes={bus.nextDepartureMinutes} />
+              ) : (
+                <span className="text-gray-500">-</span>
+              )}
+            </div>
+          </div>
+        </div>
+      ))}
     </div>
   );
 }
