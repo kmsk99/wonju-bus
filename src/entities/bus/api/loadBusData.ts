@@ -23,27 +23,19 @@ const dataCache: {
 };
 
 /**
- * 방학 여부를 설정합니다.
- * @param isVacation 방학 여부
+ * 방학 모드 설정 함수 - 기능 비활성화로 아무 동작도 하지 않음
  */
 export function setVacationMode(isVacation: boolean): void {
-  if (dataCache.isVacation !== isVacation) {
-    dataCache.isVacation = isVacation;
-    // 캐시 초기화 (방학 여부가 바뀌면 버스 데이터도 바뀔 수 있음)
-    dataCache.busData = {};
-  }
+  // 기능 제거로 아무 동작도 하지 않음
+  return;
 }
 
 /**
- * 공휴일 여부를 설정합니다.
- * @param isHoliday 공휴일 여부
+ * 공휴일 모드 설정 함수 - 기능 비활성화로 아무 동작도 하지 않음
  */
 export function setHolidayMode(isHoliday: boolean): void {
-  if (dataCache.isHoliday !== isHoliday) {
-    dataCache.isHoliday = isHoliday;
-    // 캐시 초기화 (공휴일 여부가 바뀌면 버스 데이터도 바뀔 수 있음)
-    dataCache.busData = {};
-  }
+  // 기능 제거로 아무 동작도 하지 않음
+  return;
 }
 
 /**

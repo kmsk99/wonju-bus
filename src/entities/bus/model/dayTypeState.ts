@@ -10,7 +10,7 @@ interface DayTypeState {
   isHoliday: boolean;
   dayTypeText: string;
 
-  // 액션
+  // 액션 - 기능은 유지하지만 실제로는 사용되지 않음
   setVacation: (isVacation: boolean) => void;
   setHoliday: (isHoliday: boolean) => void;
   updateDayTypes: () => void;
@@ -18,6 +18,7 @@ interface DayTypeState {
 
 /**
  * 현재 요일 타입 상태를 관리하는 스토어
+ * 방학/공휴일 기능 제거로 항상 기본값(false)만 사용
  */
 export const useDayTypeStore = create<DayTypeState>((set) => ({
   currentDayTypes: getCurrentDayTypes(false, false),
@@ -25,44 +26,43 @@ export const useDayTypeStore = create<DayTypeState>((set) => ({
   isHoliday: false,
   dayTypeText: generateDayTypeText(false, false),
 
+  // 기능은 유지하지만 실제로는 사용되지 않음
   setVacation: (isVacation: boolean) =>
     set((state: DayTypeState) => {
-      const currentDayTypes = getCurrentDayTypes(isVacation, state.isHoliday);
+      const currentDayTypes = getCurrentDayTypes(false, false);
       return {
         ...state,
-        isVacation,
+        isVacation: false,
         currentDayTypes,
-        dayTypeText: generateDayTypeText(isVacation, state.isHoliday),
+        dayTypeText: generateDayTypeText(false, false),
       };
     }),
 
   setHoliday: (isHoliday: boolean) =>
     set((state: DayTypeState) => {
-      const currentDayTypes = getCurrentDayTypes(state.isVacation, isHoliday);
+      const currentDayTypes = getCurrentDayTypes(false, false);
       return {
         ...state,
-        isHoliday,
+        isHoliday: false,
         currentDayTypes,
-        dayTypeText: generateDayTypeText(state.isVacation, isHoliday),
+        dayTypeText: generateDayTypeText(false, false),
       };
     }),
 
   updateDayTypes: () =>
     set((state: DayTypeState) => {
-      const currentDayTypes = getCurrentDayTypes(
-        state.isVacation,
-        state.isHoliday
-      );
+      const currentDayTypes = getCurrentDayTypes(false, false);
       return {
         ...state,
         currentDayTypes,
-        dayTypeText: generateDayTypeText(state.isVacation, state.isHoliday),
+        dayTypeText: generateDayTypeText(false, false),
       };
     }),
 }));
 
 /**
  * 현재 요일 타입을 텍스트로 표시
+ * 방학/공휴일 상태는 항상 false로 설정되어 표시되지 않음
  */
 function generateDayTypeText(isVacation: boolean, isHoliday: boolean): string {
   const now = new Date();
@@ -76,14 +76,6 @@ function generateDayTypeText(isVacation: boolean, isHoliday: boolean): string {
     dayText = "토요일";
   } else {
     dayText = "평일";
-  }
-
-  if (isVacation && isHoliday) {
-    return `${dayText} (방학, 공휴일)`;
-  } else if (isVacation) {
-    return `${dayText} (방학)`;
-  } else if (isHoliday) {
-    return `${dayText} (공휴일)`;
   }
 
   return dayText;

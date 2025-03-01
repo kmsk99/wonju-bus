@@ -7,11 +7,15 @@ import { useEffect, useState } from "react";
  */
 export function Clock() {
   const [currentTime, setCurrentTime] = useState(new Date());
+  const [isPulsing, setIsPulsing] = useState(false);
 
   // 1초마다 시간 업데이트
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentTime(new Date());
+      // 초가 바뀔 때마다 펄스 애니메이션 효과 추가
+      setIsPulsing(true);
+      setTimeout(() => setIsPulsing(false), 500);
     }, 1000);
 
     return () => clearInterval(interval);
@@ -24,7 +28,36 @@ export function Clock() {
     second: "2-digit",
   });
 
+  // 시, 분, 초 분리
+  const [hours, minutes, seconds] = formattedTime.split(":");
+
   return (
-    <div className="text-lg font-bold text-gray-800 mt-2">{formattedTime}</div>
+    <div className="flex items-center justify-center space-x-1 bg-black/70 rounded-lg px-4 py-2 shadow-lg border border-white/20">
+      <div className="flex items-end">
+        <div className="text-3xl font-bold text-white">{hours}</div>
+        <div
+          className={`text-3xl font-bold ${
+            isPulsing ? "text-yellow-300" : "text-white"
+          } transition-colors duration-300`}
+        >
+          :
+        </div>
+        <div className="text-3xl font-bold text-white">{minutes}</div>
+        <div
+          className={`text-3xl font-bold ${
+            isPulsing ? "text-yellow-300" : "text-white"
+          } transition-colors duration-300`}
+        >
+          :
+        </div>
+        <div
+          className={`text-3xl font-bold ${
+            isPulsing ? "scale-110 text-yellow-300" : "scale-100 text-white"
+          } transition-all duration-300`}
+        >
+          {seconds}
+        </div>
+      </div>
+    </div>
   );
 }

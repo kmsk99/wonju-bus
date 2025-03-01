@@ -1,5 +1,4 @@
 import { Clock } from "@/shared/ui/Clock";
-import { DayTypeSelector } from "@/shared/ui/DayTypeSelector";
 
 interface StopDetailHeaderProps {
   stopName: string;
@@ -14,7 +13,6 @@ export function StopDetailHeader({ stopName }: StopDetailHeaderProps) {
       <h1 className="text-2xl font-bold mb-2">{stopName}</h1>
       <p className="text-gray-600">버스 시간표</p>
       <Clock />
-      <DayTypeSelector />
     </div>
   );
 }
