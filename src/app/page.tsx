@@ -247,8 +247,19 @@ export default function Home() {
         </div>
       </div>
 
-      <footer className="text-center text-gray-500 px-3 mb-8">
-        <p>© 2025 원주 버스 시간표 서비스</p>
+      <footer className="text-center text-gray-500 px-3 mb-8 flex flex-col items-center gap-2">
+        <p>© 2025 원주시 버스 종점 정보 서비스</p>
+        <p>
+          <a
+            href="https://github.com/kmsk99"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-blue-500 hover:text-blue-700 transition-colors"
+          >
+            @kmsk99
+          </a>
+        </p>
+        <span className="opacity-10">엄마를 위해 만든 서비스</span>
       </footer>
     </div>
   );
