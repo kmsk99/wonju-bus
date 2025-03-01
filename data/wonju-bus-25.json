@@ -1,0 +1,40 @@
+{
+  "routeInfo": {
+    "routeNumber": "25",
+    "origin": "장양리시내버스공영정류장",
+    "destination": "주천",
+    "firstBusTime": "07:10",
+    "lastBusTime": "15:30",
+    "operationCount": "3회",
+    "interval": "1일 3회"
+  },
+  "operationInfo": [
+    {
+      "operationNumber": "1",
+      "departureTime": "7:10",
+      "arrivalTime": "8:55",
+      "departureName": "장양리시내버스공영정류장",
+      "arrivalName": "주천",
+      "category": "공통",
+      "note": "장양리발)주공"
+    },
+    {
+      "operationNumber": "2",
+      "departureTime": "10:30",
+      "arrivalTime": "12:15",
+      "departureName": "장양리시내버스공영정류장",
+      "arrivalName": "주천",
+      "category": "공통",
+      "note": ""
+    },
+    {
+      "operationNumber": "3",
+      "departureTime": "15:30",
+      "arrivalTime": "17:15",
+      "departureName": "장양리시내버스공영정류장",
+      "arrivalName": "주천",
+      "category": "공통",
+      "note": ""
+    }
+  ]
+}

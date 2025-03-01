@@ -1,0 +1,37 @@
+{
+  "name": "wonju-bus-crawl",
+  "version": "1.0.0",
+  "description": "원주시 버스 정보 크롤링 프로젝트",
+  "main": "index.js",
+  "scripts": {
+    "start": "ts-node src/index.ts",
+    "start:route": "ts-node src/crawlSingleRoute.ts",
+    "build": "tsc",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "selector:test": "ts-node src/testSelectors.ts",
+    "ui:route": "ts-node src/testCrawlRoute.ts",
+    "inspector": "cross-env PWDEBUG=1 ts-node src/inspectorTest.ts",
+    "test:routes": "ts-node src/testBusRouteList.ts",
+    "test:basic-info": "ts-node src/testBasicInfoExtract.ts",
+    "test:detail": "ts-node src/testBusDetailInfo.ts",
+    "test:multi": "ts-node src/testMultipleRoutes.ts"
+  },
+  "keywords": [
+    "wonju",
+    "bus",
+    "crawler",
+    "playwright"
+  ],
+  "author": "",
+  "license": "ISC",
+  "packageManager": "pnpm@10.5.2",
+  "devDependencies": {
+    "@playwright/test": "^1.50.1",
+    "@types/node": "^20.11.21",
+    "cross-env": "^7.0.3",
+    "dotenv": "^16.4.7",
+    "playwright": "^1.50.1",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.8.2"
+  }
+}

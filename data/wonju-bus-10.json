@@ -1,0 +1,67 @@
+{
+  "routeInfo": {
+    "routeNumber": "10",
+    "origin": "관설동종점",
+    "destination": "한라비발디",
+    "firstBusTime": "06:50",
+    "lastBusTime": "19:20",
+    "operationCount": "6회",
+    "interval": "1일 6회"
+  },
+  "operationInfo": [
+    {
+      "operationNumber": "1",
+      "departureTime": "6:50",
+      "arrivalTime": "7:50",
+      "departureName": "관설동종점",
+      "arrivalName": "한라비디발",
+      "category": "공통",
+      "note": ""
+    },
+    {
+      "operationNumber": "2",
+      "departureTime": "9:15",
+      "arrivalTime": "10:15",
+      "departureName": "관설동종점",
+      "arrivalName": "한라비디발",
+      "category": "공통",
+      "note": ""
+    },
+    {
+      "operationNumber": "3",
+      "departureTime": "11:45",
+      "arrivalTime": "12:45",
+      "departureName": "관설동종점",
+      "arrivalName": "한라비디발",
+      "category": "공통",
+      "note": ""
+    },
+    {
+      "operationNumber": "4",
+      "departureTime": "14:15",
+      "arrivalTime": "15:15",
+      "departureName": "관설동종점",
+      "arrivalName": "한라비디발",
+      "category": "공통",
+      "note": ""
+    },
+    {
+      "operationNumber": "5",
+      "departureTime": "17:00",
+      "arrivalTime": "18:00",
+      "departureName": "관설동종점",
+      "arrivalName": "한라비디발",
+      "category": "공통",
+      "note": ""
+    },
+    {
+      "operationNumber": "6",
+      "departureTime": "19:20",
+      "arrivalTime": "20:10",
+      "departureName": "관설동종점",
+      "arrivalName": "한라비디발",
+      "category": "공통",
+      "note": ""
+    }
+  ]
+}

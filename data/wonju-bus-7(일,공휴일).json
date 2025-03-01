@@ -1,0 +1,58 @@
+{
+  "routeInfo": {
+    "routeNumber": "7(일,공휴일)",
+    "origin": "관설동종점",
+    "destination": "태장주공1단지",
+    "firstBusTime": "08:55",
+    "lastBusTime": "20:20",
+    "operationCount": "4.5회",
+    "interval": "1일 4.5회"
+  },
+  "operationInfo": [
+    {
+      "operationNumber": "1",
+      "departureTime": "-",
+      "arrivalTime": "7:00",
+      "departureName": "관설동종점",
+      "arrivalName": "태장주공1단지",
+      "category": "공통",
+      "note": ""
+    },
+    {
+      "operationNumber": "2",
+      "departureTime": "8:55",
+      "arrivalTime": "10:30",
+      "departureName": "관설동종점",
+      "arrivalName": "태장주공1단지",
+      "category": "공통",
+      "note": ""
+    },
+    {
+      "operationNumber": "3",
+      "departureTime": "12:35",
+      "arrivalTime": "14:10",
+      "departureName": "관설동종점",
+      "arrivalName": "태장주공1단지",
+      "category": "공통",
+      "note": ""
+    },
+    {
+      "operationNumber": "4",
+      "departureTime": "16:40",
+      "arrivalTime": "18:20",
+      "departureName": "관설동종점",
+      "arrivalName": "태장주공1단지",
+      "category": "공통",
+      "note": ""
+    },
+    {
+      "operationNumber": "5",
+      "departureTime": "20:20",
+      "arrivalTime": "21:50",
+      "departureName": "관설동종점",
+      "arrivalName": "태장주공1단지",
+      "category": "공통",
+      "note": ""
+    }
+  ]
+}
