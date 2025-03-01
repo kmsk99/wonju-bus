@@ -16,6 +16,15 @@ export default function BusDetailPage() {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [activeTab, setActiveTab] = useState<DayType>("평일");
+  const [currentTime, setCurrentTime] = useState(new Date());
+
+  // 1분마다 현재 시간 업데이트
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentTime(new Date());
+    }, 60000);
+    return () => clearInterval(interval);
+  }, []);
 
   useEffect(() => {
     async function fetchBusData() {
@@ -60,6 +69,7 @@ export default function BusDetailPage() {
     }
   }, [routeNumber]);
 
+  // 선택된 날짜에 맞는 운행 정보 필터링
   const filteredOperations =
     busData?.operationInfo.filter(
       (op) =>
@@ -75,11 +85,32 @@ export default function BusDetailPage() {
     }
   ) as DayType[];
 
+  // 현재 시간 기준으로 출발 시간 분류
+  function getTimeStatus(timeStr: string): "past" | "current" | "future" {
+    if (timeStr === "-") return "future";
+
+    const [hours, minutes] = timeStr.split(":").map(Number);
+    const timeDate = new Date();
+    timeDate.setHours(hours, minutes, 0);
+
+    const now = new Date();
+
+    // 30분 이내면 current
+    if (Math.abs(timeDate.getTime() - now.getTime()) <= 30 * 60 * 1000) {
+      return "current";
+    }
+
+    return timeDate < now ? "past" : "future";
+  }
+
   return (
     <div className="container mx-auto p-4">
       <div className="flex flex-col items-center mb-6">
         <h1 className="text-2xl font-bold mb-2">{routeNumber}번 버스</h1>
         <Clock />
+        <div className="text-sm text-gray-500 mt-2">
+          현재 시간: {currentTime.toLocaleTimeString()}
+        </div>
       </div>
 
       {isLoading ? (
@@ -94,11 +125,11 @@ export default function BusDetailPage() {
             <h2 className="text-xl font-bold mb-3">노선 정보</h2>
             <div className="grid grid-cols-2 gap-4">
               <div>
-                <p className="font-semibold">출발지</p>
+                <p className="font-semibold">출발 종점</p>
                 <p>{busData.routeInfo.origin}</p>
               </div>
               <div>
-                <p className="font-semibold">도착지</p>
+                <p className="font-semibold">도착 종점</p>
                 <p>{busData.routeInfo.destination}</p>
               </div>
               <div>
@@ -151,41 +182,101 @@ export default function BusDetailPage() {
                   <thead>
                     <tr className="bg-gray-100">
                       <th className="p-2 border">회차</th>
-                      <th className="p-2 border">출발 시간</th>
-                      <th className="p-2 border">도착 시간</th>
                       <th className="p-2 border">출발지</th>
+                      <th className="p-2 border">출발 시간</th>
                       <th className="p-2 border">도착지</th>
+                      <th className="p-2 border">도착 시간</th>
                       <th className="p-2 border">비고</th>
                     </tr>
                   </thead>
                   <tbody>
-                    {filteredOperations.map((op, index) => (
-                      <tr
-                        key={index}
-                        className={index % 2 === 0 ? "bg-gray-50" : "bg-white"}
-                      >
-                        <td className="p-2 border text-center">
-                          {op.operationNumber}
-                        </td>
-                        <td className="p-2 border text-center">
-                          {op.departureTime !== "-" ? op.departureTime : ""}
-                        </td>
-                        <td className="p-2 border text-center">
-                          {op.arrivalTime !== "-" ? op.arrivalTime : ""}
-                        </td>
-                        <td className="p-2 border">
-                          {op.departureName !== "-" ? op.departureName : ""}
-                        </td>
-                        <td className="p-2 border">
-                          {op.arrivalName !== "-" ? op.arrivalName : ""}
-                        </td>
-                        <td className="p-2 border">{op.note}</td>
-                      </tr>
-                    ))}
+                    {filteredOperations.map((op, index) => {
+                      const departureStatus = getTimeStatus(op.departureTime);
+                      const arrivalStatus = getTimeStatus(op.arrivalTime);
+
+                      return (
+                        <tr
+                          key={index}
+                          className={
+                            index % 2 === 0 ? "bg-gray-50" : "bg-white"
+                          }
+                        >
+                          <td className="p-2 border text-center">
+                            {op.operationNumber}
+                          </td>
+                          <td className="p-2 border">
+                            {op.departureName !== "-" ? (
+                              <Link
+                                href={`/stops/${encodeURIComponent(
+                                  op.departureName
+                                )}`}
+                                className="text-blue-500 hover:underline"
+                              >
+                                {op.departureName}
+                              </Link>
+                            ) : (
+                              ""
+                            )}
+                          </td>
+                          <td
+                            className={`p-2 border text-center ${
+                              departureStatus === "current"
+                                ? "bg-green-100 font-bold"
+                                : departureStatus === "past"
+                                ? "text-gray-400"
+                                : ""
+                            }`}
+                          >
+                            {op.departureTime !== "-" ? op.departureTime : ""}
+                          </td>
+                          <td className="p-2 border">
+                            {op.arrivalName !== "-" ? (
+                              <Link
+                                href={`/stops/${encodeURIComponent(
+                                  op.arrivalName
+                                )}`}
+                                className="text-blue-500 hover:underline"
+                              >
+                                {op.arrivalName}
+                              </Link>
+                            ) : (
+                              ""
+                            )}
+                          </td>
+                          <td
+                            className={`p-2 border text-center ${
+                              arrivalStatus === "current"
+                                ? "bg-green-100 font-bold"
+                                : arrivalStatus === "past"
+                                ? "text-gray-400"
+                                : ""
+                            }`}
+                          >
+                            {op.arrivalTime !== "-" ? op.arrivalTime : ""}
+                          </td>
+                          <td className="p-2 border">{op.note}</td>
+                        </tr>
+                      );
+                    })}
                   </tbody>
                 </table>
               </div>
             )}
+
+            <div className="flex justify-center space-x-4 mt-4 text-sm text-gray-600">
+              <div className="flex items-center">
+                <div className="w-3 h-3 bg-green-100 mr-1"></div>
+                <span>현재 시간대 (±30분)</span>
+              </div>
+              <div className="flex items-center">
+                <div className="w-3 h-3 bg-white border border-gray-300 mr-1"></div>
+                <span>예정</span>
+              </div>
+              <div className="flex items-center">
+                <div className="w-3 h-3 text-gray-400 mr-1">A</div>
+                <span>지난 시간</span>
+              </div>
+            </div>
           </div>
         </div>
       ) : null}
