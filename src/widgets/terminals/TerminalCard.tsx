@@ -50,7 +50,7 @@ export function TerminalCard({ name }: StopCardProps) {
               ? "노선 정보 로딩 중..."
               : routeCount === null
               ? "노선 정보 없음"
-              : `총 노선 수: ${routeCount}개`}
+              : `운행 횟수: ${routeCount}회`}
           </p>
         </div>
         <Link

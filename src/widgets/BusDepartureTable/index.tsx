@@ -89,11 +89,11 @@ export function BusDepartureTable({
               : "bg-gray-50 hover:bg-gray-100"
           }`}
         >
-          <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-2">
+          <div className="flex items-center justify-between flex-wrap gap-y-2">
+            <div className="flex items-center flex-wrap gap-2">
               <Link
                 href={`/buses/${bus.routeNumber}`}
-                className={`text-lg font-medium transition-colors duration-300 ${
+                className={`whitespace-nowrap text-lg font-medium transition-colors duration-300 ${
                   bus.operatesToday
                     ? "text-blue-600 hover:text-blue-800"
                     : "text-gray-500 hover:text-gray-700"
@@ -102,15 +102,15 @@ export function BusDepartureTable({
                 {bus.routeNumber}번
               </Link>
               {bus.tripIndex && (
-                <span className="rounded bg-blue-100 px-2 py-1 text-xs text-blue-700 font-medium">
+                <span className="whitespace-nowrap rounded bg-blue-100 px-2 py-1 text-xs text-blue-700 font-medium">
                   회차 {bus.tripIndex}
                 </span>
               )}
-              <span className="rounded bg-gray-100 px-2 py-1 text-xs text-gray-600 transition-colors duration-300 hover:bg-gray-200">
+              <span className="whitespace-nowrap rounded bg-gray-100 px-2 py-1 text-xs text-gray-600 transition-colors duration-300 hover:bg-gray-200">
                 {bus.isFromTerminal ? "기점" : "경유"}
               </span>
               {bus.category && (
-                <span className="rounded bg-gray-100 px-2 py-1 text-xs text-gray-600 transition-colors duration-300 hover:bg-gray-200">
+                <span className="whitespace-nowrap rounded bg-gray-100 px-2 py-1 text-xs text-gray-600 transition-colors duration-300 hover:bg-gray-200">
                   {bus.category}
                 </span>
               )}
@@ -118,7 +118,7 @@ export function BusDepartureTable({
 
             {bus.operatesToday && bus.remainingCount !== undefined && (
               <span
-                className={`rounded px-2 py-1 text-xs transition-all duration-300 ${
+                className={`whitespace-nowrap rounded px-2 py-1 text-xs transition-all duration-300 ${
                   bus.remainingCount > 0
                     ? "bg-green-100 text-green-800 hover:bg-green-200"
                     : "bg-gray-100 text-gray-600 hover:bg-gray-200"
