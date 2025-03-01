@@ -1,0 +1,49 @@
+{
+  "routeInfo": {
+    "routeNumber": "공영 13",
+    "origin": "평원로 중앙시장",
+    "destination": "풍물시장",
+    "firstBusTime": "09:10",
+    "lastBusTime": "17:05",
+    "operationCount": "4회",
+    "interval": "1일 4회"
+  },
+  "operationInfo": [
+    {
+      "operationNumber": "1",
+      "departureTime": "09:10",
+      "arrivalTime": "-",
+      "departureName": "평원로 중앙시장",
+      "arrivalName": "풍물시장",
+      "category": "공통",
+      "note": ""
+    },
+    {
+      "operationNumber": "2",
+      "departureTime": "11:25",
+      "arrivalTime": "-",
+      "departureName": "평원로 중앙시장",
+      "arrivalName": "풍물시장",
+      "category": "공통",
+      "note": ""
+    },
+    {
+      "operationNumber": "3",
+      "departureTime": "14:00",
+      "arrivalTime": "-",
+      "departureName": "평원로 중앙시장",
+      "arrivalName": "풍물시장",
+      "category": "공통",
+      "note": ""
+    },
+    {
+      "operationNumber": "4",
+      "departureTime": "17:05",
+      "arrivalTime": "-",
+      "departureName": "평원로 중앙시장",
+      "arrivalName": "풍물시장",
+      "category": "공통",
+      "note": ""
+    }
+  ]
+}

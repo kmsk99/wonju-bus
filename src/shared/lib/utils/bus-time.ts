@@ -1,0 +1,197 @@
+import { differenceInMinutes, format, isWithinInterval, setHours } from "date-fns";
+import { ko } from "date-fns/locale";
+
+import { BusData, BusOperationInfo, DayType } from "@/entities/bus/model/types";
+
+// 한국 공휴일 목록 (매년 업데이트 필요)
+const HOLIDAYS_2023 = [
+  "2023-01-01", // 신정
+  "2023-01-21", // 설날
+  "2023-01-22", // 설날
+  "2023-01-23", // 설날
+  "2023-01-24", // 대체휴일
+  "2023-03-01", // 삼일절
+  "2023-05-05", // 어린이날
+  "2023-05-27", // 부처님오신날
+  "2023-06-06", // 현충일
+  "2023-08-15", // 광복절
+  "2023-09-28", // 추석
+  "2023-09-29", // 추석
+  "2023-09-30", // 추석
+  "2023-10-03", // 개천절
+  "2023-10-09", // 한글날
+  "2023-12-25", // 크리스마스
+];
+
+// 방학 기간 설정 (매년 업데이트 필요)
+const VACATION_PERIODS = [
+  {
+    start: new Date(2023, 6, 21), // 7월 21일
+    end: new Date(2023, 7, 31), // 8월 31일
+  },
+  {
+    start: new Date(2023, 11, 20), // 12월 20일
+    end: new Date(2024, 1, 28), // 2월 28일
+  },
+];
+
+/**
+ * 오늘의 요일 타입을 반환합니다.
+ */
+export function getTodayDayType(): DayType {
+  const today = new Date();
+
+  // 1. 공휴일 체크
+  const formattedDate = format(today, "yyyy-MM-dd");
+  if (HOLIDAYS_2023.includes(formattedDate)) {
+    return "공휴일";
+  }
+
+  // 2. 방학 기간 체크
+  const isVacation = VACATION_PERIODS.some((period) =>
+    isWithinInterval(today, { start: period.start, end: period.end })
+  );
+
+  if (isVacation) {
+    return "방학";
+  }
+
+  // 3. 주말 체크
+  const dayOfWeek = format(today, "EEEE", { locale: ko });
+  if (dayOfWeek === "토요일") return "토요일";
+  if (dayOfWeek === "일요일") return "일요일";
+
+  // 4. 평일
+  return "평일";
+}
+
+/**
+ * 특정 요일 타입에 맞는 버스 운행 정보를 필터링합니다.
+ */
+export function filterBusByDayType(
+  operations: BusOperationInfo[],
+  dayType: DayType
+): BusOperationInfo[] {
+  return operations.filter(
+    (op) => op.category === dayType || op.category === "공통"
+  );
+}
+
+/**
+ * 문자열 시간을 Date 객체로 변환합니다.
+ */
+export function parseTimeString(timeStr: string): Date {
+  const [hours, minutes] = timeStr.split(":").map(Number);
+  const date = new Date();
+  date.setHours(hours, minutes, 0, 0);
+  return date;
+}
+
+/**
+ * 현재 시간으로부터 다음 버스 출발까지 남은 시간(분)을 계산합니다.
+ */
+export function getRemainingMinutes(departureTime: string): number {
+  const now = new Date();
+  const departure = parseTimeString(departureTime);
+
+  // 출발 시간이 현재 시간보다 이전이면 음수 반환 (이미 출발함)
+  if (departure < now) {
+    return -differenceInMinutes(now, departure);
+  }
+
+  return differenceInMinutes(departure, now);
+}
+
+/**
+ * 출발 시간 기준으로 버스 운행 정보를 정렬합니다.
+ */
+export function sortByDepartureTime(
+  operations: BusOperationInfo[]
+): BusOperationInfo[] {
+  return [...operations].sort((a, b) => {
+    const timeA = parseTimeString(a.departureTime);
+    const timeB = parseTimeString(b.departureTime);
+    return timeA.getTime() - timeB.getTime();
+  });
+}
+
+/**
+ * 현재 시간 이후의 버스 운행 정보만 필터링합니다.
+ */
+export function filterRemainingBuses(
+  operations: BusOperationInfo[]
+): BusOperationInfo[] {
+  const now = new Date();
+  return operations.filter((op) => {
+    const departureTime = parseTimeString(op.departureTime);
+    return departureTime > now;
+  });
+}
+
+/**
+ * 남은 시간을 사람이 읽기 쉬운 형식으로 반환합니다.
+ */
+export function formatRemainingTime(minutes: number): string {
+  if (minutes < 0) {
+    return `${Math.abs(minutes)}분 전 출발`;
+  }
+
+  if (minutes === 0) {
+    return "지금 출발";
+  }
+
+  if (minutes < 60) {
+    return `${minutes}분 후 출발`;
+  }
+
+  const hours = Math.floor(minutes / 60);
+  const remainingMinutes = minutes % 60;
+
+  if (remainingMinutes === 0) {
+    return `${hours}시간 후 출발`;
+  }
+
+  return `${hours}시간 ${remainingMinutes}분 후 출발`;
+}
+
+/**
+ * 특정 종점에서 출발하는 버스 운행 정보를 필터링합니다.
+ */
+export function filterByTerminal(
+  busData: BusData,
+  terminalName: string
+): BusOperationInfo[] {
+  return busData.operationInfo.filter(
+    (op) => op.departureName === terminalName
+  );
+}
+
+/**
+ * 버스 데이터에서 모든 종점 이름을 추출합니다. (중복 제거)
+ */
+export function extractTerminals(busData: BusData[]): string[] {
+  const terminals = new Set<string>();
+
+  busData.forEach((bus) => {
+    bus.operationInfo.forEach((op) => {
+      terminals.add(op.departureName);
+      terminals.add(op.arrivalName);
+    });
+  });
+
+  return Array.from(terminals);
+}
+
+/**
+ * 현재 날짜의 요일을 한글로 반환합니다.
+ */
+export function getTodayKoreanDay(): string {
+  return format(new Date(), "EEEE", { locale: ko });
+}
+
+/**
+ * 오늘 남은 버스 수를 계산합니다.
+ */
+export function countRemainingBuses(operations: BusOperationInfo[]): number {
+  return filterRemainingBuses(operations).length;
+}

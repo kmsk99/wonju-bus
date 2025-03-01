@@ -1,0 +1,67 @@
+{
+  "routeInfo": {
+    "routeNumber": "18(주말,공휴일)",
+    "origin": "관설동종점",
+    "destination": "한라대학교",
+    "firstBusTime": "07:30",
+    "lastBusTime": "19:40",
+    "operationCount": "6회",
+    "interval": "1일 6회"
+  },
+  "operationInfo": [
+    {
+      "operationNumber": "1",
+      "departureTime": "7:30",
+      "arrivalTime": "8:30",
+      "departureName": "관설동종점",
+      "arrivalName": "한라대학교",
+      "category": "공통",
+      "note": ""
+    },
+    {
+      "operationNumber": "2",
+      "departureTime": "10:00",
+      "arrivalTime": "11:00",
+      "departureName": "관설동종점",
+      "arrivalName": "한라대학교",
+      "category": "공통",
+      "note": ""
+    },
+    {
+      "operationNumber": "3",
+      "departureTime": "12:40",
+      "arrivalTime": "13:40",
+      "departureName": "관설동종점",
+      "arrivalName": "한라대학교",
+      "category": "공통",
+      "note": ""
+    },
+    {
+      "operationNumber": "4",
+      "departureTime": "15:00",
+      "arrivalTime": "16:00",
+      "departureName": "관설동종점",
+      "arrivalName": "한라대학교",
+      "category": "공통",
+      "note": ""
+    },
+    {
+      "operationNumber": "5",
+      "departureTime": "17:20",
+      "arrivalTime": "18:20",
+      "departureName": "관설동종점",
+      "arrivalName": "한라대학교",
+      "category": "공통",
+      "note": ""
+    },
+    {
+      "operationNumber": "6",
+      "departureTime": "19:40",
+      "arrivalTime": "20:40",
+      "departureName": "관설동종점",
+      "arrivalName": "한라대학교",
+      "category": "공통",
+      "note": ""
+    }
+  ]
+}

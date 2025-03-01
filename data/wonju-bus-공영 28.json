@@ -1,0 +1,40 @@
+{
+  "routeInfo": {
+    "routeNumber": "공영 28",
+    "origin": "중앙시장",
+    "destination": "용곡",
+    "firstBusTime": "07:40",
+    "lastBusTime": "16:00",
+    "operationCount": "3회",
+    "interval": "1일 3회"
+  },
+  "operationInfo": [
+    {
+      "operationNumber": "1",
+      "departureTime": "07:40",
+      "arrivalTime": "08:20",
+      "departureName": "중앙시장",
+      "arrivalName": "용곡",
+      "category": "공통",
+      "note": "(용곡발)매호리, 호매, 점실 경유"
+    },
+    {
+      "operationNumber": "2",
+      "departureTime": "13:30",
+      "arrivalTime": "14:40",
+      "departureName": "중앙시장",
+      "arrivalName": "용곡",
+      "category": "공통",
+      "note": "(중앙시장발)매호리, 호매, 점실 경유"
+    },
+    {
+      "operationNumber": "3",
+      "departureTime": "16:00",
+      "arrivalTime": "16:45",
+      "departureName": "중앙시장",
+      "arrivalName": "용곡",
+      "category": "공통",
+      "note": "(용곡발) 매호리 경유"
+    }
+  ]
+}

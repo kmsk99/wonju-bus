@@ -1,0 +1,22 @@
+{
+  "routeInfo": {
+    "routeNumber": "조조",
+    "origin": "태장주공 4단지",
+    "destination": "태장농공단지",
+    "firstBusTime": "05:55",
+    "lastBusTime": "-",
+    "operationCount": "1회",
+    "interval": "1일 1회"
+  },
+  "operationInfo": [
+    {
+      "operationNumber": "1",
+      "departureTime": "05:55",
+      "arrivalTime": "-",
+      "departureName": "태장주공 4단지",
+      "arrivalName": "태장농공단지",
+      "category": "공통",
+      "note": "(평일만 운행) 태장농공단지 종료"
+    }
+  ]
+}
