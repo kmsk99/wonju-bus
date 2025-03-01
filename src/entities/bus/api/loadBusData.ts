@@ -472,6 +472,7 @@ export async function getAllDepartureTimesFromStop(stopName: string): Promise<
     nextDepartureMinutes: number;
     category: string;
     isFromTerminal: boolean; // true: 출발지, false: 도착지(회차)
+    isNextDay?: boolean; // 다음 날 출발 여부
   }>
 > {
   // 해당 종점에서 출발하는 모든 노선
@@ -487,6 +488,7 @@ export async function getAllDepartureTimesFromStop(stopName: string): Promise<
     nextDepartureMinutes: number;
     category: string;
     isFromTerminal: boolean;
+    isNextDay?: boolean;
   }> = [];
 
   // 각 노선별 출발 시간 확인
@@ -497,13 +499,29 @@ export async function getAllDepartureTimesFromStop(stopName: string): Promise<
     // 출발지로서의 시간
     busData.operationInfo.forEach((op) => {
       if (op.departureName === stopName && op.departureTime !== "-") {
-        const nextDepartureMinutes = getTimeUntilNextBus(op.departureTime);
+        const now = new Date();
+        const [hours, minutes] = op.departureTime.split(":").map(Number);
+        const departureTime = new Date(now);
+        departureTime.setHours(hours, minutes, 0, 0);
+
+        // 지난 시간인 경우 다음날로 설정
+        let isNextDay = false;
+        if (departureTime < now) {
+          departureTime.setDate(departureTime.getDate() + 1);
+          isNextDay = true;
+        }
+
+        const nextDepartureMinutes = Math.floor(
+          (departureTime.getTime() - now.getTime()) / (1000 * 60)
+        );
+
         result.push({
           routeNumber: route,
           departureTime: op.departureTime,
           nextDepartureMinutes,
           category: op.category,
           isFromTerminal: true,
+          isNextDay,
         });
       }
     });
@@ -511,13 +529,29 @@ export async function getAllDepartureTimesFromStop(stopName: string): Promise<
     // 도착지로서의 시간 (회차 시간)
     busData.operationInfo.forEach((op) => {
       if (op.arrivalName === stopName && op.arrivalTime !== "-") {
-        const nextDepartureMinutes = getTimeUntilNextBus(op.arrivalTime);
+        const now = new Date();
+        const [hours, minutes] = op.arrivalTime.split(":").map(Number);
+        const departureTime = new Date(now);
+        departureTime.setHours(hours, minutes, 0, 0);
+
+        // 지난 시간인 경우 다음날로 설정
+        let isNextDay = false;
+        if (departureTime < now) {
+          departureTime.setDate(departureTime.getDate() + 1);
+          isNextDay = true;
+        }
+
+        const nextDepartureMinutes = Math.floor(
+          (departureTime.getTime() - now.getTime()) / (1000 * 60)
+        );
+
         result.push({
           routeNumber: route,
           departureTime: op.arrivalTime,
           nextDepartureMinutes,
           category: op.category,
           isFromTerminal: false,
+          isNextDay,
         });
       }
     });

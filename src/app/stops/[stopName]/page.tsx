@@ -20,6 +20,7 @@ interface DepartureInfo {
   nextDepartureMinutes: number;
   category: string;
   isFromTerminal: boolean;
+  isNextDay?: boolean;
 }
 
 interface GroupedDeparture {
@@ -167,16 +168,35 @@ export default function StopDetailPage() {
       if (a[1].operatesToday && !b[1].operatesToday) return -1;
       if (!a[1].operatesToday && b[1].operatesToday) return 1;
 
-      // 2. 같은 운행 상태면, 출발 시간 기준으로 정렬
-      // 이미 지난 시간은 뒤로
-      const aMinutes = a[1].nextDeparture.nextDepartureMinutes;
-      const bMinutes = b[1].nextDeparture.nextDepartureMinutes;
+      // 2. 운행하는 노선 중에서 추가 분류
+      if (a[1].operatesToday) {
+        // 2.1 아직 운행할 버스가 남아있는지 확인
+        const aHasRemainingBuses = a[1].remainingCount > 0;
+        const bHasRemainingBuses = b[1].remainingCount > 0;
 
-      if (aMinutes === -1 && bMinutes !== -1) return 1;
-      if (aMinutes !== -1 && bMinutes === -1) return -1;
+        // 운행 중인 노선이 먼저 오도록
+        if (aHasRemainingBuses !== bHasRemainingBuses) {
+          return aHasRemainingBuses ? -1 : 1;
+        }
 
-      // 둘 다 지났거나 둘 다 안 지난 경우 시간순
-      return aMinutes - bMinutes;
+        // 2.2 두 노선 모두 운행 중인 경우, 남은 시간 순으로 정렬
+        if (aHasRemainingBuses) {
+          const aMinutes = a[1].nextDeparture.nextDepartureMinutes;
+          const bMinutes = b[1].nextDeparture.nextDepartureMinutes;
+
+          // 이미 지난 시간은 뒤로
+          if (aMinutes >= 0 && bMinutes < 0) return -1;
+          if (aMinutes < 0 && bMinutes >= 0) return 1;
+
+          // 둘 다 지난 시간이거나 둘 다 안 지난 경우, 시간순 정렬
+          return aMinutes - bMinutes;
+        }
+      }
+
+      // 3. 다른 경우 출발 시간 기준으로 정렬
+      return a[1].nextDeparture.departureTime.localeCompare(
+        b[1].nextDeparture.departureTime
+      );
     })
     .map(([routeNumber, data]) => ({
       routeNumber,
@@ -186,6 +206,7 @@ export default function StopDetailPage() {
       isFromTerminal: data.nextDeparture.isFromTerminal,
       remainingCount: data.remainingCount,
       operatesToday: data.operatesToday,
+      isNextDay: data.nextDeparture.isNextDay,
     }));
 
   // 노선 목록 데이터 변환

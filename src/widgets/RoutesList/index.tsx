@@ -22,11 +22,24 @@ export function RoutesList({ routes }: RoutesListProps) {
 
   // 현재 날짜에 운행하는 노선과 아닌 노선 분리
   const sortedRoutes = [...routes].sort((a, b) => {
-    // 운행 여부에 따라 정렬 (운행하는 노선이 먼저 오도록)
+    // 1. 운행 여부에 따른 1차 분류 (운행하는 노선이 먼저 오도록)
     if (a.operatesToday !== b.operatesToday) {
       return a.operatesToday ? -1 : 1;
     }
-    // 노선 번호로 이차 정렬
+
+    // 2. 운행하는 노선 중에서 추가 분류
+    if (a.operatesToday) {
+      // 2.1 운행 중인지, 운행 종료인지 확인 (남은 운행 횟수로 판단)
+      const aIsActive = a.remainingCount !== undefined && a.remainingCount > 0;
+      const bIsActive = b.remainingCount !== undefined && b.remainingCount > 0;
+
+      // 운행 중인 노선이 먼저 오도록
+      if (aIsActive !== bIsActive) {
+        return aIsActive ? -1 : 1;
+      }
+    }
+
+    // 3. 노선 번호로 마지막 정렬
     return a.routeNumber.localeCompare(b.routeNumber);
   });
 

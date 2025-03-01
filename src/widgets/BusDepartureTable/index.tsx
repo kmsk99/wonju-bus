@@ -11,6 +11,7 @@ export interface BusDepartureInfo {
   isFromTerminal?: boolean;
   remainingCount?: number;
   operatesToday?: boolean;
+  isNextDay?: boolean;
 }
 
 export interface BusDepartureTableProps {
@@ -31,20 +32,37 @@ export function BusDepartureTable({
 
   // 오늘 운행하는 노선은 상단에, 운행하지 않는 노선은 하단에 정렬
   const sortedDepartures = [...departures].sort((a, b) => {
-    // 운행 여부에 따라 정렬 (운행하는 노선이 먼저 오도록)
+    // 1. 운행 여부에 따른 1차 분류 (운행하는 노선이 먼저 오도록)
     if (a.operatesToday !== b.operatesToday) {
       return a.operatesToday ? -1 : 1;
     }
 
-    // 다음 출발까지 남은 시간으로 이차 정렬
-    if (
-      a.nextDepartureMinutes !== undefined &&
-      b.nextDepartureMinutes !== undefined
-    ) {
-      return a.nextDepartureMinutes - b.nextDepartureMinutes;
+    // 2. 운행하는 노선 중에서 추가 분류
+    if (a.operatesToday) {
+      // 2.1 운행 중인지, 운행 종료인지 확인
+      const aIsActive =
+        (a.nextDepartureMinutes !== undefined && a.nextDepartureMinutes >= 0) ||
+        (a.remainingCount !== undefined && a.remainingCount > 0);
+      const bIsActive =
+        (b.nextDepartureMinutes !== undefined && b.nextDepartureMinutes >= 0) ||
+        (b.remainingCount !== undefined && b.remainingCount > 0);
+
+      // 운행 중인 노선이 먼저 오도록
+      if (aIsActive !== bIsActive) {
+        return aIsActive ? -1 : 1;
+      }
+
+      // 2.2 둘 다 운행 중이면 출발 대기 시간순으로 정렬
+      if (
+        aIsActive &&
+        a.nextDepartureMinutes !== undefined &&
+        b.nextDepartureMinutes !== undefined
+      ) {
+        return a.nextDepartureMinutes - b.nextDepartureMinutes;
+      }
     }
 
-    // 출발 시간으로 삼차 정렬
+    // 3. 같은 카테고리 내에서는 출발 시간으로 정렬
     return a.departureTime.localeCompare(b.departureTime);
   });
 
@@ -125,6 +143,9 @@ export function BusDepartureTable({
                 }`}
               >
                 {bus.departureTime}
+                {bus.isNextDay && (
+                  <span className="ml-1 text-blue-600 font-medium">(내일)</span>
+                )}
               </td>
               <td className="whitespace-nowrap px-6 py-4 text-sm">
                 {bus.operatesToday && bus.nextDepartureMinutes !== undefined ? (
