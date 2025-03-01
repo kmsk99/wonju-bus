@@ -1,0 +1,40 @@
+{
+  "routeInfo": {
+    "routeNumber": "57",
+    "origin": "관설동종점",
+    "destination": "상구현",
+    "firstBusTime": "06:10",
+    "lastBusTime": "16:05",
+    "operationCount": "3회",
+    "interval": "1일 3회"
+  },
+  "operationInfo": [
+    {
+      "operationNumber": "1",
+      "departureTime": "6:10",
+      "arrivalTime": "7:45",
+      "departureName": "관설동종점",
+      "arrivalName": "상구현",
+      "category": "공통",
+      "note": ""
+    },
+    {
+      "operationNumber": "2",
+      "departureTime": "11:15",
+      "arrivalTime": "13:10",
+      "departureName": "관설동종점",
+      "arrivalName": "상구현",
+      "category": "공통",
+      "note": "관설동발)도계,산삼교경유, 상구현발)판대경유"
+    },
+    {
+      "operationNumber": "3",
+      "departureTime": "16:05",
+      "arrivalTime": "18:00",
+      "departureName": "관설동종점",
+      "arrivalName": "상구현",
+      "category": "공통",
+      "note": ""
+    }
+  ]
+}

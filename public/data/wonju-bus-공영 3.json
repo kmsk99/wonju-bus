@@ -1,0 +1,49 @@
+{
+  "routeInfo": {
+    "routeNumber": "공영 3",
+    "origin": "문막 소방서(순환버스)",
+    "destination": "문막 소방서",
+    "firstBusTime": "07:15",
+    "lastBusTime": "17:45",
+    "operationCount": "4회",
+    "interval": "1일 4회"
+  },
+  "operationInfo": [
+    {
+      "operationNumber": "1",
+      "departureTime": "07:15",
+      "arrivalTime": "-",
+      "departureName": "문막 소방서(순환버스)",
+      "arrivalName": "문막 소방서",
+      "category": "공통",
+      "note": "문막소방서→등안→메나교→건등저수지→관천교→시외버스정류소→문막소방서"
+    },
+    {
+      "operationNumber": "2",
+      "departureTime": "10:50",
+      "arrivalTime": "-",
+      "departureName": "문막 소방서(순환버스)",
+      "arrivalName": "문막 소방서",
+      "category": "공통",
+      "note": "문막소방서→등안→메나교→건등저수지→관천교→시외버스정류소→문막소방서"
+    },
+    {
+      "operationNumber": "3",
+      "departureTime": "15:45",
+      "arrivalTime": "-",
+      "departureName": "문막 소방서(순환버스)",
+      "arrivalName": "문막 소방서",
+      "category": "공통",
+      "note": "문막소방서→등안→메나교→건등저수지→관천교→시외버스정류소→문막소방서"
+    },
+    {
+      "operationNumber": "4",
+      "departureTime": "17:45",
+      "arrivalTime": "-",
+      "departureName": "문막 소방서(순환버스)",
+      "arrivalName": "문막 소방서",
+      "category": "공통",
+      "note": "문막소방서→등안→메나교→건등저수지→관천교→시외버스정류소→문막소방서"
+    }
+  ]
+}
