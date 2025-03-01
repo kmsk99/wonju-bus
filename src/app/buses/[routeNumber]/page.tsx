@@ -10,7 +10,9 @@ import { Clock } from "@/shared/ui/Clock";
 
 export default function BusDetailPage() {
   const params = useParams<{ routeNumber: string }>();
-  const routeNumber = params?.routeNumber || "";
+  const routeNumber = params?.routeNumber
+    ? decodeURIComponent(params.routeNumber)
+    : "";
 
   const [busData, setBusData] = useState<BusData | null>(null);
   const [isLoading, setIsLoading] = useState(true);

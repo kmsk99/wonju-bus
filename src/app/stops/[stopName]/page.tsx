@@ -5,7 +5,7 @@ import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
 import {
-    getAllDepartureTimesFromStop, loadRoutesByTerminal, loadRoutesToTerminal
+    getAllDepartureTimesFromStop, loadBusData, loadRoutesByTerminal, loadRoutesToTerminal
 } from "@/entities/bus/api/loadBusData";
 import { Clock } from "@/shared/ui/Clock";
 
@@ -45,6 +45,21 @@ export default function StopDetailPage() {
       isFromTerminal: boolean;
     }>
   >([]);
+  const [groupedDepartures, setGroupedDepartures] = useState<
+    Record<
+      string,
+      {
+        nextDeparture: {
+          routeNumber: string;
+          departureTime: string;
+          nextDepartureMinutes: number;
+          category: string;
+          isFromTerminal: boolean;
+        };
+        remainingCount: number;
+      }
+    >
+  >({});
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [activeTab, setActiveTab] = useState<"all" | "from" | "to">("all");
@@ -99,18 +114,112 @@ export default function StopDetailPage() {
       const times = await getAllDepartureTimesFromStop(stopName);
       setDepartureTimes(times);
       console.log(`${stopName}의 출발 시간표 ${times.length}개 로드 완료`);
+
+      // 노선별로 그룹화하고 남은 버스 개수 계산
+      const grouped: Record<
+        string,
+        {
+          nextDeparture: (typeof times)[0];
+          remainingCount: number;
+        }
+      > = {};
+
+      // 현재 시간
+      const now = new Date();
+      const today = now.toDateString();
+
+      // 모든 노선 목록 가져오기
+      const uniqueRoutes = Array.from(
+        new Set(times.map((time) => time.routeNumber))
+      );
+
+      // 각 노선에 대해 운행 정보 가져오기
+      for (const routeNumber of uniqueRoutes) {
+        const busData = await loadBusData(routeNumber);
+        if (!busData) continue;
+
+        // 해당 노선의 모든 출발 시간
+        const routeTimes = times.filter(
+          (time) => time.routeNumber === routeNumber
+        );
+
+        // 아직 출발하지 않은 시간들
+        const remainingTimes = routeTimes.filter(
+          (time) => time.nextDepartureMinutes >= 0
+        );
+
+        // 가장 가까운 출발
+        const nextDeparture =
+          remainingTimes.length > 0 ? remainingTimes[0] : routeTimes[0]; // 모두 지났으면 첫 번째 출발 표시
+
+        // 오늘 남은 출발 횟수 계산
+        // 현재 요일 확인
+        const dayOfWeek = now.getDay(); // 0: 일요일, 1-5: 평일, 6: 토요일
+        let dayType = "평일";
+        if (dayOfWeek === 0) dayType = "일요일";
+        else if (dayOfWeek === 6) dayType = "토요일";
+
+        // 오늘 해당하는 카테고리의 운행 정보만 필터링
+        const todayOperations = busData.operationInfo.filter(
+          (op) =>
+            (op.category === dayType || op.category === "공통") &&
+            (op.departureName === stopName || op.arrivalName === stopName)
+        );
+
+        // 아직 출발하지 않은 운행 개수
+        let remainingCount = 0;
+
+        for (const op of todayOperations) {
+          let timeStr = "";
+          if (op.departureName === stopName) {
+            timeStr = op.departureTime;
+          } else if (op.arrivalName === stopName) {
+            timeStr = op.arrivalTime;
+          }
+
+          if (timeStr === "-") continue;
+
+          const [hours, minutes] = timeStr.split(":").map(Number);
+          const opTime = new Date();
+          opTime.setHours(hours, minutes, 0);
+
+          if (opTime > now) {
+            remainingCount++;
+          }
+        }
+
+        // 결과 저장
+        grouped[routeNumber] = {
+          nextDeparture,
+          remainingCount,
+        };
+      }
+
+      setGroupedDepartures(grouped);
     } catch (err) {
       console.error(`${stopName} 출발 시간표 로딩 중 오류:`, err);
     }
   }
 
-  // 필터링된 출발 시간표
-  const filteredDepartureTimes = departureTimes.filter((time) => {
-    if (activeTab === "all") return true;
-    if (activeTab === "from") return time.isFromTerminal;
-    if (activeTab === "to") return !time.isFromTerminal;
-    return true;
-  });
+  // 필터링된 그룹화 출발 시간표
+  const filteredGroupedDepartures = Object.entries(groupedDepartures)
+    .filter(([_, data]) => {
+      if (activeTab === "all") return true;
+      if (activeTab === "from") return data.nextDeparture.isFromTerminal;
+      if (activeTab === "to") return !data.nextDeparture.isFromTerminal;
+      return true;
+    })
+    .sort((a, b) => {
+      // 이미 지난 시간은 뒤로
+      const aMinutes = a[1].nextDeparture.nextDepartureMinutes;
+      const bMinutes = b[1].nextDeparture.nextDepartureMinutes;
+
+      if (aMinutes === -1 && bMinutes !== -1) return 1;
+      if (aMinutes !== -1 && bMinutes === -1) return -1;
+
+      // 둘 다 지났거나 둘 다 안 지난 경우 시간순
+      return aMinutes - bMinutes;
+    });
 
   return (
     <div className="container mx-auto p-4">
@@ -165,8 +274,8 @@ export default function StopDetailPage() {
       ) : (
         <div>
           <div className="mb-6">
-            <h2 className="text-xl font-bold mb-3">시간표</h2>
-            {filteredDepartureTimes.length === 0 ? (
+            <h2 className="text-xl font-bold mb-3">다음 출발 시간</h2>
+            {filteredGroupedDepartures.length === 0 ? (
               <div className="text-center my-4 text-gray-500">
                 {activeTab === "all"
                   ? "이 종점의 시간표 정보가 없습니다."
@@ -181,36 +290,50 @@ export default function StopDetailPage() {
                     <tr className="bg-gray-100">
                       <th className="p-2 border">노선</th>
                       <th className="p-2 border">구분</th>
-                      <th className="p-2 border">시간</th>
+                      <th className="p-2 border">다음 출발</th>
                       <th className="p-2 border">대기 시간</th>
                       <th className="p-2 border">유형</th>
+                      <th className="p-2 border">오늘 남은 운행</th>
                     </tr>
                   </thead>
                   <tbody>
-                    {filteredDepartureTimes.map((time, index) => (
+                    {filteredGroupedDepartures.map(([routeNumber, data]) => (
                       <tr
-                        key={index}
-                        className={index % 2 === 0 ? "bg-gray-50" : "bg-white"}
+                        key={routeNumber}
+                        className={
+                          data.nextDeparture.nextDepartureMinutes >= 0
+                            ? "bg-white"
+                            : "bg-gray-100"
+                        }
                       >
                         <td className="p-2 border text-center">
                           <Link
-                            href={`/buses/${time.routeNumber}`}
+                            href={`/buses/${encodeURIComponent(routeNumber)}`}
                             className="text-blue-500 hover:underline"
                           >
-                            {time.routeNumber}번
+                            {routeNumber}번
                           </Link>
                         </td>
                         <td className="p-2 border text-center">
-                          {time.isFromTerminal ? "출발" : "도착/회차"}
+                          {data.nextDeparture.isFromTerminal
+                            ? "출발"
+                            : "도착/회차"}
                         </td>
                         <td className="p-2 border text-center">
-                          {time.departureTime}
+                          {data.nextDeparture.departureTime}
                         </td>
                         <td className="p-2 border text-center">
-                          <WaitingTime minutes={time.nextDepartureMinutes} />
+                          <WaitingTime
+                            minutes={data.nextDeparture.nextDepartureMinutes}
+                          />
                         </td>
                         <td className="p-2 border text-center">
-                          {time.category}
+                          {data.nextDeparture.category}
+                        </td>
+                        <td className="p-2 border text-center font-bold">
+                          {data.remainingCount > 0
+                            ? `${data.remainingCount}회`
+                            : "운행 종료"}
                         </td>
                       </tr>
                     ))}
@@ -230,32 +353,42 @@ export default function StopDetailPage() {
               <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
                 {Array.from(
                   new Set([...departureRoutes, ...arrivalRoutes])
-                ).map((route) => (
-                  <Link
-                    key={route}
-                    href={`/buses/${route}`}
-                    className="bg-white shadow-md rounded-lg p-4 hover:shadow-lg transition-shadow"
-                  >
-                    <div className="text-center">
-                      <div className="text-xl font-bold mb-1">{route}번</div>
-                      <div className="flex justify-center space-x-2">
-                        {departureRoutes.includes(route) && (
-                          <span className="text-xs bg-blue-100 text-blue-800 py-1 px-2 rounded">
-                            출발
-                          </span>
+                ).map((route) => {
+                  const routeData = groupedDepartures[route];
+                  return (
+                    <Link
+                      key={route}
+                      href={`/buses/${encodeURIComponent(route)}`}
+                      className="bg-white shadow-md rounded-lg p-4 hover:shadow-lg transition-shadow"
+                    >
+                      <div className="text-center">
+                        <div className="text-xl font-bold mb-1">{route}번</div>
+                        <div className="flex justify-center space-x-2 mb-2">
+                          {departureRoutes.includes(route) && (
+                            <span className="text-xs bg-blue-100 text-blue-800 py-1 px-2 rounded">
+                              출발
+                            </span>
+                          )}
+                          {arrivalRoutes.includes(route) && (
+                            <span className="text-xs bg-green-100 text-green-800 py-1 px-2 rounded">
+                              도착
+                            </span>
+                          )}
+                        </div>
+                        {routeData && (
+                          <div className="text-sm font-semibold">
+                            {routeData.remainingCount > 0
+                              ? `오늘 남은 운행: ${routeData.remainingCount}회`
+                              : "오늘 운행 종료"}
+                          </div>
                         )}
-                        {arrivalRoutes.includes(route) && (
-                          <span className="text-xs bg-green-100 text-green-800 py-1 px-2 rounded">
-                            도착
-                          </span>
-                        )}
+                        <div className="text-sm text-blue-500 mt-1">
+                          상세 정보 보기
+                        </div>
                       </div>
-                      <div className="text-sm text-blue-500 mt-1">
-                        상세 정보 보기
-                      </div>
-                    </div>
-                  </Link>
-                ))}
+                    </Link>
+                  );
+                })}
               </div>
             )}
           </div>
