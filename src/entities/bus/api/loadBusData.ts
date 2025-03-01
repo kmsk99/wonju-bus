@@ -5,42 +5,66 @@ const dataCache: {
   busData: Record<string, BusData>;
   terminals: string[] | null;
   routesByTerminal: Record<string, string[]>;
+  routesCountByTerminal: Record<string, number>;
 } = {
   busData: {},
   terminals: null,
   routesByTerminal: {},
+  routesCountByTerminal: {},
 };
 
 /**
  * 데이터 폴더에서 모든 버스 데이터를 로드합니다.
  */
-async function loadAllBusData(): Promise<BusData[]> {
+export async function loadAllBusData(): Promise<BusData[]> {
   try {
+    console.log("버스 데이터 목록 로드 시작");
     // 데이터 파일 목록을 가져오는 API 엔드포인트 호출
     const response = await fetch("/data/bus-files.json");
     if (!response.ok) {
-      throw new Error("버스 파일 목록을 가져오는데 실패했습니다.");
+      console.error(
+        `버스 파일 목록 가져오기 실패: ${response.status} ${response.statusText}`
+      );
+      throw new Error(
+        `버스 파일 목록을 가져오는데 실패했습니다: ${response.status}`
+      );
     }
 
     const busFiles = (await response.json()) as string[];
+    console.log(`버스 파일 목록 로드 완료: ${busFiles.length}개 파일`);
 
     // 각 파일의 데이터 가져오기
     const busDataPromises = busFiles.map(async (filename) => {
-      const dataResponse = await fetch(`/data/${filename}`);
-      if (!dataResponse.ok) {
-        throw new Error(`${filename} 데이터를 가져오는데 실패했습니다.`);
+      try {
+        const fileUrl = `/data/${filename}`;
+        console.log(`파일 로드 중: ${fileUrl}`);
+        const dataResponse = await fetch(fileUrl);
+
+        if (!dataResponse.ok) {
+          console.error(
+            `파일 로드 실패: ${filename}, 상태: ${dataResponse.status}`
+          );
+          throw new Error(`${filename} 데이터를 가져오는데 실패했습니다.`);
+        }
+
+        const data = (await dataResponse.json()) as BusData;
+        console.log(`파일 로드 성공: ${filename}`);
+
+        // 캐시에 저장
+        const routeNumber = data.routeInfo.routeNumber;
+        dataCache.busData[routeNumber] = data;
+
+        return data;
+      } catch (error) {
+        console.error(`${filename} 파일 처리 중 오류:`, error);
+        return null;
       }
-
-      const data = (await dataResponse.json()) as BusData;
-
-      // 캐시에 저장
-      const routeNumber = data.routeInfo.routeNumber;
-      dataCache.busData[routeNumber] = data;
-
-      return data;
     });
 
-    return await Promise.all(busDataPromises);
+    const results = await Promise.all(busDataPromises);
+    const validResults = results.filter((item) => item !== null) as BusData[];
+    console.log(`총 ${validResults.length}개 버스 데이터 로드 완료`);
+    return validResults;
   } catch (error) {
     console.error("버스 데이터 로드 오류:", error);
     return [];
@@ -62,14 +86,19 @@ export async function loadBusData(
 
   try {
     // public 폴더의 데이터 파일에 접근
-    const response = await fetch(`/data/wonju-bus-${routeNumber}.json`);
+    const fileUrl = `/data/wonju-bus-${routeNumber}.json`;
+    console.log(`버스 노선 데이터 로드 중: ${fileUrl}`);
+    const response = await fetch(fileUrl);
+
     if (!response.ok) {
+      console.error(`버스 노선 ${routeNumber} 로드 실패: ${response.status}`);
       throw new Error(
-        `버스 노선 ${routeNumber} 데이터를 가져오는데 실패했습니다.`
+        `버스 노선 ${routeNumber} 데이터를 가져오는데 실패했습니다: ${response.status}`
       );
     }
 
     const busData = (await response.json()) as BusData;
+    console.log(`버스 노선 ${routeNumber} 로드 성공`);
 
     // 캐시에 저장
     dataCache.busData[routeNumber] = busData;
@@ -91,25 +120,56 @@ export async function loadTerminals(): Promise<string[]> {
     return dataCache.terminals;
   }
 
+  console.log("종점 목록 로드 시작");
   // 모든 버스 데이터 로드
   const busDataList = await loadAllBusData();
+  console.log(`종점 목록 추출 중: ${busDataList.length}개 버스 데이터 사용`);
 
   // 모든 종점 추출 (중복 제거)
   const terminals = new Set<string>();
+  const routesCountByTerminal: Record<string, number> = {};
 
   busDataList.forEach((bus) => {
     bus.operationInfo.forEach((op) => {
       terminals.add(op.departureName);
       terminals.add(op.arrivalName);
+
+      // 종점별 노선 수 계산
+      if (!routesCountByTerminal[op.departureName]) {
+        routesCountByTerminal[op.departureName] = 0;
+      }
+      routesCountByTerminal[op.departureName]++;
+
+      if (!routesCountByTerminal[op.arrivalName]) {
+        routesCountByTerminal[op.arrivalName] = 0;
+      }
+      routesCountByTerminal[op.arrivalName]++;
     });
   });
 
-  const terminalsList = Array.from(terminals);
+  // 종점별 노선 수 캐싱
+  dataCache.routesCountByTerminal = routesCountByTerminal;
+
+  // 종점을 노선 수 기준으로 정렬 (내림차순)
+  const terminalsList = Array.from(terminals).sort((a, b) => {
+    return (routesCountByTerminal[b] || 0) - (routesCountByTerminal[a] || 0);
+  });
+
+  console.log(`종점 목록 로드 완료: ${terminalsList.length}개 종점`);
 
   // 캐시에 저장
   dataCache.terminals = terminalsList;
 
   return terminalsList;
+}
+
+/**
+ * 종점에 연결된 노선 수를 가져옵니다.
+ * @param terminalName 종점 이름
+ * @returns 해당 종점의 노선 수
+ */
+export function getRouteCountForTerminal(terminalName: string): number {
+  return dataCache.routesCountByTerminal[terminalName] || 0;
 }
 
 /**
@@ -125,6 +185,7 @@ export async function loadRoutesByTerminal(
     return dataCache.routesByTerminal[terminalName];
   }
 
+  console.log(`${terminalName} 종점의 노선 목록 로드 시작`);
   // 모든 버스 데이터 로드
   const busDataList = await loadAllBusData();
 
@@ -134,6 +195,10 @@ export async function loadRoutesByTerminal(
       busData.operationInfo.some((op) => op.departureName === terminalName)
     )
     .map((busData) => busData.routeInfo.routeNumber);
+
+  console.log(
+    `${terminalName} 종점의 노선 목록 로드 완료: ${routesFromTerminal.length}개 노선`
+  );
 
   // 캐시에 저장
   dataCache.routesByTerminal[terminalName] = routesFromTerminal;

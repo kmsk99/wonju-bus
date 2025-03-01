@@ -16,7 +16,9 @@ export function TerminalsList() {
     async function fetchTerminals() {
       try {
         setIsLoading(true);
+        console.log("종점 목록 불러오기 시작");
         const data = await loadTerminals();
+        console.log(`종점 목록 ${data.length}개 로드 완료`);
         setTerminals(data);
         setError(null);
       } catch (err) {
@@ -31,7 +33,7 @@ export function TerminalsList() {
   }, []);
 
   const filteredTerminals = terminals.filter((terminal) =>
-    terminal.includes(searchTerm)
+    terminal.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   if (isLoading) {

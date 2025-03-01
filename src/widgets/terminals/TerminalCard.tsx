@@ -3,13 +3,13 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
-import { loadRoutesByTerminal } from "@/entities/bus/api/loadBusData";
+import { getRouteCountForTerminal, loadRoutesByTerminal } from "@/entities/bus/api/loadBusData";
 
-interface TerminalCardProps {
+interface StopCardProps {
   name: string;
 }
 
-export function TerminalCard({ name }: TerminalCardProps) {
+export function TerminalCard({ name }: StopCardProps) {
   const [routeCount, setRouteCount] = useState<number | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -17,6 +17,16 @@ export function TerminalCard({ name }: TerminalCardProps) {
     async function fetchRouteCount() {
       try {
         setIsLoading(true);
+
+        // 캐시된 종점별 노선 수 확인
+        const cachedCount = getRouteCountForTerminal(name);
+        if (cachedCount > 0) {
+          setRouteCount(cachedCount);
+          setIsLoading(false);
+          return;
+        }
+
+        // 캐시된 값이 없으면 API 호출
         const routes = await loadRoutesByTerminal(name);
         setRouteCount(routes.length);
       } catch (error) {
@@ -44,7 +54,7 @@ export function TerminalCard({ name }: TerminalCardProps) {
           </p>
         </div>
         <Link
-          href={`/terminals/${encodeURIComponent(name)}`}
+          href={`/stops/${encodeURIComponent(name)}`}
           className="btn btn-primary text-sm py-1 px-3"
         >
           보기

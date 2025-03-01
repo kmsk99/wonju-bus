@@ -1,38 +1,53 @@
-import { Suspense } from "react";
+"use client";
+
+import Link from "next/link";
 
 import { Clock } from "@/shared/ui/Clock";
-import { TerminalsList } from "@/widgets/terminals/TerminalsList";
 
 export default function Home() {
   return (
-    <div className="space-y-6 pb-16">
-      <section className="py-4">
-        <div className="text-center space-y-3">
-          <h1 className="text-2xl font-bold">원주시 버스 종점 출발 시간</h1>
-          <p className="text-sm text-gray-600">
-            원주시 버스의 종점 출발 시간을 확인하고 다음 출발까지 남은 시간을 알
-            수 있습니다.
-          </p>
-          <div className="py-2">
-            <Clock />
+    <main className="flex min-h-screen flex-col items-center justify-center p-4">
+      <div className="z-10 w-full max-w-5xl items-center justify-center font-mono text-sm lg:flex">
+        <div className="w-full text-center">
+          <h1 className="text-4xl font-bold mb-4">원주 버스 시간표</h1>
+          <Clock />
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-10">
+            <Link
+              href="/stops"
+              className="group rounded-lg border border-transparent px-5 py-8 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
+            >
+              <h2 className="mb-3 text-2xl font-semibold">
+                종점별 조회
+                <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none ml-1">
+                  →
+                </span>
+              </h2>
+              <p className="text-left">
+                출발지 종점별로 버스 노선을 조회합니다.
+              </p>
+            </Link>
+
+            <Link
+              href="/buses"
+              className="group rounded-lg border border-transparent px-5 py-8 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
+            >
+              <h2 className="mb-3 text-2xl font-semibold">
+                노선별 조회
+                <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none ml-1">
+                  →
+                </span>
+              </h2>
+              <p className="text-left">버스 노선별로 시간표를 조회합니다.</p>
+            </Link>
           </div>
+
+          <footer className="mt-16 text-center text-sm text-gray-500">
+            <p>© 2025 원주 버스 시간표 서비스</p>
+            <p className="mt-2">모든 버스 시간표 정보는 2025년 기준입니다.</p>
+          </footer>
         </div>
-      </section>
-
-      <section className="py-2">
-        <h2 className="text-xl font-semibold mb-3 flex items-center">
-          <span className="w-2 h-6 bg-primary rounded mr-2"></span>
-          종점 목록
-        </h2>
-
-        <Suspense
-          fallback={
-            <div className="p-8 text-center">종점 목록을 불러오는 중...</div>
-          }
-        >
-          <TerminalsList />
-        </Suspense>
-      </section>
-    </div>
+      </div>
+    </main>
   );
 }
