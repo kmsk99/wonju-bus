@@ -171,14 +171,23 @@ export default function StopDetailPage() {
           );
         });
 
-        // 아직 출발하지 않은 시간들
+        // 아직 출발하지 않은 시간들 (오늘)
         const remainingTimes = routeTimes.filter(
-          (time) => time.nextDepartureMinutes >= 0
+          (time) => time.nextDepartureMinutes >= 0 && !time.isNextDay
         );
 
-        // 가장 가까운 출발
-        const nextDeparture =
-          remainingTimes.length > 0 ? remainingTimes[0] : routeTimes[0]; // 모두 지났으면 첫 번째 출발 표시
+        // 다음날 운행하는 시간들
+        const nextDayTimes = routeTimes.filter((time) => time.isNextDay);
+
+        // 가장 가까운 출발 (우선순위: 오늘 남은 출발 > 다음날 출발 > 첫 운행)
+        let nextDeparture;
+        if (remainingTimes.length > 0) {
+          nextDeparture = remainingTimes[0]; // 오늘 남은 출발
+        } else if (nextDayTimes.length > 0) {
+          nextDeparture = nextDayTimes[0]; // 다음날 첫 출발
+        } else {
+          nextDeparture = routeTimes[0]; // 모든 출발이 지났으면 첫 번째 출발
+        }
 
         // 오늘 운행 여부 확인
         const operatesToday = await isRouteOperatingToday(routeNumber);

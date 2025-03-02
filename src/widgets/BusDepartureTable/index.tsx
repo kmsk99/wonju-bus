@@ -156,10 +156,15 @@ export function BusDepartureTable({
 
             <div className="mt-1">
               <span className="text-sm font-medium">대기 시간:</span>{" "}
-              {bus.isNextDay ? (
-                <span className="text-gray-500">운행 종료</span>
-              ) : bus.nextDepartureMinutes !== undefined ? (
-                <WaitingTime minutes={bus.nextDepartureMinutes} />
+              {bus.nextDepartureMinutes !== undefined ? (
+                <span>
+                  <WaitingTime minutes={bus.nextDepartureMinutes} />
+                  {bus.isNextDay && (
+                    <span className="ml-1 text-xs text-blue-600 font-medium">
+                      (내일)
+                    </span>
+                  )}
+                </span>
               ) : (
                 <span className="text-gray-500">-</span>
               )}
