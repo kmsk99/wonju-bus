@@ -1,0 +1,14 @@
+# Node dependencies
+node_modules/
+.pnpm-store/
+
+# Env and local overrides
+.env
+.env.*
+
+# IDE
+.vscode/
+.idea/
+
+# macOS
+.DS_Store

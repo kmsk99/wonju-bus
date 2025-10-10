@@ -1,5 +1,5 @@
 {
-  "name": "wonju-bus-crawl",
+  "name": "@wonju-bus/crawl",
   "version": "1.0.0",
   "description": "원주시 버스 정보 크롤링 프로젝트",
   "main": "index.js",
@@ -24,7 +24,6 @@
   ],
   "author": "",
   "license": "ISC",
-  "packageManager": "pnpm@10.5.2",
   "devDependencies": {
     "@playwright/test": "^1.50.1",
     "@types/node": "^20.11.21",

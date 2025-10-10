@@ -1,5 +1,5 @@
 {
-  "name": "wonju-bus-site",
+  "name": "@wonju-bus/site",
   "version": "0.1.0",
   "private": true,
   "scripts": {
