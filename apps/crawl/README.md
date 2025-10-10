@@ -93,7 +93,17 @@ pnpm exec playwright install chromium
 
 ## 사용 방법
 
+### 루트에서 전체 데이터 동기화
+
+모노레포 루트에서 한 번의 명령으로 크롤링과 사이트 데이터 동기화를 진행합니다.
+
+```bash
+pnpm crawl
+```
+
 ### 모든 버스 노선 정보 크롤링
+
+패키지 디렉터리(`apps/crawl`)에서 독립적으로 실행할 수도 있습니다.
 
 ```bash
 pnpm start

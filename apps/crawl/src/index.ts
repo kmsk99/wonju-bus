@@ -7,7 +7,22 @@ async function main() {
 
   try {
     // 모든 버스 정보 수집
-    await crawler.crawlAllBusInfo();
+    const summary = await crawler.crawlAllBusInfo();
+
+    console.log(
+      `총 ${summary.totalRoutes}개 노선 중 ${summary.successfulRoutes}개 데이터를 저장했습니다.`
+    );
+    if (summary.failedRoutes.length > 0) {
+      console.warn(
+        `수집에 실패한 노선: ${summary.failedRoutes.join(", ")}`
+      );
+      process.exitCode = 1;
+    }
+
+    if (summary.outputDirs.length > 0) {
+      console.log("데이터 저장 위치:");
+      summary.outputDirs.forEach((dir) => console.log(` - ${dir}`));
+    }
 
     // 원하는 경우 특정 버스 노선만 수집할 수도 있습니다
     // const busInfo = await crawler.getBusInfo('2');

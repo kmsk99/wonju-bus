@@ -25,7 +25,7 @@
       "departureName": "장양리시내버스공영정류장",
       "arrivalName": "귀래,운남,용암",
       "category": "공통",
-      "note": "용암, 외촌발)귀래3리, 서곡"
+      "note": "용암, 용암발)귀래3리, 서곡 경유"
     },
     {
       "operationNumber": "3",
@@ -34,7 +34,7 @@
       "departureName": "장양리시내버스공영정류장",
       "arrivalName": "귀래,운남,용암",
       "category": "공통",
-      "note": "운남, (외촌발)운남1리경유"
+      "note": "운남, 운남발)귀래3리, 귀래1리 경유"
     },
     {
       "operationNumber": "4",
@@ -61,7 +61,7 @@
       "departureName": "장양리시내버스공영정류장",
       "arrivalName": "귀래,운남,용암",
       "category": "공통",
-      "note": "귀래3리경유, (외촌발)원주역"
+      "note": "귀래3리 경유, 외촌발)원주역 경유"
     },
     {
       "operationNumber": "7",
@@ -88,7 +88,7 @@
       "departureName": "장양리시내버스공영정류장",
       "arrivalName": "귀래,운남,용암",
       "category": "공통",
-      "note": "외촌발)원주역"
+      "note": "외촌발)원주역 경유"
     },
     {
       "operationNumber": "10",
@@ -97,7 +97,7 @@
       "departureName": "장양리시내버스공영정류장",
       "arrivalName": "귀래,운남,용암",
       "category": "공통",
-      "note": "귀래3리경유"
+      "note": "귀래3리 경유"
     },
     {
       "operationNumber": "11",
@@ -124,7 +124,7 @@
       "departureName": "장양리시내버스공영정류장",
       "arrivalName": "귀래,운남,용암",
       "category": "공통",
-      "note": "외촌발)원주역"
+      "note": "외촌발)원주역 경유"
     },
     {
       "operationNumber": "14",
@@ -133,7 +133,7 @@
       "departureName": "장양리시내버스공영정류장",
       "arrivalName": "귀래,운남,용암",
       "category": "공통",
-      "note": "귀래3리경유"
+      "note": "귀래3리 경유"
     },
     {
       "operationNumber": "15",

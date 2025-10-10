@@ -14,7 +14,8 @@
     "test:routes": "ts-node src/testBusRouteList.ts",
     "test:basic-info": "ts-node src/testBasicInfoExtract.ts",
     "test:detail": "ts-node src/testBusDetailInfo.ts",
-    "test:multi": "ts-node src/testMultipleRoutes.ts"
+    "test:multi": "ts-node src/testMultipleRoutes.ts",
+    "sync-site-data": "ts-node src/syncSiteData.ts"
   },
   "keywords": [
     "wonju",

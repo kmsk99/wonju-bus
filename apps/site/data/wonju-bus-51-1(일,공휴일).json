@@ -3,7 +3,7 @@
     "routeNumber": "51-1(일,공휴일)",
     "origin": "관설동종점",
     "destination": "문막읍",
-    "firstBusTime": "06:40",
+    "firstBusTime": "06:30",
     "lastBusTime": "21:20",
     "operationCount": "7.5회",
     "interval": "1일 7.5회"
@@ -11,8 +11,8 @@
   "operationInfo": [
     {
       "operationNumber": "1",
-      "departureTime": "6:40",
-      "arrivalTime": "8:05",
+      "departureTime": "6:30",
+      "arrivalTime": "7:45",
       "departureName": "관설동종점",
       "arrivalName": "문막읍",
       "category": "공통",
@@ -29,8 +29,8 @@
     },
     {
       "operationNumber": "3",
-      "departureTime": "10:55",
-      "arrivalTime": "12:15",
+      "departureTime": "11:15",
+      "arrivalTime": "12:35",
       "departureName": "관설동종점",
       "arrivalName": "문막읍",
       "category": "공통",
@@ -38,8 +38,8 @@
     },
     {
       "operationNumber": "4",
-      "departureTime": "12:55",
-      "arrivalTime": "14:15",
+      "departureTime": "13:15",
+      "arrivalTime": "14:35",
       "departureName": "관설동종점",
       "arrivalName": "문막읍",
       "category": "공통",
@@ -47,8 +47,8 @@
     },
     {
       "operationNumber": "5",
-      "departureTime": "14:55",
-      "arrivalTime": "16:15",
+      "departureTime": "15:25",
+      "arrivalTime": "16:50",
       "departureName": "관설동종점",
       "arrivalName": "문막읍",
       "category": "공통",
@@ -56,8 +56,8 @@
     },
     {
       "operationNumber": "6",
-      "departureTime": "17:05",
-      "arrivalTime": "18:25",
+      "departureTime": "17:50",
+      "arrivalTime": "19:20",
       "departureName": "관설동종점",
       "arrivalName": "문막읍",
       "category": "공통",
@@ -65,8 +65,8 @@
     },
     {
       "operationNumber": "7",
-      "departureTime": "19:15",
-      "arrivalTime": "20:35",
+      "departureTime": "18:55",
+      "arrivalTime": "20:20",
       "departureName": "관설동종점",
       "arrivalName": "문막읍",
       "category": "공통",

@@ -6,6 +6,7 @@
     "build": "pnpm -r build",
     "dev": "pnpm --filter @wonju-bus/site dev",
     "lint": "pnpm -r --if-present lint",
+    "crawl": "pnpm --filter @wonju-bus/crawl run sync-site-data",
     "start:crawl": "pnpm --filter @wonju-bus/crawl start",
     "start:site": "pnpm --filter @wonju-bus/site start"
   }
