@@ -1,0 +1,49 @@
+{
+  "routeInfo": {
+    "routeNumber": "공영 20",
+    "origin": "부론면 행정복지센터",
+    "destination": "사기막",
+    "firstBusTime": "07:50",
+    "lastBusTime": "17:25",
+    "operationCount": "3회",
+    "interval": "1일 3회"
+  },
+  "operationInfo": [
+    {
+      "operationNumber": "1",
+      "departureTime": "-",
+      "arrivalTime": "6:55",
+      "departureName": "부론면 행정복지센터",
+      "arrivalName": "사기막",
+      "category": "공통",
+      "note": "(사기막 발)작실, 정산 경유"
+    },
+    {
+      "operationNumber": "2",
+      "departureTime": "7:50",
+      "arrivalTime": "8:20",
+      "departureName": "부론면 행정복지센터",
+      "arrivalName": "사기막",
+      "category": "공통",
+      "note": "(사기막 발)작실, 정산 경유"
+    },
+    {
+      "operationNumber": "3",
+      "departureTime": "15:20",
+      "arrivalTime": "16:05",
+      "departureName": "부론면 행정복지센터",
+      "arrivalName": "사기막",
+      "category": "공통",
+      "note": "(부론발)정산, 작실 경유"
+    },
+    {
+      "operationNumber": "4",
+      "departureTime": "17:25",
+      "arrivalTime": "-",
+      "departureName": "부론면 행정복지센터",
+      "arrivalName": "사기막",
+      "category": "공통",
+      "note": "(부론 발)정산, 작실 경유,  하부론 운행종료"
+    }
+  ]
+}

@@ -1,0 +1,58 @@
+{
+  "routeInfo": {
+    "routeNumber": "23",
+    "origin": "장양리시내버스공영정류장",
+    "destination": "성남종점",
+    "firstBusTime": "06:10",
+    "lastBusTime": "17:25",
+    "operationCount": "5회",
+    "interval": "1일 5회"
+  },
+  "operationInfo": [
+    {
+      "operationNumber": "1",
+      "departureTime": "6:10",
+      "arrivalTime": "7:20",
+      "departureName": "장양리시내버스공영정류장",
+      "arrivalName": "성남종점",
+      "category": "공통",
+      "note": ""
+    },
+    {
+      "operationNumber": "2",
+      "departureTime": "8:20",
+      "arrivalTime": "9:45",
+      "departureName": "장양리시내버스공영정류장",
+      "arrivalName": "성남종점",
+      "category": "공통",
+      "note": ""
+    },
+    {
+      "operationNumber": "3",
+      "departureTime": "12:10",
+      "arrivalTime": "13:40",
+      "departureName": "장양리시내버스공영정류장",
+      "arrivalName": "성남종점",
+      "category": "공통",
+      "note": ""
+    },
+    {
+      "operationNumber": "4",
+      "departureTime": "14:25",
+      "arrivalTime": "15:45",
+      "departureName": "장양리시내버스공영정류장",
+      "arrivalName": "성남종점",
+      "category": "공통",
+      "note": ""
+    },
+    {
+      "operationNumber": "5",
+      "departureTime": "17:25",
+      "arrivalTime": "18:45",
+      "departureName": "장양리시내버스공영정류장",
+      "arrivalName": "성남종점",
+      "category": "공통",
+      "note": ""
+    }
+  ]
+}

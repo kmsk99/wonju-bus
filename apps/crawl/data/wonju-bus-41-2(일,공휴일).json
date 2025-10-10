@@ -1,0 +1,49 @@
+{
+  "routeInfo": {
+    "routeNumber": "41-2(일,공휴일)",
+    "origin": "관설동종점",
+    "destination": "구룡사",
+    "firstBusTime": "08:30",
+    "lastBusTime": "17:25",
+    "operationCount": "4회",
+    "interval": "1일 4회"
+  },
+  "operationInfo": [
+    {
+      "operationNumber": "1",
+      "departureTime": "8:30",
+      "arrivalTime": "9:45",
+      "departureName": "관설동종점",
+      "arrivalName": "구룡사",
+      "category": "공통",
+      "note": "※토요일 운행안함※"
+    },
+    {
+      "operationNumber": "2",
+      "departureTime": "11:30",
+      "arrivalTime": "12:45",
+      "departureName": "관설동종점",
+      "arrivalName": "구룡사",
+      "category": "공통",
+      "note": "※토요일 운행안함※"
+    },
+    {
+      "operationNumber": "3",
+      "departureTime": "14:25",
+      "arrivalTime": "15:40",
+      "departureName": "관설동종점",
+      "arrivalName": "구룡사",
+      "category": "공통",
+      "note": "※토요일 운행안함※"
+    },
+    {
+      "operationNumber": "4",
+      "departureTime": "17:25",
+      "arrivalTime": "18:40",
+      "departureName": "관설동종점",
+      "arrivalName": "구룡사",
+      "category": "공통",
+      "note": "※토요일 운행안함※"
+    }
+  ]
+}
