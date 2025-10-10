@@ -1,9 +1,9 @@
 "use client";
 
-import Link from "next/link";
-import { useEffect, useRef, useState } from "react";
+import Link from 'next/link';
+import { useEffect, useRef, useState } from 'react';
 
-import { Clock } from "@/shared/ui/Clock";
+import { Clock } from '@/shared/ui/Clock';
 
 export default function Home() {
   const [isVisible, setIsVisible] = useState(false);
@@ -222,7 +222,7 @@ export default function Home() {
             </h3>
             <p className="text-blue-700">
               모든 버스 시간표 정보는{" "}
-              <span className="font-bold">2025년 3월 1일</span> 기준입니다.
+              <span className="font-bold">2025년 10월 10일</span> 기준입니다.
             </p>
           </div>
           <div className="bg-white shadow-sm rounded-lg px-3 py-2.5 flex items-center hover:shadow-md transition-all duration-300 hover:bg-blue-50">
