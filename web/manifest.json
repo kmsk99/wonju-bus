@@ -1,11 +1,11 @@
 {
-    "name": "wonju_bus_flutter",
-    "short_name": "wonju_bus_flutter",
+    "name": "원주 버스 종점",
+    "short_name": "원주 버스 종점",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
     "theme_color": "#0175C2",
-    "description": "A new Flutter project.",
+    "description": "원주시 버스 종점 출발·노선 정보를 제공하는 Flutter 앱입니다.",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [

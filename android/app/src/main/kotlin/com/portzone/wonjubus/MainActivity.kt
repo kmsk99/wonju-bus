@@ -1,4 +1,4 @@
-package com.example.wonju_bus_flutter
+package com.portzone.wonjubus
 
 import io.flutter.embedding.android.FlutterActivity
 

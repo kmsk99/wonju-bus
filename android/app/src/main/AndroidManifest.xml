@@ -1,6 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
     <application
-        android:label="wonju_bus_flutter"
+        android:label="원주 버스 종점"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

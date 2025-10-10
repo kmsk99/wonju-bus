@@ -89,13 +89,13 @@ BEGIN
     BEGIN
         BLOCK "040904e4"
         BEGIN
-            VALUE "CompanyName", "com.example" "\0"
-            VALUE "FileDescription", "wonju_bus_flutter" "\0"
+            VALUE "CompanyName", "com.portzone" "\0"
+            VALUE "FileDescription", "원주 버스 종점" "\0"
             VALUE "FileVersion", VERSION_AS_STRING "\0"
-            VALUE "InternalName", "wonju_bus_flutter" "\0"
-            VALUE "LegalCopyright", "Copyright (C) 2025 com.example. All rights reserved." "\0"
-            VALUE "OriginalFilename", "wonju_bus_flutter.exe" "\0"
-            VALUE "ProductName", "wonju_bus_flutter" "\0"
+            VALUE "InternalName", "wonjubus" "\0"
+            VALUE "LegalCopyright", "Copyright (C) 2025 com.portzone. All rights reserved." "\0"
+            VALUE "OriginalFilename", "wonjubus.exe" "\0"
+            VALUE "ProductName", "원주 버스 종점" "\0"
             VALUE "ProductVersion", VERSION_AS_STRING "\0"
         END
     END
