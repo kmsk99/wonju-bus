@@ -1,0 +1,175 @@
+{
+  "routeInfo": {
+    "routeNumber": "3(방학,휴일)",
+    "origin": "장양리시내버스공영정류장",
+    "destination": "장양리시내버스공영정류장",
+    "firstBusTime": "06:20",
+    "lastBusTime": "21:00",
+    "operationCount": "18회",
+    "interval": "평균 50분"
+  },
+  "operationInfo": [
+    {
+      "operationNumber": "1",
+      "departureTime": "6:20",
+      "arrivalTime": "순환",
+      "departureName": "장양리시내버스공영정류장",
+      "arrivalName": "장양리시내버스공영정류장",
+      "category": "공통",
+      "note": ""
+    },
+    {
+      "operationNumber": "2",
+      "departureTime": "7:30",
+      "arrivalTime": "순환",
+      "departureName": "장양리시내버스공영정류장",
+      "arrivalName": "장양리시내버스공영정류장",
+      "category": "공통",
+      "note": ""
+    },
+    {
+      "operationNumber": "3",
+      "departureTime": "8:10",
+      "arrivalTime": "순환",
+      "departureName": "장양리시내버스공영정류장",
+      "arrivalName": "장양리시내버스공영정류장",
+      "category": "공통",
+      "note": ""
+    },
+    {
+      "operationNumber": "4",
+      "departureTime": "8:50",
+      "arrivalTime": "순환",
+      "departureName": "장양리시내버스공영정류장",
+      "arrivalName": "장양리시내버스공영정류장",
+      "category": "공통",
+      "note": ""
+    },
+    {
+      "operationNumber": "5",
+      "departureTime": "10:05",
+      "arrivalTime": "순환",
+      "departureName": "장양리시내버스공영정류장",
+      "arrivalName": "장양리시내버스공영정류장",
+      "category": "공통",
+      "note": ""
+    },
+    {
+      "operationNumber": "6",
+      "departureTime": "10:45",
+      "arrivalTime": "순환",
+      "departureName": "장양리시내버스공영정류장",
+      "arrivalName": "장양리시내버스공영정류장",
+      "category": "공통",
+      "note": ""
+    },
+    {
+      "operationNumber": "7",
+      "departureTime": "11:25",
+      "arrivalTime": "순환",
+      "departureName": "장양리시내버스공영정류장",
+      "arrivalName": "장양리시내버스공영정류장",
+      "category": "공통",
+      "note": ""
+    },
+    {
+      "operationNumber": "8",
+      "departureTime": "12:40",
+      "arrivalTime": "순환",
+      "departureName": "장양리시내버스공영정류장",
+      "arrivalName": "장양리시내버스공영정류장",
+      "category": "공통",
+      "note": ""
+    },
+    {
+      "operationNumber": "9",
+      "departureTime": "13:20",
+      "arrivalTime": "순환",
+      "departureName": "장양리시내버스공영정류장",
+      "arrivalName": "장양리시내버스공영정류장",
+      "category": "공통",
+      "note": ""
+    },
+    {
+      "operationNumber": "10",
+      "departureTime": "14:00",
+      "arrivalTime": "순환",
+      "departureName": "장양리시내버스공영정류장",
+      "arrivalName": "장양리시내버스공영정류장",
+      "category": "공통",
+      "note": ""
+    },
+    {
+      "operationNumber": "11",
+      "departureTime": "15:15",
+      "arrivalTime": "순환",
+      "departureName": "장양리시내버스공영정류장",
+      "arrivalName": "장양리시내버스공영정류장",
+      "category": "공통",
+      "note": ""
+    },
+    {
+      "operationNumber": "12",
+      "departureTime": "15:55",
+      "arrivalTime": "순환",
+      "departureName": "장양리시내버스공영정류장",
+      "arrivalName": "장양리시내버스공영정류장",
+      "category": "공통",
+      "note": ""
+    },
+    {
+      "operationNumber": "13",
+      "departureTime": "16:35",
+      "arrivalTime": "순환",
+      "departureName": "장양리시내버스공영정류장",
+      "arrivalName": "장양리시내버스공영정류장",
+      "category": "공통",
+      "note": ""
+    },
+    {
+      "operationNumber": "14",
+      "departureTime": "17:50",
+      "arrivalTime": "순환",
+      "departureName": "장양리시내버스공영정류장",
+      "arrivalName": "장양리시내버스공영정류장",
+      "category": "공통",
+      "note": ""
+    },
+    {
+      "operationNumber": "15",
+      "departureTime": "18:30",
+      "arrivalTime": "순환",
+      "departureName": "장양리시내버스공영정류장",
+      "arrivalName": "장양리시내버스공영정류장",
+      "category": "공통",
+      "note": ""
+    },
+    {
+      "operationNumber": "16",
+      "departureTime": "19:10",
+      "arrivalTime": "순환",
+      "departureName": "장양리시내버스공영정류장",
+      "arrivalName": "장양리시내버스공영정류장",
+      "category": "공통",
+      "note": ""
+    },
+    {
+      "operationNumber": "17",
+      "departureTime": "20:20",
+      "arrivalTime": "순환",
+      "departureName": "장양리시내버스공영정류장",
+      "arrivalName": "장양리시내버스공영정류장",
+      "category": "공통",
+      "note": ""
+    },
+    {
+      "operationNumber": "18",
+      "departureTime": "21:00",
+      "arrivalTime": "순환",
+      "departureName": "장양리시내버스공영정류장",
+      "arrivalName": "장양리시내버스공영정류장",
+      "category": "공통",
+      "note": ""
+    }
+  ]
+}

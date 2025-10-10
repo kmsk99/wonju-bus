@@ -1,0 +1,220 @@
+{
+  "routeInfo": {
+    "routeNumber": "34(방학,휴일)",
+    "origin": "장양리시내버스공영정류장",
+    "destination": "연세대",
+    "firstBusTime": "06:30",
+    "lastBusTime": "21:10",
+    "operationCount": "21회",
+    "interval": "평균 42분"
+  },
+  "operationInfo": [
+    {
+      "operationNumber": "1",
+      "departureTime": "-",
+      "arrivalTime": "6:33",
+      "departureName": "장양리시내버스공영정류장",
+      "arrivalName": "연세대",
+      "category": "공통",
+      "note": ""
+    },
+    {
+      "operationNumber": "2",
+      "departureTime": "-",
+      "arrivalTime": "6:50",
+      "departureName": "장양리시내버스공영정류장",
+      "arrivalName": "연세대",
+      "category": "공통",
+      "note": ""
+    },
+    {
+      "operationNumber": "3",
+      "departureTime": "6:30",
+      "arrivalTime": "7:45",
+      "departureName": "장양리시내버스공영정류장",
+      "arrivalName": "연세대",
+      "category": "공통",
+      "note": "연세대발)원주역"
+    },
+    {
+      "operationNumber": "4",
+      "departureTime": "7:17",
+      "arrivalTime": "8:43",
+      "departureName": "장양리시내버스공영정류장",
+      "arrivalName": "연세대",
+      "category": "공통",
+      "note": ""
+    },
+    {
+      "operationNumber": "5",
+      "departureTime": "8:10",
+      "arrivalTime": "9:38",
+      "departureName": "장양리시내버스공영정류장",
+      "arrivalName": "연세대",
+      "category": "공통",
+      "note": ""
+    },
+    {
+      "operationNumber": "6",
+      "departureTime": "9:05",
+      "arrivalTime": "10:28",
+      "departureName": "장양리시내버스공영정류장",
+      "arrivalName": "연세대",
+      "category": "공통",
+      "note": ""
+    },
+    {
+      "operationNumber": "7",
+      "departureTime": "10:05",
+      "arrivalTime": "11:28",
+      "departureName": "장양리시내버스공영정류장",
+      "arrivalName": "연세대",
+      "category": "공통",
+      "note": ""
+    },
+    {
+      "operationNumber": "8",
+      "departureTime": "10:30",
+      "arrivalTime": "12:03",
+      "departureName": "장양리시내버스공영정류장",
+      "arrivalName": "연세대",
+      "category": "공통",
+      "note": ""
+    },
+    {
+      "operationNumber": "9",
+      "departureTime": "11:02",
+      "arrivalTime": "12:28",
+      "departureName": "장양리시내버스공영정류장",
+      "arrivalName": "연세대",
+      "category": "공통",
+      "note": ""
+    },
+    {
+      "operationNumber": "10",
+      "departureTime": "11:52",
+      "arrivalTime": "13:18",
+      "departureName": "장양리시내버스공영정류장",
+      "arrivalName": "연세대",
+      "category": "공통",
+      "note": ""
+    },
+    {
+      "operationNumber": "11",
+      "departureTime": "12:20",
+      "arrivalTime": "13:43",
+      "departureName": "장양리시내버스공영정류장",
+      "arrivalName": "연세대",
+      "category": "공통",
+      "note": ""
+    },
+    {
+      "operationNumber": "12",
+      "departureTime": "13:05",
+      "arrivalTime": "14:23",
+      "departureName": "장양리시내버스공영정류장",
+      "arrivalName": "연세대",
+      "category": "공통",
+      "note": ""
+    },
+    {
+      "operationNumber": "13",
+      "departureTime": "13:40",
+      "arrivalTime": "15:05",
+      "departureName": "장양리시내버스공영정류장",
+      "arrivalName": "연세대",
+      "category": "공통",
+      "note": ""
+    },
+    {
+      "operationNumber": "14",
+      "departureTime": "14:30",
+      "arrivalTime": "16:00",
+      "departureName": "장양리시내버스공영정류장",
+      "arrivalName": "연세대",
+      "category": "공통",
+      "note": ""
+    },
+    {
+      "operationNumber": "15",
+      "departureTime": "15:20",
+      "arrivalTime": "16:43",
+      "departureName": "장양리시내버스공영정류장",
+      "arrivalName": "연세대",
+      "category": "공통",
+      "note": ""
+    },
+    {
+      "operationNumber": "16",
+      "departureTime": "15:40",
+      "arrivalTime": "16:55",
+      "departureName": "장양리시내버스공영정류장",
+      "arrivalName": "연세대",
+      "category": "공통",
+      "note": ""
+    },
+    {
+      "operationNumber": "17",
+      "departureTime": "16:25",
+      "arrivalTime": "17:53",
+      "departureName": "장양리시내버스공영정류장",
+      "arrivalName": "연세대",
+      "category": "공통",
+      "note": ""
+    },
+    {
+      "operationNumber": "18",
+      "departureTime": "17:35",
+      "arrivalTime": "18:53",
+      "departureName": "장양리시내버스공영정류장",
+      "arrivalName": "연세대",
+      "category": "공통",
+      "note": ""
+    },
+    {
+      "operationNumber": "19",
+      "departureTime": "18:00",
+      "arrivalTime": "19:18",
+      "departureName": "장양리시내버스공영정류장",
+      "arrivalName": "연세대",
+      "category": "공통",
+      "note": ""
+    },
+    {
+      "operationNumber": "20",
+      "departureTime": "18:22",
+      "arrivalTime": "19:50",
+      "departureName": "장양리시내버스공영정류장",
+      "arrivalName": "연세대",
+      "category": "공통",
+      "note": ""
+    },
+    {
+      "operationNumber": "21",
+      "departureTime": "19:35",
+      "arrivalTime": "21:03",
+      "departureName": "장양리시내버스공영정류장",
+      "arrivalName": "연세대",
+      "category": "공통",
+      "note": ""
+    },
+    {
+      "operationNumber": "22",
+      "departureTime": "21:00",
+      "arrivalTime": "-",
+      "departureName": "장양리시내버스공영정류장",
+      "arrivalName": "연세대",
+      "category": "공통",
+      "note": ""
+    },
+    {
+      "operationNumber": "23",
+      "departureTime": "21:10",
+      "arrivalTime": "-",
+      "departureName": "장양리시내버스공영정류장",
+      "arrivalName": "연세대",
+      "category": "공통",
+      "note": ""
+    }
+  ]
+}

@@ -1,0 +1,193 @@
+{
+  "routeInfo": {
+    "routeNumber": "52-1(일,공휴일)",
+    "origin": "관설동종점",
+    "destination": "기업도시",
+    "firstBusTime": "06:20",
+    "lastBusTime": "20:45",
+    "operationCount": "20회",
+    "interval": "평균 45분"
+  },
+  "operationInfo": [
+    {
+      "operationNumber": "1",
+      "departureTime": "6:20",
+      "arrivalTime": "7:30",
+      "departureName": "관설동종점",
+      "arrivalName": "기업도시",
+      "category": "공통",
+      "note": ""
+    },
+    {
+      "operationNumber": "2",
+      "departureTime": "7:05",
+      "arrivalTime": "8:20",
+      "departureName": "관설동종점",
+      "arrivalName": "기업도시",
+      "category": "공통",
+      "note": ""
+    },
+    {
+      "operationNumber": "3",
+      "departureTime": "7:55",
+      "arrivalTime": "9:10",
+      "departureName": "관설동종점",
+      "arrivalName": "기업도시",
+      "category": "공통",
+      "note": ""
+    },
+    {
+      "operationNumber": "4",
+      "departureTime": "8:35",
+      "arrivalTime": "9:50",
+      "departureName": "관설동종점",
+      "arrivalName": "기업도시",
+      "category": "공통",
+      "note": ""
+    },
+    {
+      "operationNumber": "5",
+      "departureTime": "9:15",
+      "arrivalTime": "10:30",
+      "departureName": "관설동종점",
+      "arrivalName": "기업도시",
+      "category": "공통",
+      "note": ""
+    },
+    {
+      "operationNumber": "6",
+      "departureTime": "10:05",
+      "arrivalTime": "11:20",
+      "departureName": "관설동종점",
+      "arrivalName": "기업도시",
+      "category": "공통",
+      "note": ""
+    },
+    {
+      "operationNumber": "7",
+      "departureTime": "10:50",
+      "arrivalTime": "12:05",
+      "departureName": "관설동종점",
+      "arrivalName": "기업도시",
+      "category": "공통",
+      "note": ""
+    },
+    {
+      "operationNumber": "8",
+      "departureTime": "11:35",
+      "arrivalTime": "12:50",
+      "departureName": "관설동종점",
+      "arrivalName": "기업도시",
+      "category": "공통",
+      "note": ""
+    },
+    {
+      "operationNumber": "9",
+      "departureTime": "12:15",
+      "arrivalTime": "13:30",
+      "departureName": "관설동종점",
+      "arrivalName": "기업도시",
+      "category": "공통",
+      "note": ""
+    },
+    {
+      "operationNumber": "10",
+      "departureTime": "13:05",
+      "arrivalTime": "14:20",
+      "departureName": "관설동종점",
+      "arrivalName": "기업도시",
+      "category": "공통",
+      "note": ""
+    },
+    {
+      "operationNumber": "11",
+      "departureTime": "13:50",
+      "arrivalTime": "15:05",
+      "departureName": "관설동종점",
+      "arrivalName": "기업도시",
+      "category": "공통",
+      "note": ""
+    },
+    {
+      "operationNumber": "12",
+      "departureTime": "14:35",
+      "arrivalTime": "15:50",
+      "departureName": "관설동종점",
+      "arrivalName": "기업도시",
+      "category": "공통",
+      "note": ""
+    },
+    {
+      "operationNumber": "13",
+      "departureTime": "15:15",
+      "arrivalTime": "16:30",
+      "departureName": "관설동종점",
+      "arrivalName": "기업도시",
+      "category": "공통",
+      "note": ""
+    },
+    {
+      "operationNumber": "14",
+      "departureTime": "16:05",
+      "arrivalTime": "17:20",
+      "departureName": "관설동종점",
+      "arrivalName": "기업도시",
+      "category": "공통",
+      "note": ""
+    },
+    {
+      "operationNumber": "15",
+      "departureTime": "16:50",
+      "arrivalTime": "18:05",
+      "departureName": "관설동종점",
+      "arrivalName": "기업도시",
+      "category": "공통",
+      "note": "기업도시발) 문화마을 경유"
+    },
+    {
+      "operationNumber": "16",
+      "departureTime": "17:45",
+      "arrivalTime": "19:00",
+      "departureName": "관설동종점",
+      "arrivalName": "기업도시",
+      "category": "공통",
+      "note": ""
+    },
+    {
+      "operationNumber": "17",
+      "departureTime": "18:15",
+      "arrivalTime": "19:30",
+      "departureName": "관설동종점",
+      "arrivalName": "기업도시",
+      "category": "공통",
+      "note": ""
+    },
+    {
+      "operationNumber": "18",
+      "departureTime": "19:05",
+      "arrivalTime": "20:20",
+      "departureName": "관설동종점",
+      "arrivalName": "기업도시",
+      "category": "공통",
+      "note": ""
+    },
+    {
+      "operationNumber": "19",
+      "departureTime": "19:50",
+      "arrivalTime": "21:05",
+      "departureName": "관설동종점",
+      "arrivalName": "기업도시",
+      "category": "공통",
+      "note": ""
+    },
+    {
+      "operationNumber": "20",
+      "departureTime": "20:45",
+      "arrivalTime": "22:00",
+      "departureName": "관설동종점",
+      "arrivalName": "기업도시",
+      "category": "공통",
+      "note": ""
+    }
+  ]
+}

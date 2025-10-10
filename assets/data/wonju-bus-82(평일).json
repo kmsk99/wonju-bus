@@ -1,0 +1,76 @@
+{
+  "routeInfo": {
+    "routeNumber": "82(평일)",
+    "origin": "장양리시내버스공영정류장",
+    "destination": "하초구",
+    "firstBusTime": "06:00",
+    "lastBusTime": "20:05",
+    "operationCount": "7회",
+    "interval": "1일 7회"
+  },
+  "operationInfo": [
+    {
+      "operationNumber": "1",
+      "departureTime": "6:00",
+      "arrivalTime": "6:40",
+      "departureName": "장양리시내버스공영정류장",
+      "arrivalName": "하초구",
+      "category": "공통",
+      "note": "(하초구 출발) 오리골,진광고 경유"
+    },
+    {
+      "operationNumber": "2",
+      "departureTime": "8:00",
+      "arrivalTime": "9:10",
+      "departureName": "장양리시내버스공영정류장",
+      "arrivalName": "하초구",
+      "category": "공통",
+      "note": "(장양리 출발)미래고 경유, (하초구 출발)오리골경유"
+    },
+    {
+      "operationNumber": "3",
+      "departureTime": "10:40",
+      "arrivalTime": "11:50",
+      "departureName": "장양리시내버스공영정류장",
+      "arrivalName": "하초구",
+      "category": "공통",
+      "note": "(장양리,하초구 출발) 오리골 경유"
+    },
+    {
+      "operationNumber": "4",
+      "departureTime": "13:20",
+      "arrivalTime": "14:30",
+      "departureName": "장양리시내버스공영정류장",
+      "arrivalName": "하초구",
+      "category": "공통",
+      "note": "(장양리,하초구 출발) 오리골 경유"
+    },
+    {
+      "operationNumber": "5",
+      "departureTime": "16:00",
+      "arrivalTime": "17:10",
+      "departureName": "장양리시내버스공영정류장",
+      "arrivalName": "하초구",
+      "category": "공통",
+      "note": "(장양리출발)오리골경유, (하초구출발)미래고 경유"
+    },
+    {
+      "operationNumber": "6",
+      "departureTime": "18:45",
+      "arrivalTime": "19:55",
+      "departureName": "장양리시내버스공영정류장",
+      "arrivalName": "하초구",
+      "category": "공통",
+      "note": "(장양리 출발) 오리골 경유"
+    },
+    {
+      "operationNumber": "7",
+      "departureTime": "20:05",
+      "arrivalTime": "21:00",
+      "departureName": "장양리시내버스공영정류장",
+      "arrivalName": "하초구",
+      "category": "공통",
+      "note": ""
+    }
+  ]
+}

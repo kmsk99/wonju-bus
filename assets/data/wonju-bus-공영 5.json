@@ -1,0 +1,40 @@
+{
+  "routeInfo": {
+    "routeNumber": "공영 5",
+    "origin": "대둔마을회관",
+    "destination": "레일파크(간현)",
+    "firstBusTime": "07:50",
+    "lastBusTime": "17:00",
+    "operationCount": "3회",
+    "interval": "1일 3회"
+  },
+  "operationInfo": [
+    {
+      "operationNumber": "1",
+      "departureTime": "07:50",
+      "arrivalTime": "09:40",
+      "departureName": "대둔마을회관",
+      "arrivalName": "레일파크(간현)",
+      "category": "공통",
+      "note": "서원주역 경유, 마을회관발) 문막공단 경유"
+    },
+    {
+      "operationNumber": "2",
+      "departureTime": "11:30",
+      "arrivalTime": "13:10",
+      "departureName": "대둔마을회관",
+      "arrivalName": "레일파크(간현)",
+      "category": "공통",
+      "note": "서원주역 경유, 마을회관발) 문막공단 경유"
+    },
+    {
+      "operationNumber": "3",
+      "departureTime": "17:00",
+      "arrivalTime": "18:15",
+      "departureName": "대둔마을회관",
+      "arrivalName": "레일파크(간현)",
+      "category": "공통",
+      "note": "서원주역 경유, 마을회관발) 문막공단 경유 (문막소방서 종료)"
+    }
+  ]
+}

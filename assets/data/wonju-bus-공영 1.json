@@ -1,0 +1,76 @@
+{
+  "routeInfo": {
+    "routeNumber": "공영 1",
+    "origin": "문막읍 행정복지센터",
+    "destination": "대둔마을화관",
+    "firstBusTime": "07:35",
+    "lastBusTime": "16:45",
+    "operationCount": "4.5회",
+    "interval": "1일 4.5회"
+  },
+  "operationInfo": [
+    {
+      "operationNumber": "1",
+      "departureTime": "07:35",
+      "arrivalTime": "07:50",
+      "departureName": "문막읍 행정복지센터",
+      "arrivalName": "대둔마을화관",
+      "category": "공통",
+      "note": "대둔마을회관발 공영5번 대체운행) 공단 경유"
+    },
+    {
+      "operationNumber": "2",
+      "departureTime": "08:00",
+      "arrivalTime": "순환",
+      "departureName": "문막읍 행정복지센터",
+      "arrivalName": "대둔마을화관",
+      "category": "공통",
+      "note": "문막읍행정복지센터발)골무네기 경유"
+    },
+    {
+      "operationNumber": "3",
+      "departureTime": "-",
+      "arrivalTime": "10:25",
+      "departureName": "문막읍 행정복지센터",
+      "arrivalName": "대둔마을화관",
+      "category": "공통",
+      "note": ""
+    },
+    {
+      "operationNumber": "4",
+      "departureTime": "11:10",
+      "arrivalTime": "11:30",
+      "departureName": "문막읍 행정복지센터",
+      "arrivalName": "대둔마을화관",
+      "category": "공통",
+      "note": "대둔마을회관발 공영5번 대체운행) 골무네기 경유"
+    },
+    {
+      "operationNumber": "5",
+      "departureTime": "12:50",
+      "arrivalTime": "순환",
+      "departureName": "문막읍 행정복지센터",
+      "arrivalName": "대둔마을화관",
+      "category": "공통",
+      "note": "대둔마을회관발) 골무네기 경유"
+    },
+    {
+      "operationNumber": "6",
+      "departureTime": "-",
+      "arrivalTime": "13:55",
+      "departureName": "문막읍 행정복지센터",
+      "arrivalName": "대둔마을화관",
+      "category": "공통",
+      "note": ""
+    },
+    {
+      "operationNumber": "7",
+      "departureTime": "16:45",
+      "arrivalTime": "17:00",
+      "departureName": "문막읍 행정복지센터",
+      "arrivalName": "대둔마을화관",
+      "category": "공통",
+      "note": "대둔마을회관발 공영5번 대체운행"
+    }
+  ]
+}

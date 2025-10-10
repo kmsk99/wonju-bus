@@ -1,0 +1,49 @@
+{
+  "routeInfo": {
+    "routeNumber": "공영 29",
+    "origin": "중앙시장",
+    "destination": "기업사거리",
+    "firstBusTime": "-",
+    "lastBusTime": "16:50",
+    "operationCount": "4회",
+    "interval": "1일 4회"
+  },
+  "operationInfo": [
+    {
+      "operationNumber": "1",
+      "departureTime": "-",
+      "arrivalTime": "06:40",
+      "departureName": "중앙시장",
+      "arrivalName": "기업사거리",
+      "category": "공통",
+      "note": "(중앙시장발)평원로 중앙시장 → 기업사거리, (기업도시발)기업사거리 → 평원로 중앙시장"
+    },
+    {
+      "operationNumber": "2",
+      "departureTime": "10:45",
+      "arrivalTime": "12:20",
+      "departureName": "중앙시장",
+      "arrivalName": "기업사거리",
+      "category": "공통",
+      "note": "(중앙시장발)평원로 중앙시장 → 기업사거리, (기업도시발)기업사거리 → 평원로 중앙시장"
+    },
+    {
+      "operationNumber": "3",
+      "departureTime": "13:10",
+      "arrivalTime": "14:05",
+      "departureName": "중앙시장",
+      "arrivalName": "기업사거리",
+      "category": "공통",
+      "note": "(중앙시장발)평원로 중앙시장 → 기업사거리, (기업도시발)기업사거리 → 평원로 중앙시장"
+    },
+    {
+      "operationNumber": "4",
+      "departureTime": "16:50",
+      "arrivalTime": "17:50",
+      "departureName": "중앙시장",
+      "arrivalName": "기업사거리",
+      "category": "공통",
+      "note": "(중앙시장발)평원로 중앙시장 → 기업사거리, (기업도시발)기업사거리 → 평원로 중앙시장"
+    }
+  ]
+}
