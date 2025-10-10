@@ -1,0 +1,58 @@
+{
+  "routeInfo": {
+    "routeNumber": "공영 15",
+    "origin": "태장2동(바다약국)",
+    "destination": "태장2동",
+    "firstBusTime": "07:35",
+    "lastBusTime": "18:10",
+    "operationCount": "4.5회",
+    "interval": "1일 4.5회"
+  },
+  "operationInfo": [
+    {
+      "operationNumber": "1",
+      "departureTime": "-",
+      "arrivalTime": "06:50",
+      "departureName": "태장2동(바다약국)",
+      "arrivalName": "태장2동",
+      "category": "공통",
+      "note": "뉴스테이아파트 출발 -> 상촌 -> 하촌 -> 바다약국"
+    },
+    {
+      "operationNumber": "2",
+      "departureTime": "07:35",
+      "arrivalTime": "순환",
+      "departureName": "태장2동(바다약국)",
+      "arrivalName": "태장2동",
+      "category": "공통",
+      "note": ""
+    },
+    {
+      "operationNumber": "3",
+      "departureTime": "10:40",
+      "arrivalTime": "순환",
+      "departureName": "태장2동(바다약국)",
+      "arrivalName": "태장2동",
+      "category": "공통",
+      "note": ""
+    },
+    {
+      "operationNumber": "4",
+      "departureTime": "15:30",
+      "arrivalTime": "순환",
+      "departureName": "태장2동(바다약국)",
+      "arrivalName": "태장2동",
+      "category": "공통",
+      "note": ""
+    },
+    {
+      "operationNumber": "5",
+      "departureTime": "18:10",
+      "arrivalTime": "순환",
+      "departureName": "태장2동(바다약국)",
+      "arrivalName": "태장2동",
+      "category": "공통",
+      "note": ""
+    }
+  ]
+}

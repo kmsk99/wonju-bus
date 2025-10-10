@@ -1,0 +1,22 @@
+{
+  "routeInfo": {
+    "routeNumber": "공영 21",
+    "origin": "부론면 행정복지센터",
+    "destination": "귀래",
+    "firstBusTime": "12:00",
+    "lastBusTime": "-",
+    "operationCount": "1회",
+    "interval": "1일 1회"
+  },
+  "operationInfo": [
+    {
+      "operationNumber": "1",
+      "departureTime": "12:00",
+      "arrivalTime": "14:00",
+      "departureName": "부론면 행정복지센터",
+      "arrivalName": "귀래",
+      "category": "공통",
+      "note": "(부론발)부론면→정산→작실→사기막→귀래면), (귀래발)귀래면→사기막→작실→부론면)"
+    }
+  ]
+}

@@ -1,0 +1,31 @@
+{
+  "routeInfo": {
+    "routeNumber": "58",
+    "origin": "관설동종점",
+    "destination": "양동",
+    "firstBusTime": "07:10",
+    "lastBusTime": "15:25",
+    "operationCount": "2회",
+    "interval": "1일 2회"
+  },
+  "operationInfo": [
+    {
+      "operationNumber": "1",
+      "departureTime": "7:10",
+      "arrivalTime": "8:55",
+      "departureName": "관설동종점",
+      "arrivalName": "양동",
+      "category": "공통",
+      "note": "서원주역, 삼산2리 경유"
+    },
+    {
+      "operationNumber": "2",
+      "departureTime": "15:25",
+      "arrivalTime": "17:15",
+      "departureName": "관설동종점",
+      "arrivalName": "양동",
+      "category": "공통",
+      "note": "서원주역, 삼산2리 경유"
+    }
+  ]
+}

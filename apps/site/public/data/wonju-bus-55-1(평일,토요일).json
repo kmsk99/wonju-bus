@@ -1,0 +1,49 @@
+{
+  "routeInfo": {
+    "routeNumber": "55-1(평일,토요일)",
+    "origin": "관설동종점",
+    "destination": "부론",
+    "firstBusTime": "06:00",
+    "lastBusTime": "18:50",
+    "operationCount": "3.5회",
+    "interval": "1일 3.5회"
+  },
+  "operationInfo": [
+    {
+      "operationNumber": "1",
+      "departureTime": "6:00",
+      "arrivalTime": "7:50",
+      "departureName": "관설동종점",
+      "arrivalName": "부론",
+      "category": "공통",
+      "note": "경동대 미경유, 구만이 경유"
+    },
+    {
+      "operationNumber": "2",
+      "departureTime": "10:00",
+      "arrivalTime": "11:50",
+      "departureName": "관설동종점",
+      "arrivalName": "부론",
+      "category": "공통",
+      "note": "경동대 경유, 구만이 경유 ※토요일, 방학 경동대 미경유"
+    },
+    {
+      "operationNumber": "3",
+      "departureTime": "14:20",
+      "arrivalTime": "16:15",
+      "departureName": "관설동종점",
+      "arrivalName": "부론",
+      "category": "공통",
+      "note": "경동대 경유, 구만이 경유 ※토요일, 방학 경동대 미경유"
+    },
+    {
+      "operationNumber": "4",
+      "departureTime": "18:50",
+      "arrivalTime": "-",
+      "departureName": "관설동종점",
+      "arrivalName": "부론",
+      "category": "공통",
+      "note": "경동대 미경유, 구만이 경유, 부론면,노림,문막2리종료"
+    }
+  ]
+}

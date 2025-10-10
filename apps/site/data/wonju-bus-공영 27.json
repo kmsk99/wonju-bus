@@ -1,0 +1,31 @@
+{
+  "routeInfo": {
+    "routeNumber": "공영 27",
+    "origin": "중앙시장",
+    "destination": "동막",
+    "firstBusTime": "06:45",
+    "lastBusTime": "18:50",
+    "operationCount": "2회",
+    "interval": "1일 2회"
+  },
+  "operationInfo": [
+    {
+      "operationNumber": "1",
+      "departureTime": "06:45",
+      "arrivalTime": "07:30",
+      "departureName": "중앙시장",
+      "arrivalName": "동막",
+      "category": "공통",
+      "note": "(동막발)대덕1리 경유"
+    },
+    {
+      "operationNumber": "2",
+      "departureTime": "18:50",
+      "arrivalTime": "19:50",
+      "departureName": "중앙시장",
+      "arrivalName": "동막",
+      "category": "공통",
+      "note": ""
+    }
+  ]
+}

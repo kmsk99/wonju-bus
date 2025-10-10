@@ -1,0 +1,67 @@
+{
+  "routeInfo": {
+    "routeNumber": "공영 7",
+    "origin": "문막읍 행정복지센터",
+    "destination": "문막읍 행정복지센터",
+    "firstBusTime": "06:37",
+    "lastBusTime": "20:00",
+    "operationCount": "6회",
+    "interval": "1일 6회"
+  },
+  "operationInfo": [
+    {
+      "operationNumber": "1",
+      "departureTime": "6:37",
+      "arrivalTime": "-",
+      "departureName": "문막읍 행정복지센터",
+      "arrivalName": "문막읍 행정복지센터",
+      "category": "공통",
+      "note": "진밭 미경유"
+    },
+    {
+      "operationNumber": "2",
+      "departureTime": "14:30",
+      "arrivalTime": "-",
+      "departureName": "문막읍 행정복지센터",
+      "arrivalName": "문막읍 행정복지센터",
+      "category": "공통",
+      "note": ""
+    },
+    {
+      "operationNumber": "3",
+      "departureTime": "15:25",
+      "arrivalTime": "-",
+      "departureName": "문막읍 행정복지센터",
+      "arrivalName": "문막읍 행정복지센터",
+      "category": "공통",
+      "note": "(문막읍 행정복지센터발)골무네기 경유, 진밭 미경유"
+    },
+    {
+      "operationNumber": "4",
+      "departureTime": "16:25",
+      "arrivalTime": "-",
+      "departureName": "문막읍 행정복지센터",
+      "arrivalName": "문막읍 행정복지센터",
+      "category": "공통",
+      "note": ""
+    },
+    {
+      "operationNumber": "5",
+      "departureTime": "18:15",
+      "arrivalTime": "-",
+      "departureName": "문막읍 행정복지센터",
+      "arrivalName": "문막읍 행정복지센터",
+      "category": "공통",
+      "note": "취병가든 경유, 진밭 미경유"
+    },
+    {
+      "operationNumber": "6",
+      "departureTime": "20:00",
+      "arrivalTime": "-",
+      "departureName": "문막읍 행정복지센터",
+      "arrivalName": "문막읍 행정복지센터",
+      "category": "공통",
+      "note": "진밭 미경유"
+    }
+  ]
+}
