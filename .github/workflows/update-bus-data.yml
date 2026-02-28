@@ -1,0 +1,71 @@
+name: 버스 데이터 자동 갱신
+
+on:
+  schedule:
+    - cron: '0 0 * * 1' # 매주 월요일 09:00 KST (00:00 UTC)
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  update-bus-data:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 저장소 체크아웃
+        uses: actions/checkout@v4
+
+      - name: pnpm 설치
+        uses: pnpm/action-setup@v4
+
+      - name: Node.js 설정
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'pnpm'
+
+      - name: 의존성 설치
+        run: pnpm install --frozen-lockfile
+
+      - name: Playwright Chromium 설치
+        run: pnpm exec playwright install --with-deps chromium
+        working-directory: apps/crawl
+
+      - name: 버스 데이터 크롤링
+        run: pnpm crawl
+
+      - name: 변경 사항 확인
+        id: check_changes
+        run: |
+          if [ -z "$(git status --porcelain)" ]; then
+            echo "has_changes=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "has_changes=true" >> "$GITHUB_OUTPUT"
+            echo "branch_name=data/update-$(date +'%Y%m%d')" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: 업데이트 브랜치 생성 및 푸시
+        if: steps.check_changes.outputs.has_changes == 'true'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          BRANCH="${{ steps.check_changes.outputs.branch_name }}"
+          git checkout -b "$BRANCH"
+          git add -A
+          git commit -m "버스 데이터 갱신 $(date +'%Y-%m-%d')"
+          git push origin "$BRANCH"
+
+      - name: PR 생성 및 자동 머지
+        if: steps.check_changes.outputs.has_changes == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          BRANCH="${{ steps.check_changes.outputs.branch_name }}"
+          gh pr create \
+            --title "버스 데이터 갱신 $(date +'%Y-%m-%d')" \
+            --body "매주 월요일 자동 크롤링으로 버스 시간표 데이터를 갱신합니다." \
+            --base main \
+            --head "$BRANCH"
+          gh pr merge "$BRANCH" --merge --delete-branch

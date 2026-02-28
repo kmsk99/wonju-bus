@@ -4,13 +4,13 @@
 원주시 버스 시간표는 공식 ITS 포털에서 데이터를 수집하고, Next.js 기반 웹사이트로 종점 출발 시간을 제공하는 모노레포입니다. 크롤러가 최신 JSON 일정을 생성하며, 프런트엔드는 이를 활용해 빠르고 모바일 친화적인 화면을 제공합니다.
 
 ## 프로젝트 구조
-- `apps/site` – Next.js 14 + Tailwind CSS 프런트엔드. `src/{app,entities,shared,widgets}` 구조를 따르며 `data/`의 시간표 JSON을 읽습니다.
+- `apps/site` – Next.js 16 + Tailwind CSS 프런트엔드. `src/{app,entities,shared,widgets}` 구조를 따르며 `data/`의 시간표 JSON을 읽습니다.
 - `apps/crawl` – TypeScript/Playwright 크롤러. http://its.wonju.go.kr 에서 전체 노선 정보를 수집해 정규화된 JSON을 `data/`에 저장합니다.
 - `apps/*/data` – 크롤링 결과가 저장되는 JSON 디렉터리로, `pnpm crawl` 실행 시 두 패키지 간에 동기화됩니다.
 
 ## 필요 조건
-- Node.js 18 이상 (Next.js 14 및 Playwright 요구)
-- pnpm 10.5.2 (`corepack enable pnpm`으로 활성화 권장)
+- Node.js 20 이상 (Next.js 16 및 Playwright 요구)
+- pnpm 10.24.0 (`corepack enable pnpm`으로 활성화 권장)
 - Playwright용 Chromium (`pnpm exec playwright install chromium`)
 
 ## 설치 방법
@@ -34,6 +34,14 @@ pnpm start:crawl        # 콘솔 로그를 확인하며 연속 크롤링
 pnpm --filter @wonju-bus/crawl selector:test   # 셀렉터 검증 대화형 도구
 ```
 크롤링으로 생성된 JSON은 코드 변경과 함께 커밋해 배포본과 데이터가 일치하도록 유지합니다.
+
+## 자동 데이터 갱신
+GitHub Actions 워크플로우(`.github/workflows/update-bus-data.yml`)가 **매주 월요일 09:00 KST**에 자동 실행됩니다.
+1. 크롤러가 최신 버스 시간표를 수집합니다.
+2. 변경 사항이 있으면 `data/update-YYYYMMDD` 브랜치를 생성합니다.
+3. PR을 만들어 자동으로 main에 머지하고 브랜치를 삭제합니다.
+
+Actions 탭의 **버스 데이터 자동 갱신** 워크플로우에서 `workflow_dispatch`로 수동 실행도 가능합니다.
 
 ## 테스트와 품질 점검
 Playwright 스크립트는 `apps/crawl/src`에 위치합니다.

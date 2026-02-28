@@ -221,8 +221,9 @@ export default function Home() {
               데이터 최신화 정보
             </h3>
             <p className="text-blue-700">
-              모든 버스 시간표 정보는{" "}
-              <span className="font-bold">2025년 10월 10일</span> 기준입니다.
+              버스 시간표 데이터는{" "}
+              <span className="font-bold">매주 월요일</span> 자동으로
+              갱신됩니다.
             </p>
           </div>
           <div className="bg-white shadow-sm rounded-lg px-3 py-2.5 flex items-center hover:shadow-md transition-all duration-300 hover:bg-blue-50">
@@ -241,7 +242,7 @@ export default function Home() {
               />
             </svg>
             <span className="text-sm text-gray-600">
-              정기 업데이트: 매년 노선 개편 후
+              정기 업데이트: 매주 월요일 자동 갱신
             </span>
           </div>
         </div>
