@@ -1,11 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
 
-import { Inter } from "next/font/google";
-
 import { ClientLayout } from "@/widgets/Layout";
-
-const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "원주시 버스 종점 출발 시간",
@@ -32,7 +28,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="ko">
-      <body className={inter.className}>
+      <body>
         <ClientLayout>{children}</ClientLayout>
       </body>
     </html>

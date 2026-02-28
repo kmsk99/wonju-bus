@@ -26,6 +26,16 @@ pnpm --filter @wonju-bus/site build
 pnpm start:site         # 프로덕션 빌드 로컬 검증
 ```
 
+### Amplify 배포(SSR)
+이 프로젝트는 Amplify에서 Next.js SSR로 배포해야 하므로 앱 플랫폼을 `WEB_COMPUTE`로 설정해야 합니다.
+
+```bash
+aws amplify update-app --app-id <APP_ID> --platform WEB_COMPUTE --region <REGION>
+aws amplify update-branch --app-id <APP_ID> --branch-name main --framework "Next.js - SSR" --region <REGION>
+```
+
+루트의 `amplify.yml`은 모노레포 기준으로 `@wonju-bus/site`를 빌드하고 `apps/site/.next` 아티팩트를 업로드하도록 구성되어 있습니다.
+
 ### 시간표 데이터 갱신
 ```bash
 pnpm crawl              # 크롤링 후 data/ 갱신 및 사이트 동기화
