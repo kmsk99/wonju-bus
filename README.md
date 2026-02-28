@@ -5,13 +5,12 @@
 
 ## 프로젝트 구조
 - `apps/site` – Next.js 16 + Tailwind CSS 프런트엔드. `src/{app,entities,shared,widgets}` 구조를 따르며 `data/`의 시간표 JSON을 읽습니다.
-- `apps/crawl` – TypeScript/Playwright 크롤러. http://its.wonju.go.kr 에서 전체 노선 정보를 수집해 정규화된 JSON을 `data/`에 저장합니다.
+- `apps/crawl` – TypeScript/cheerio 기반 크롤러. http://its.wonju.go.kr 에서 fetch로 전체 노선 정보를 수집해 정규화된 JSON을 `data/`에 저장합니다.
 - `apps/*/data` – 크롤링 결과가 저장되는 JSON 디렉터리로, `pnpm crawl` 실행 시 두 패키지 간에 동기화됩니다.
 
 ## 필요 조건
-- Node.js 20 이상 (Next.js 16 및 Playwright 요구)
+- Node.js 20 이상 (Next.js 16 요구)
 - pnpm 10.24.0 (`corepack enable pnpm`으로 활성화 권장)
-- Playwright용 Chromium (`pnpm exec playwright install chromium`)
 
 ## 설치 방법
 ```bash
@@ -44,10 +43,10 @@ GitHub Actions 워크플로우(`.github/workflows/update-bus-data.yml`)가 **매
 Actions 탭의 **버스 데이터 자동 갱신** 워크플로우에서 `workflow_dispatch`로 수동 실행도 가능합니다.
 
 ## 테스트와 품질 점검
-Playwright 스크립트는 `apps/crawl/src`에 위치합니다.
-- `pnpm --filter @wonju-bus/crawl test:routes` – 노선 목록 테이블 검증
+테스트 스크립트는 `apps/crawl/src`에 위치합니다.
 - `pnpm --filter @wonju-bus/crawl test:basic-info` – 기본 정보 추출 확인
 - `pnpm --filter @wonju-bus/crawl test:detail` – 노선별 상세 시간표 파싱 점검
+- `pnpm --filter @wonju-bus/crawl test:multi` – 다중 노선 크롤링 검증
 프런트엔드 자동화 테스트는 아직 없으므로 UI 기능 추가 시 수동 확인 절차를 PR 본문에 기록하거나 테스트 디렉터리에 케이스를 추가하세요.
 
 ## 기여 안내

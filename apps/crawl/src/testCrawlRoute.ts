@@ -9,12 +9,7 @@ async function testCrawlRoute(routeNumber: string): Promise<void> {
     `원주시 버스 ${routeNumber}번 정보 크롤링 테스트를 시작합니다...`
   );
 
-  // UI 모드(headless: false)와 느린 동작(slowMo: 500)으로 크롤러 생성
-  const crawler = new WonjuBusCrawler({
-    headless: false,
-    slowMo: 500,
-    timeout: 60000,
-  });
+  const crawler = new WonjuBusCrawler();
 
   try {
     // 해당 버스 노선 정보 수집

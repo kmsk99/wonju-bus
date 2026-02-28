@@ -6,11 +6,7 @@ import { WonjuBusCrawler } from "./busCrawler";
 async function testMultipleRoutes() {
   console.log("여러 버스 노선 크롤링 테스트를 시작합니다...");
 
-  // 크롤러 생성 (헤드리스 모드)
-  const crawler = new WonjuBusCrawler({
-    headless: true, // 실제 UI가 보이지 않는 모드 사용
-    timeout: 60000,
-  });
+  const crawler = new WonjuBusCrawler();
 
   try {
     // 테스트할 버스 노선 목록

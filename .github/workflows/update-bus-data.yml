@@ -29,10 +29,6 @@ jobs:
       - name: 의존성 설치
         run: pnpm install --frozen-lockfile
 
-      - name: Playwright Chromium 설치
-        run: pnpm exec playwright install --with-deps chromium
-        working-directory: apps/crawl
-
       - name: 버스 데이터 크롤링
         run: pnpm crawl
 

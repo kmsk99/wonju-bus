@@ -6,12 +6,7 @@ import { WonjuBusCrawler } from "./busCrawler";
 async function testBasicInfoExtract() {
   console.log("버스 노선 기본 정보 추출 테스트를 시작합니다...");
 
-  // UI 모드 크롤러 생성
-  const crawler = new WonjuBusCrawler({
-    headless: false,
-    slowMo: 300,
-    timeout: 60000,
-  });
+  const crawler = new WonjuBusCrawler();
 
   try {
     // 모든 버스 노선 기본 정보 목록 가져오기

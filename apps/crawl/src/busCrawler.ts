@@ -1,13 +1,13 @@
 import fs from "fs";
 import path from "path";
-import { Browser, BrowserContext, chromium, Page } from "playwright";
+import * as cheerio from "cheerio";
 
 import { BusInfo, BusOperationInfo, BusRouteInfo } from "./types";
 
 const BUS_INFO_URL = "http://its.wonju.go.kr/bus/bus04.do";
+const BUS_DETAIL_URL = "http://its.wonju.go.kr/bus/bus04Detail.do";
 const TABLE_SELECTOR =
   "#content > div.sub_inner > div.para.tbl_cont > div > table";
-const DEFAULT_TIMEOUT = 30_000;
 const DEFAULT_MAX_RETRIES = 2;
 const RETRY_DELAY_MS = 1_000;
 const TEXT_CORRECTIONS: Array<[string, string]> = [
@@ -15,8 +15,11 @@ const TEXT_CORRECTIONS: Array<[string, string]> = [
 ];
 
 export interface CrawlerOptions {
+  /** @deprecated Playwright 제거로 더 이상 사용하지 않습니다 */
   headless?: boolean;
+  /** @deprecated Playwright 제거로 더 이상 사용하지 않습니다 */
   slowMo?: number;
+  /** @deprecated Playwright 제거로 더 이상 사용하지 않습니다 */
   timeout?: number;
   outputDirs?: string[];
   maxRetries?: number;
@@ -31,11 +34,7 @@ export interface CrawlSummary {
   savedFiles: string[];
 }
 
-/**
- * 원주시 버스 정보를 크롤링하는 클래스
- */
 export class WonjuBusCrawler {
-  private readonly options: CrawlerOptions;
   private readonly outputDirs: string[];
   private readonly maxRetries: number;
   private readonly throttleMs: number;
@@ -50,135 +49,83 @@ export class WonjuBusCrawler {
     this.outputDirs = configuredDirs.map((dir) => path.resolve(dir));
     this.maxRetries = Math.max(1, options.maxRetries ?? DEFAULT_MAX_RETRIES);
     this.throttleMs = Math.max(0, options.throttleMs ?? 0);
-
-    this.options = {
-      headless: options.headless ?? true,
-      slowMo: options.slowMo ?? 0,
-      timeout: options.timeout ?? DEFAULT_TIMEOUT,
-      maxRetries: this.maxRetries,
-      throttleMs: this.throttleMs,
-      outputDirs: this.outputDirs,
-    };
   }
 
-  /**
-   * 모든 버스 노선 정보 요약 목록을 가져옵니다.
-   */
   async getBusRouteNumbers(): Promise<BusRouteInfo[]> {
-    const { browser, context } = await this.launchBrowser();
-
-    try {
-      const page = await context.newPage();
-
-      try {
-        const routes = await this.extractRouteNumbers(page);
-        const normalizedRoutes = routes.map((route) =>
-          this.normalizeRouteInfo(route)
-        );
-        console.log(`총 ${normalizedRoutes.length}개의 버스 노선을 찾았습니다.`);
-        return normalizedRoutes;
-      } finally {
-        await page.close();
-      }
-    } finally {
-      await context.close();
-      await browser.close();
-    }
+    const routes = await this.extractRouteNumbers();
+    const normalizedRoutes = routes.map((route) =>
+      this.normalizeRouteInfo(route)
+    );
+    console.log(`총 ${normalizedRoutes.length}개의 버스 노선을 찾았습니다.`);
+    return normalizedRoutes;
   }
 
-  /**
-   * 특정 버스 노선의 상세 정보를 가져옵니다.
-   */
   async getBusInfo(busRouteNumber: string): Promise<BusInfo | null> {
-    const { browser, context } = await this.launchBrowser();
-
-    try {
-      return await this.fetchBusInfoWithContext(
-        context,
-        busRouteNumber,
-        undefined
-      );
-    } finally {
-      await context.close();
-      await browser.close();
-    }
+    const routes = await this.extractRouteNumbers();
+    const fallbackInfo = routes.find(
+      (r) => r.routeNumber === busRouteNumber
+    );
+    return this.fetchBusDetail(busRouteNumber, fallbackInfo);
   }
 
-  /**
-   * 모든 버스 노선 정보를 수집하고 JSON 파일로 저장합니다.
-   */
   async crawlAllBusInfo(): Promise<CrawlSummary> {
     this.prepareOutputDirs();
 
     const results: Record<string, BusInfo> = {};
     const savedFiles: string[] = [];
     const failedRoutes: string[] = [];
-    let totalRoutes = 0;
 
-    const { browser, context } = await this.launchBrowser();
-    try {
-      const listPage = await context.newPage();
-      let routeInfoList: BusRouteInfo[] = [];
+    const rawRoutes = await this.extractRouteNumbers();
+    const routeInfoList = rawRoutes.map((route) =>
+      this.normalizeRouteInfo(route)
+    );
+    const totalRoutes = routeInfoList.length;
+    console.log(`총 ${totalRoutes}개의 버스 노선 정보를 크롤링합니다...`);
 
-      try {
-        const rawRoutes = await this.extractRouteNumbers(listPage);
-        routeInfoList = rawRoutes.map((route) => this.normalizeRouteInfo(route));
-      } finally {
-        await listPage.close();
-      }
+    let completed = 0;
+    for (const routeInfo of routeInfoList) {
+      completed += 1;
 
-      totalRoutes = routeInfoList.length;
-      console.log(`총 ${totalRoutes}개의 버스 노선 정보를 크롤링합니다...`);
-
-      let completed = 0;
-      for (const routeInfo of routeInfoList) {
-        completed += 1;
-
-        let busInfo: BusInfo | null = null;
-        for (let attempt = 1; attempt <= this.maxRetries; attempt++) {
-          busInfo = await this.fetchBusInfoWithContext(
-            context,
-            routeInfo.routeNumber,
-            routeInfo
-          );
-          if (busInfo) {
-            break;
-          }
-
-          console.warn(
-            `[재시도] ${routeInfo.routeNumber} 노선 ${attempt}차 시도 실패`
-          );
-          if (attempt < this.maxRetries) {
-            await this.delay(Math.max(RETRY_DELAY_MS, this.throttleMs));
-          }
-        }
-
+      let busInfo: BusInfo | null = null;
+      for (let attempt = 1; attempt <= this.maxRetries; attempt++) {
+        busInfo = await this.fetchBusDetail(
+          routeInfo.routeNumber,
+          routeInfo
+        );
         if (busInfo) {
-          const normalizedRouteNumber = busInfo.routeInfo.routeNumber;
-          results[normalizedRouteNumber] = busInfo;
-          const fileName = this.saveBusInfoToJson(
-            normalizedRouteNumber,
-            busInfo
-          );
-          savedFiles.push(fileName);
-
-          console.log(
-            `[${completed}/${totalRoutes}] ${normalizedRouteNumber} 노선 정보 크롤링 완료`
-          );
-        } else {
-          failedRoutes.push(routeInfo.routeNumber);
-          console.error(
-            `[${completed}/${totalRoutes}] ${routeInfo.routeNumber} 노선 정보 크롤링 실패`
-          );
+          break;
         }
 
-        if (this.throttleMs > 0) {
-          await this.delay(this.throttleMs);
+        console.warn(
+          `[재시도] ${routeInfo.routeNumber} 노선 ${attempt}차 시도 실패`
+        );
+        if (attempt < this.maxRetries) {
+          await this.delay(Math.max(RETRY_DELAY_MS, this.throttleMs));
         }
       }
-    } finally {
-      await context.close();
-      await browser.close();
+
+      if (busInfo) {
+        const normalizedRouteNumber = busInfo.routeInfo.routeNumber;
+        results[normalizedRouteNumber] = busInfo;
+        const fileName = this.saveBusInfoToJson(
+          normalizedRouteNumber,
+          busInfo
+        );
+        savedFiles.push(fileName);
+
+        console.log(
+          `[${completed}/${totalRoutes}] ${normalizedRouteNumber} 노선 정보 크롤링 완료`
+        );
+      } else {
+        failedRoutes.push(routeInfo.routeNumber);
+        console.error(
+          `[${completed}/${totalRoutes}] ${routeInfo.routeNumber} 노선 정보 크롤링 실패`
+        );
+      }
+
+      if (this.throttleMs > 0) {
+        await this.delay(this.throttleMs);
+      }
     }
 
     this.writeAggregatedOutputs(results, savedFiles);
@@ -192,267 +139,121 @@ export class WonjuBusCrawler {
     };
   }
 
-  private async launchBrowser(): Promise<{
-    browser: Browser;
-    context: BrowserContext;
-  }> {
-    const browser = await chromium.launch({
-      headless: this.options.headless,
-      slowMo: this.options.slowMo,
+  private async extractRouteNumbers(): Promise<BusRouteInfo[]> {
+    const res = await fetch(BUS_INFO_URL);
+    const html = await res.text();
+    const $ = cheerio.load(html);
+
+    const routes: BusRouteInfo[] = [];
+
+    $(`${TABLE_SELECTOR} > tbody > tr`).each((_i, row) => {
+      const cells = $(row).find("td");
+      if (cells.length < 7) return;
+
+      routes.push({
+        routeNumber: $(cells[0]).text().trim(),
+        origin: $(cells[1]).text().trim(),
+        destination: $(cells[2]).text().trim(),
+        firstBusTime: $(cells[3]).text().trim(),
+        lastBusTime: $(cells[4]).text().trim(),
+        operationCount: $(cells[5]).text().trim(),
+        interval: $(cells[6]).text().trim(),
+      });
     });
 
-    const context = await browser.newContext();
-    const timeout = this.options.timeout ?? DEFAULT_TIMEOUT;
-    context.setDefaultTimeout(timeout);
-    context.setDefaultNavigationTimeout(timeout);
-
-    return { browser, context };
+    return routes.filter((r) => r.routeNumber.length > 0);
   }
 
-  private async extractRouteNumbers(page: Page): Promise<BusRouteInfo[]> {
-    await page.goto(BUS_INFO_URL, { waitUntil: "domcontentloaded" });
-    await page.waitForSelector(TABLE_SELECTOR);
-
-    return page.evaluate<BusRouteInfo[], string>((selector) => {
-      const rows = document.querySelectorAll<HTMLTableRowElement>(
-        `${selector} > tbody > tr`
-      );
-
-      return Array.from(rows)
-        .map((row) => {
-          const cells = row.querySelectorAll<HTMLTableCellElement>("td");
-          if (cells.length < 7) {
-            return null;
-          }
-
-          return {
-            routeNumber: cells[0].textContent?.trim() ?? "",
-            origin: cells[1].textContent?.trim() ?? "",
-            destination: cells[2].textContent?.trim() ?? "",
-            firstBusTime: cells[3].textContent?.trim() ?? "",
-            lastBusTime: cells[4].textContent?.trim() ?? "",
-            operationCount: cells[5].textContent?.trim() ?? "",
-            interval: cells[6].textContent?.trim() ?? "",
-          };
-        })
-        .filter(
-          (value): value is BusRouteInfo =>
-            !!value && value.routeNumber.length > 0
-        );
-    }, TABLE_SELECTOR);
-  }
-
-  private async fetchBusInfoWithContext(
-    context: BrowserContext,
+  private async fetchBusDetail(
     busRouteNumber: string,
     fallbackInfo?: BusRouteInfo
   ): Promise<BusInfo | null> {
-    const page = await context.newPage();
-    page.setDefaultTimeout(this.options.timeout ?? DEFAULT_TIMEOUT);
-
     try {
-      await page.goto(BUS_INFO_URL, { waitUntil: "domcontentloaded" });
-      await page.waitForSelector(TABLE_SELECTOR);
-
-      const routeInfo =
-        fallbackInfo && fallbackInfo.routeNumber === busRouteNumber
-          ? fallbackInfo
-          : await this.extractBasicInfoFromTable(page, busRouteNumber);
-
-      const opened = await this.openRouteDetail(page, busRouteNumber);
-      if (!opened) {
-        console.error(
-          `버스 ${busRouteNumber}번 상세 페이지로 이동하지 못했습니다.`
-        );
-        return null;
-      }
-
-      await page.waitForSelector(TABLE_SELECTOR);
-      const operationInfo = await this.extractOperationInfo(page);
-
-      return this.normalizeBusInfo({
-        routeInfo,
-        operationInfo,
+      const res = await fetch(BUS_DETAIL_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: `no=${encodeURIComponent(busRouteNumber)}`,
       });
+      const html = await res.text();
+      const $ = cheerio.load(html);
+
+      const routeInfo: BusRouteInfo = fallbackInfo ?? {
+        routeNumber: busRouteNumber,
+        origin: "",
+        destination: "",
+        firstBusTime: "",
+        lastBusTime: "",
+        operationCount: "",
+        interval: "",
+      };
+
+      const operationInfo = this.parseOperationTable($);
+
+      return this.normalizeBusInfo({ routeInfo, operationInfo });
     } catch (error) {
       console.error(`버스 ${busRouteNumber}번 정보 가져오기 실패:`, error);
       return null;
-    } finally {
-      await page.close();
     }
   }
 
-  /**
-   * 목록 테이블에서 해당 버스 노선의 기본 정보를 추출합니다.
-   */
-  private async extractBasicInfoFromTable(
-    page: Page,
-    busRouteNumber: string
-  ): Promise<BusRouteInfo> {
-    return page.evaluate<
-      BusRouteInfo,
-      { routeNumber: string; selector: string }
-    >(
-      ({ routeNumber, selector }) => {
-        const rows = document.querySelectorAll<HTMLTableRowElement>(
-          `${selector} > tbody > tr`
-        );
+  private parseOperationTable($: cheerio.CheerioAPI): BusOperationInfo[] {
+    const table = $(TABLE_SELECTOR);
+    if (table.length === 0) return [];
 
-        for (const row of rows) {
-          const firstCell = row.querySelector<HTMLTableCellElement>(
-            "td:first-child"
-          );
-          if (firstCell?.textContent?.trim() === routeNumber) {
-            const cells = row.querySelectorAll<HTMLTableCellElement>("td");
-            if (cells.length >= 7) {
-              return {
-                routeNumber,
-                origin: cells[1].textContent?.trim() ?? "",
-                destination: cells[2].textContent?.trim() ?? "",
-                firstBusTime: cells[3].textContent?.trim() ?? "",
-                lastBusTime: cells[4].textContent?.trim() ?? "",
-                operationCount: cells[5].textContent?.trim() ?? "",
-                interval: cells[6].textContent?.trim() ?? "",
-              };
-            }
-          }
+    const headerCells = table.find("thead > tr > th");
+    const headerNames = headerCells.map((_i, el) => $(el).text().trim()).get();
+
+    if (headerNames.length < 3) return [];
+
+    let departureIdx = -1;
+    let arrivalIdx = -1;
+
+    headerNames.forEach((header, index) => {
+      if (index === 0) return;
+      if (header.includes("발")) {
+        if (departureIdx === -1) {
+          departureIdx = index;
+        } else if (arrivalIdx === -1) {
+          arrivalIdx = index;
         }
-
-        return {
-          routeNumber,
-          origin: "",
-          destination: "",
-          firstBusTime: "",
-          lastBusTime: "",
-          operationCount: "",
-          interval: "",
-        };
-      },
-      { routeNumber: busRouteNumber, selector: TABLE_SELECTOR }
-    );
-  }
-
-  /**
-   * 상세 페이지로 이동하기 위해 해당 노선 행을 클릭합니다.
-   */
-  private async openRouteDetail(
-    page: Page,
-    busRouteNumber: string
-  ): Promise<boolean> {
-    return page.evaluate<
-      boolean,
-      { routeNumber: string; selector: string }
-    >(
-      ({ routeNumber, selector }) => {
-        const rows = document.querySelectorAll<HTMLTableRowElement>(
-          `${selector} > tbody > tr`
-        );
-
-        for (const row of rows) {
-          const firstCell = row.querySelector<HTMLTableCellElement>(
-            "td:first-child"
-          );
-          if (firstCell?.textContent?.trim() === routeNumber) {
-            const clickableCell =
-              (row.querySelector("td[onclick]") as HTMLElement | null) ??
-              (firstCell as HTMLElement | null);
-
-            if (clickableCell) {
-              clickableCell.click();
-              return true;
-            }
-          }
-        }
-
-        return false;
-      },
-      { routeNumber: busRouteNumber, selector: TABLE_SELECTOR }
-    );
-  }
-
-  /**
-   * 버스 운행 정보를 추출합니다.
-   */
-  private async extractOperationInfo(page: Page): Promise<BusOperationInfo[]> {
-    return page.evaluate<BusOperationInfo[], string>((selector) => {
-      const table = document.querySelector(selector);
-      if (!table) {
-        return [];
       }
+    });
 
-      const headerCells = table.querySelectorAll("thead > tr > th");
-      const headerNames = Array.from(headerCells).map(
-        (cell) => cell.textContent?.trim() ?? ""
-      );
+    if (departureIdx === -1) departureIdx = 1;
+    if (arrivalIdx === -1) arrivalIdx = 2;
 
-      if (headerNames.length < 3) {
-        return [];
-      }
+    const departureLabel =
+      headerNames[departureIdx]?.replace("발", "").trim() || "출발지";
+    const arrivalLabel =
+      headerNames[arrivalIdx]?.replace("발", "").trim() || "도착지";
 
-      const operationNumberIdx = 0;
-      let departureIdx = -1;
-      let arrivalIdx = -1;
+    const categoryIdx = Math.min(3, headerNames.length - 2);
+    const noteIdx = Math.min(4, headerNames.length - 1);
 
-      headerNames.forEach((header, index) => {
-        if (index === 0) {
-          return;
-        }
+    const results: BusOperationInfo[] = [];
 
-        if (header.includes("발")) {
-          if (departureIdx === -1) {
-            departureIdx = index;
-          } else if (arrivalIdx === -1) {
-            arrivalIdx = index;
-          }
-        }
+    table.find("tbody > tr").each((_i, row) => {
+      const cells = $(row).find("td");
+      if (cells.length <= arrivalIdx) return;
+
+      const operationNumber = $(cells[0]).text().trim();
+      const departureTime = $(cells[departureIdx]).text().trim();
+      const arrivalTime = $(cells[arrivalIdx]).text().trim();
+
+      if (!operationNumber || (!departureTime && !arrivalTime)) return;
+
+      results.push({
+        operationNumber,
+        departureTime,
+        arrivalTime,
+        departureName: departureLabel,
+        arrivalName: arrivalLabel,
+        category: $(cells[categoryIdx]).text().trim(),
+        note: $(cells[noteIdx]).text().trim(),
       });
+    });
 
-      if (departureIdx === -1) departureIdx = 1;
-      if (arrivalIdx === -1) arrivalIdx = 2;
-
-      const departureLabel =
-        headerNames[departureIdx]?.replace("발", "").trim() || "출발지";
-      const arrivalLabel =
-        headerNames[arrivalIdx]?.replace("발", "").trim() || "도착지";
-
-      const categoryIdx = Math.min(3, headerNames.length - 2);
-      const noteIdx = Math.min(4, headerNames.length - 1);
-
-      const rows = table.querySelectorAll("tbody > tr");
-
-      return Array.from(rows)
-        .map((row) => {
-          const cells = row.querySelectorAll<HTMLTableCellElement>("td");
-
-          if (cells.length <= arrivalIdx) {
-            return null;
-          }
-
-          const operationNumber =
-            cells[operationNumberIdx]?.textContent?.trim() ?? "";
-          const departureTime =
-            cells[departureIdx]?.textContent?.trim() ?? "";
-          const arrivalTime = cells[arrivalIdx]?.textContent?.trim() ?? "";
-
-          if (!operationNumber || (!departureTime && !arrivalTime)) {
-            return null;
-          }
-
-          return {
-            operationNumber,
-            departureTime,
-            arrivalTime,
-            departureName: departureLabel,
-            arrivalName: arrivalLabel,
-            category: cells[categoryIdx]?.textContent?.trim() ?? "",
-            note: cells[noteIdx]?.textContent?.trim() ?? "",
-          };
-        })
-        .filter(
-          (value): value is BusOperationInfo =>
-            value !== null && !!value.operationNumber
-        );
-    }, TABLE_SELECTOR);
+    return results;
   }
 
   private prepareOutputDirs(): void {
@@ -543,9 +344,7 @@ export class WonjuBusCrawler {
   }
 
   private normalizeValue(value: string | null | undefined): string {
-    if (!value) {
-      return "";
-    }
+    if (!value) return "";
 
     let normalized = value.trim();
     for (const [wrong, correct] of TEXT_CORRECTIONS) {
@@ -562,10 +361,7 @@ export class WonjuBusCrawler {
   }
 
   private async delay(durationMs: number): Promise<void> {
-    if (durationMs <= 0) {
-      return;
-    }
-
+    if (durationMs <= 0) return;
     await new Promise((resolve) => setTimeout(resolve, durationMs));
   }
 }
