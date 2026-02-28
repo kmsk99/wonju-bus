@@ -16,7 +16,7 @@
       "departureName": "중앙시장",
       "arrivalName": "동막",
       "category": "공통",
-      "note": "(동막발)대덕1리 경유"
+      "note": ""
     },
     {
       "operationNumber": "2",
@@ -25,7 +25,7 @@
       "departureName": "중앙시장",
       "arrivalName": "동막",
       "category": "공통",
-      "note": ""
+      "note": "(중앙시장발)고산리 경유"
     }
   ]
 }

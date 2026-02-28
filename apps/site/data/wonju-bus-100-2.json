@@ -3,7 +3,7 @@
     "routeNumber": "100-2",
     "origin": "중흥2단지",
     "destination": "기업도시",
-    "firstBusTime": "06:30",
+    "firstBusTime": "06:20",
     "lastBusTime": "21:20",
     "operationCount": "15회",
     "interval": "평균 65분"
@@ -29,7 +29,7 @@
     },
     {
       "operationNumber": "3",
-      "departureTime": "6:30",
+      "departureTime": "6:20",
       "arrivalTime": "7:40",
       "departureName": "중흥2단지",
       "arrivalName": "기업도시",
@@ -38,7 +38,7 @@
     },
     {
       "operationNumber": "4",
-      "departureTime": "7:50",
+      "departureTime": "7:40",
       "arrivalTime": "9:10",
       "departureName": "중흥2단지",
       "arrivalName": "기업도시",

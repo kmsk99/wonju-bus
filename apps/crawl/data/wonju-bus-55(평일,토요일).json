@@ -56,8 +56,8 @@
     },
     {
       "operationNumber": "6",
-      "departureTime": "11:45",
-      "arrivalTime": "13:35",
+      "departureTime": "11:55",
+      "arrivalTime": "13:40",
       "departureName": "관설동종점",
       "arrivalName": "부론",
       "category": "공통",

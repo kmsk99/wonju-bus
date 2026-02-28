@@ -295,7 +295,7 @@
       "departureName": "장양리시내버스공영정류장",
       "arrivalName": "한라대학교",
       "category": "공통",
-      "note": "한라대발)원주역 미경유"
+      "note": ""
     },
     {
       "operationNumber": "33",
@@ -304,7 +304,7 @@
       "departureName": "장양리시내버스공영정류장",
       "arrivalName": "한라대학교",
       "category": "공통",
-      "note": "원주역 미경유"
+      "note": ""
     }
   ]
 }

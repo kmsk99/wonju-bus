@@ -21,11 +21,11 @@
     {
       "operationNumber": "2",
       "departureTime": "07:15",
-      "arrivalTime": "07:50",
+      "arrivalTime": "07:45",
       "departureName": "태장2동(바다약국)",
       "arrivalName": "동막",
       "category": "공통",
-      "note": "(동막발)대덕1리 경유"
+      "note": "(동막발)고산리 경유"
     },
     {
       "operationNumber": "3",
@@ -39,11 +39,11 @@
     {
       "operationNumber": "4",
       "departureTime": "09:40",
-      "arrivalTime": "10:10",
+      "arrivalTime": "10:05",
       "departureName": "태장2동(바다약국)",
       "arrivalName": "동막",
       "category": "공통",
-      "note": "(동막발)대덕1리 경유"
+      "note": "(동막발)고산리 경유"
     },
     {
       "operationNumber": "5",
@@ -52,7 +52,7 @@
       "departureName": "태장2동(바다약국)",
       "arrivalName": "동막",
       "category": "공통",
-      "note": "(동막발)대덕1리 경유"
+      "note": ""
     },
     {
       "operationNumber": "6",
@@ -61,7 +61,7 @@
       "departureName": "태장2동(바다약국)",
       "arrivalName": "동막",
       "category": "공통",
-      "note": ""
+      "note": "(태장2동발)고산리 경유"
     },
     {
       "operationNumber": "7",
@@ -70,7 +70,7 @@
       "departureName": "태장2동(바다약국)",
       "arrivalName": "동막",
       "category": "공통",
-      "note": "(태장2동발)대덕1리 경유"
+      "note": ""
     },
     {
       "operationNumber": "8",
@@ -79,7 +79,7 @@
       "departureName": "태장2동(바다약국)",
       "arrivalName": "동막",
       "category": "공통",
-      "note": "(태장2동발)대덕1리 경유"
+      "note": ""
     },
     {
       "operationNumber": "9",
@@ -88,7 +88,7 @@
       "departureName": "태장2동(바다약국)",
       "arrivalName": "동막",
       "category": "공통",
-      "note": "동막 운행종료"
+      "note": ""
     }
   ]
 }

@@ -12,7 +12,7 @@
     {
       "operationNumber": "1",
       "departureTime": "-",
-      "arrivalTime": "7:40",
+      "arrivalTime": "7:30",
       "departureName": "중흥2단지",
       "arrivalName": "롯데캐슬2차",
       "category": "공통",
@@ -119,8 +119,8 @@
     },
     {
       "operationNumber": "13",
-      "departureTime": "18:10",
-      "arrivalTime": "19:35",
+      "departureTime": "18:00",
+      "arrivalTime": "19:25",
       "departureName": "중흥2단지",
       "arrivalName": "롯데캐슬2차",
       "category": "공통",
