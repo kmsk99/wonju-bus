@@ -1,0 +1,67 @@
+{
+  "routeInfo": {
+    "routeNumber": "공영 8",
+    "origin": "흥업면 행정복지센터",
+    "destination": "사제광터회관",
+    "firstBusTime": "07:00",
+    "lastBusTime": "19:30",
+    "operationCount": "5.5회",
+    "interval": "1일 5.5회"
+  },
+  "operationInfo": [
+    {
+      "operationNumber": "1",
+      "departureTime": "07:00",
+      "arrivalTime": "순환",
+      "departureName": "흥업면 행정복지센터",
+      "arrivalName": "사제광터회관",
+      "category": "공통",
+      "note": "(평일-통학지원)(사제광터회관발) 승안, 대안2리, 육민관고 경유 (휴일 광터발 승안경유)"
+    },
+    {
+      "operationNumber": "2",
+      "departureTime": "09:50",
+      "arrivalTime": "순환",
+      "departureName": "흥업면 행정복지센터",
+      "arrivalName": "사제광터회관",
+      "category": "공통",
+      "note": "(사제광터회관발)승안 경유"
+    },
+    {
+      "operationNumber": "3",
+      "departureTime": "12:00",
+      "arrivalTime": "순환",
+      "departureName": "흥업면 행정복지센터",
+      "arrivalName": "사제광터회관",
+      "category": "공통",
+      "note": "(사제광터회관발)승안 경유"
+    },
+    {
+      "operationNumber": "4",
+      "departureTime": "15:10",
+      "arrivalTime": "순환",
+      "departureName": "흥업면 행정복지센터",
+      "arrivalName": "사제광터회관",
+      "category": "공통",
+      "note": "(흥업면 행정복지센터발)육민관고, 승안 경유, (휴일) 육민관고 미경유"
+    },
+    {
+      "operationNumber": "5",
+      "departureTime": "18:10",
+      "arrivalTime": "순환",
+      "departureName": "흥업면 행정복지센터",
+      "arrivalName": "사제광터회관",
+      "category": "공통",
+      "note": "(흥업면 행정복지센터발)육민관고, 승안 경유, (휴일) 육민관고 미경유"
+    },
+    {
+      "operationNumber": "6",
+      "departureTime": "19:30",
+      "arrivalTime": "순환",
+      "departureName": "흥업면 행정복지센터",
+      "arrivalName": "사제광터회관",
+      "category": "공통",
+      "note": "(흥업면 행정복지센터발)육민관고, 대안리, 승안 경유, (휴일) 육민관고 미경유"
+    }
+  ]
+}

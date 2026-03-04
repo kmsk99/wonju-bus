@@ -1,0 +1,76 @@
+{
+  "routeInfo": {
+    "routeNumber": "32",
+    "origin": "장양리시내버스공영정류장",
+    "destination": "서곡리",
+    "firstBusTime": "05:45",
+    "lastBusTime": "19:20",
+    "operationCount": "7회",
+    "interval": "1일 7회"
+  },
+  "operationInfo": [
+    {
+      "operationNumber": "1",
+      "departureTime": "5:45",
+      "arrivalTime": "6:35",
+      "departureName": "장양리시내버스공영정류장",
+      "arrivalName": "서곡리",
+      "category": "공통",
+      "note": "장양리발)내남송 → 서곡발)서곡"
+    },
+    {
+      "operationNumber": "2",
+      "departureTime": "7:50",
+      "arrivalTime": "8:40",
+      "departureName": "장양리시내버스공영정류장",
+      "arrivalName": "서곡리",
+      "category": "공통",
+      "note": ""
+    },
+    {
+      "operationNumber": "3",
+      "departureTime": "10:05",
+      "arrivalTime": "11:00",
+      "departureName": "장양리시내버스공영정류장",
+      "arrivalName": "서곡리",
+      "category": "공통",
+      "note": "장양리발)서곡 → 서곡발)내남송"
+    },
+    {
+      "operationNumber": "4",
+      "departureTime": "12:25",
+      "arrivalTime": "13:20",
+      "departureName": "장양리시내버스공영정류장",
+      "arrivalName": "서곡리",
+      "category": "공통",
+      "note": ""
+    },
+    {
+      "operationNumber": "5",
+      "departureTime": "14:45",
+      "arrivalTime": "15:40",
+      "departureName": "장양리시내버스공영정류장",
+      "arrivalName": "서곡리",
+      "category": "공통",
+      "note": "장양리발)서곡 → 서곡발)내남송"
+    },
+    {
+      "operationNumber": "6",
+      "departureTime": "17:05",
+      "arrivalTime": "18:00",
+      "departureName": "장양리시내버스공영정류장",
+      "arrivalName": "서곡리",
+      "category": "공통",
+      "note": ""
+    },
+    {
+      "operationNumber": "7",
+      "departureTime": "19:20",
+      "arrivalTime": "20:10",
+      "departureName": "장양리시내버스공영정류장",
+      "arrivalName": "서곡리",
+      "category": "공통",
+      "note": "장양리발)서곡 → 서곡발)내남송"
+    }
+  ]
+}

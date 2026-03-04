@@ -1,0 +1,319 @@
+{
+  "routeInfo": {
+    "routeNumber": "34-1(방학,휴일)",
+    "origin": "장양리시내버스공영정류장",
+    "destination": "회촌",
+    "firstBusTime": "06:10",
+    "lastBusTime": "20:47",
+    "operationCount": "31.5회",
+    "interval": "평균 30분"
+  },
+  "operationInfo": [
+    {
+      "operationNumber": "1",
+      "departureTime": "-",
+      "arrivalTime": "6:45",
+      "departureName": "장양리시내버스공영정류장",
+      "arrivalName": "회촌",
+      "category": "공통",
+      "note": ""
+    },
+    {
+      "operationNumber": "2",
+      "departureTime": "6:10",
+      "arrivalTime": "7:48",
+      "departureName": "장양리시내버스공영정류장",
+      "arrivalName": "회촌",
+      "category": "공통",
+      "note": ""
+    },
+    {
+      "operationNumber": "3",
+      "departureTime": "6:42",
+      "arrivalTime": "8:18",
+      "departureName": "장양리시내버스공영정류장",
+      "arrivalName": "회촌",
+      "category": "공통",
+      "note": ""
+    },
+    {
+      "operationNumber": "4",
+      "departureTime": "7:05",
+      "arrivalTime": "8:48",
+      "departureName": "장양리시내버스공영정류장",
+      "arrivalName": "회촌",
+      "category": "공통",
+      "note": ""
+    },
+    {
+      "operationNumber": "5",
+      "departureTime": "7:30",
+      "arrivalTime": "9:13",
+      "departureName": "장양리시내버스공영정류장",
+      "arrivalName": "회촌",
+      "category": "공통",
+      "note": ""
+    },
+    {
+      "operationNumber": "6",
+      "departureTime": "7:55",
+      "arrivalTime": "9:38",
+      "departureName": "장양리시내버스공영정류장",
+      "arrivalName": "회촌",
+      "category": "공통",
+      "note": ""
+    },
+    {
+      "operationNumber": "7",
+      "departureTime": "8:25",
+      "arrivalTime": "10:03",
+      "departureName": "장양리시내버스공영정류장",
+      "arrivalName": "회촌",
+      "category": "공통",
+      "note": ""
+    },
+    {
+      "operationNumber": "8",
+      "departureTime": "8:52",
+      "arrivalTime": "10:30",
+      "departureName": "장양리시내버스공영정류장",
+      "arrivalName": "회촌",
+      "category": "공통",
+      "note": ""
+    },
+    {
+      "operationNumber": "9",
+      "departureTime": "9:20",
+      "arrivalTime": "11:03",
+      "departureName": "장양리시내버스공영정류장",
+      "arrivalName": "회촌",
+      "category": "공통",
+      "note": ""
+    },
+    {
+      "operationNumber": "10",
+      "departureTime": "9:50",
+      "arrivalTime": "11:28",
+      "departureName": "장양리시내버스공영정류장",
+      "arrivalName": "회촌",
+      "category": "공통",
+      "note": ""
+    },
+    {
+      "operationNumber": "11",
+      "departureTime": "10:20",
+      "arrivalTime": "12:03",
+      "departureName": "장양리시내버스공영정류장",
+      "arrivalName": "회촌",
+      "category": "공통",
+      "note": ""
+    },
+    {
+      "operationNumber": "12",
+      "departureTime": "10:50",
+      "arrivalTime": "12:28",
+      "departureName": "장양리시내버스공영정류장",
+      "arrivalName": "회촌",
+      "category": "공통",
+      "note": ""
+    },
+    {
+      "operationNumber": "13",
+      "departureTime": "11:15",
+      "arrivalTime": "12:53",
+      "departureName": "장양리시내버스공영정류장",
+      "arrivalName": "회촌",
+      "category": "공통",
+      "note": ""
+    },
+    {
+      "operationNumber": "14",
+      "departureTime": "11:40",
+      "arrivalTime": "13:18",
+      "departureName": "장양리시내버스공영정류장",
+      "arrivalName": "회촌",
+      "category": "공통",
+      "note": ""
+    },
+    {
+      "operationNumber": "15",
+      "departureTime": "12:05",
+      "arrivalTime": "13:58",
+      "departureName": "장양리시내버스공영정류장",
+      "arrivalName": "회촌",
+      "category": "공통",
+      "note": ""
+    },
+    {
+      "operationNumber": "16",
+      "departureTime": "12:50",
+      "arrivalTime": "14:28",
+      "departureName": "장양리시내버스공영정류장",
+      "arrivalName": "회촌",
+      "category": "공통",
+      "note": ""
+    },
+    {
+      "operationNumber": "17",
+      "departureTime": "13:17",
+      "arrivalTime": "15:05",
+      "departureName": "장양리시내버스공영정류장",
+      "arrivalName": "회촌",
+      "category": "공통",
+      "note": ""
+    },
+    {
+      "operationNumber": "18",
+      "departureTime": "13:52",
+      "arrivalTime": "15:33",
+      "departureName": "장양리시내버스공영정류장",
+      "arrivalName": "회촌",
+      "category": "공통",
+      "note": ""
+    },
+    {
+      "operationNumber": "19",
+      "departureTime": "14:17",
+      "arrivalTime": "16:00",
+      "departureName": "장양리시내버스공영정류장",
+      "arrivalName": "회촌",
+      "category": "공통",
+      "note": ""
+    },
+    {
+      "operationNumber": "20",
+      "departureTime": "14:42",
+      "arrivalTime": "16:20",
+      "departureName": "장양리시내버스공영정류장",
+      "arrivalName": "회촌",
+      "category": "공통",
+      "note": ""
+    },
+    {
+      "operationNumber": "21",
+      "departureTime": "15:07",
+      "arrivalTime": "16:53",
+      "departureName": "장양리시내버스공영정류장",
+      "arrivalName": "회촌",
+      "category": "공통",
+      "note": ""
+    },
+    {
+      "operationNumber": "22",
+      "departureTime": "15:30",
+      "arrivalTime": "17:23",
+      "departureName": "장양리시내버스공영정류장",
+      "arrivalName": "회촌",
+      "category": "공통",
+      "note": ""
+    },
+    {
+      "operationNumber": "23",
+      "departureTime": "16:10",
+      "arrivalTime": "17:58",
+      "departureName": "장양리시내버스공영정류장",
+      "arrivalName": "회촌",
+      "category": "공통",
+      "note": ""
+    },
+    {
+      "operationNumber": "24",
+      "departureTime": "16:40",
+      "arrivalTime": "18:15",
+      "departureName": "장양리시내버스공영정류장",
+      "arrivalName": "회촌",
+      "category": "공통",
+      "note": ""
+    },
+    {
+      "operationNumber": "25",
+      "departureTime": "17:05",
+      "arrivalTime": "18:53",
+      "departureName": "장양리시내버스공영정류장",
+      "arrivalName": "회촌",
+      "category": "공통",
+      "note": ""
+    },
+    {
+      "operationNumber": "26",
+      "departureTime": "17:47",
+      "arrivalTime": "19:28",
+      "departureName": "장양리시내버스공영정류장",
+      "arrivalName": "회촌",
+      "category": "공통",
+      "note": ""
+    },
+    {
+      "operationNumber": "27",
+      "departureTime": "18:10",
+      "arrivalTime": "19:58",
+      "departureName": "장양리시내버스공영정류장",
+      "arrivalName": "회촌",
+      "category": "공통",
+      "note": ""
+    },
+    {
+      "operationNumber": "28",
+      "departureTime": "18:35",
+      "arrivalTime": "20:13",
+      "departureName": "장양리시내버스공영정류장",
+      "arrivalName": "회촌",
+      "category": "공통",
+      "note": ""
+    },
+    {
+      "operationNumber": "29",
+      "departureTime": "18:55",
+      "arrivalTime": "20:28",
+      "departureName": "장양리시내버스공영정류장",
+      "arrivalName": "회촌",
+      "category": "공통",
+      "note": ""
+    },
+    {
+      "operationNumber": "30",
+      "departureTime": "19:20",
+      "arrivalTime": "21:03",
+      "departureName": "장양리시내버스공영정류장",
+      "arrivalName": "회촌",
+      "category": "공통",
+      "note": ""
+    },
+    {
+      "operationNumber": "31",
+      "departureTime": "20:05",
+      "arrivalTime": "-",
+      "departureName": "장양리시내버스공영정류장",
+      "arrivalName": "회촌",
+      "category": "공통",
+      "note": ""
+    },
+    {
+      "operationNumber": "32",
+      "departureTime": "20:20",
+      "arrivalTime": "-",
+      "departureName": "장양리시내버스공영정류장",
+      "arrivalName": "회촌",
+      "category": "공통",
+      "note": ""
+    },
+    {
+      "operationNumber": "33",
+      "departureTime": "20:35",
+      "arrivalTime": "-",
+      "departureName": "장양리시내버스공영정류장",
+      "arrivalName": "회촌",
+      "category": "공통",
+      "note": ""
+    },
+    {
+      "operationNumber": "34",
+      "departureTime": "20:47",
+      "arrivalTime": "-",
+      "departureName": "장양리시내버스공영정류장",
+      "arrivalName": "회촌",
+      "category": "공통",
+      "note": ""
+    }
+  ]
+}

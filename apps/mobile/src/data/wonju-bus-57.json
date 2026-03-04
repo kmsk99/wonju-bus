@@ -1,0 +1,58 @@
+{
+  "routeInfo": {
+    "routeNumber": "57",
+    "origin": "관설동종점",
+    "destination": "상구현",
+    "firstBusTime": "06:10",
+    "lastBusTime": "16:25",
+    "operationCount": "4.5회",
+    "interval": "1일 3회"
+  },
+  "operationInfo": [
+    {
+      "operationNumber": "1",
+      "departureTime": "-",
+      "arrivalTime": "6:20",
+      "departureName": "관설동종점",
+      "arrivalName": "상구현",
+      "category": "공통",
+      "note": ""
+    },
+    {
+      "operationNumber": "2",
+      "departureTime": "6:10",
+      "arrivalTime": "7:50",
+      "departureName": "관설동종점",
+      "arrivalName": "상구현",
+      "category": "공통",
+      "note": "판대 경유"
+    },
+    {
+      "operationNumber": "3",
+      "departureTime": "10:25",
+      "arrivalTime": "12:35",
+      "departureName": "관설동종점",
+      "arrivalName": "상구현",
+      "category": "공통",
+      "note": "판대 경유"
+    },
+    {
+      "operationNumber": "4",
+      "departureTime": "11:30",
+      "arrivalTime": "13:40",
+      "departureName": "관설동종점",
+      "arrivalName": "상구현",
+      "category": "공통",
+      "note": "관설동발)도계,삼산교경유, 상구현발)판대경유"
+    },
+    {
+      "operationNumber": "5",
+      "departureTime": "16:25",
+      "arrivalTime": "18:35",
+      "departureName": "관설동종점",
+      "arrivalName": "상구현",
+      "category": "공통",
+      "note": "판대 경유"
+    }
+  ]
+}

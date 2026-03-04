@@ -1,0 +1,121 @@
+{
+  "routeInfo": {
+    "routeNumber": "21",
+    "origin": "장양리시내버스공영정류장",
+    "destination": "학산종점",
+    "firstBusTime": "05:55",
+    "lastBusTime": "20:55",
+    "operationCount": "12회",
+    "interval": "평균 70분"
+  },
+  "operationInfo": [
+    {
+      "operationNumber": "1",
+      "departureTime": "5:55",
+      "arrivalTime": "6:55",
+      "departureName": "장양리시내버스공영정류장",
+      "arrivalName": "학산종점",
+      "category": "공통",
+      "note": "학산발)공단"
+    },
+    {
+      "operationNumber": "2",
+      "departureTime": "7:40",
+      "arrivalTime": "9:00",
+      "departureName": "장양리시내버스공영정류장",
+      "arrivalName": "학산종점",
+      "category": "공통",
+      "note": "장양리발)주공"
+    },
+    {
+      "operationNumber": "3",
+      "departureTime": "9:55",
+      "arrivalTime": "11:10",
+      "departureName": "장양리시내버스공영정류장",
+      "arrivalName": "학산종점",
+      "category": "공통",
+      "note": ""
+    },
+    {
+      "operationNumber": "4",
+      "departureTime": "11:05",
+      "arrivalTime": "12:20",
+      "departureName": "장양리시내버스공영정류장",
+      "arrivalName": "학산종점",
+      "category": "공통",
+      "note": ""
+    },
+    {
+      "operationNumber": "5",
+      "departureTime": "12:50",
+      "arrivalTime": "14:15",
+      "departureName": "장양리시내버스공영정류장",
+      "arrivalName": "학산종점",
+      "category": "공통",
+      "note": ""
+    },
+    {
+      "operationNumber": "6",
+      "departureTime": "14:00",
+      "arrivalTime": "15:10",
+      "departureName": "장양리시내버스공영정류장",
+      "arrivalName": "학산종점",
+      "category": "공통",
+      "note": ""
+    },
+    {
+      "operationNumber": "7",
+      "departureTime": "16:05",
+      "arrivalTime": "17:15",
+      "departureName": "장양리시내버스공영정류장",
+      "arrivalName": "학산종점",
+      "category": "공통",
+      "note": ""
+    },
+    {
+      "operationNumber": "8",
+      "departureTime": "18:20",
+      "arrivalTime": "19:30",
+      "departureName": "장양리시내버스공영정류장",
+      "arrivalName": "학산종점",
+      "category": "공통",
+      "note": ""
+    },
+    {
+      "operationNumber": "9",
+      "departureTime": "18:50",
+      "arrivalTime": "20:00",
+      "departureName": "장양리시내버스공영정류장",
+      "arrivalName": "학산종점",
+      "category": "공통",
+      "note": ""
+    },
+    {
+      "operationNumber": "10",
+      "departureTime": "19:50",
+      "arrivalTime": "21:05",
+      "departureName": "장양리시내버스공영정류장",
+      "arrivalName": "학산종점",
+      "category": "공통",
+      "note": ""
+    },
+    {
+      "operationNumber": "11",
+      "departureTime": "20:25",
+      "arrivalTime": "21:30",
+      "departureName": "장양리시내버스공영정류장",
+      "arrivalName": "학산종점",
+      "category": "공통",
+      "note": ""
+    },
+    {
+      "operationNumber": "12",
+      "departureTime": "20:55",
+      "arrivalTime": "22:05",
+      "departureName": "장양리시내버스공영정류장",
+      "arrivalName": "학산종점",
+      "category": "공통",
+      "note": "장양리발) 신림면사무소 종점, 학산발) 신림면사무소 기점"
+    }
+  ]
+}

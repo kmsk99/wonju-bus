@@ -1,0 +1,76 @@
+{
+  "routeInfo": {
+    "routeNumber": "81",
+    "origin": "장양리시내버스공영정류장",
+    "destination": "미래고",
+    "firstBusTime": "07:10",
+    "lastBusTime": "18:15",
+    "operationCount": "7회",
+    "interval": "1일 7회"
+  },
+  "operationInfo": [
+    {
+      "operationNumber": "1",
+      "departureTime": "6:20",
+      "arrivalTime": "7:05",
+      "departureName": "장양리시내버스공영정류장",
+      "arrivalName": "미래고",
+      "category": "공통",
+      "note": "(미래고 발) 진광고 경유, (토, 일, 공휴일 미운행)"
+    },
+    {
+      "operationNumber": "2",
+      "departureTime": "8:10",
+      "arrivalTime": "9:00",
+      "departureName": "장양리시내버스공영정류장",
+      "arrivalName": "미래고",
+      "category": "공통",
+      "note": "토, 일, 공휴일 미운행"
+    },
+    {
+      "operationNumber": "3",
+      "departureTime": "10:20",
+      "arrivalTime": "11:10",
+      "departureName": "장양리시내버스공영정류장",
+      "arrivalName": "미래고",
+      "category": "공통",
+      "note": "토, 일, 공휴일 미운행"
+    },
+    {
+      "operationNumber": "4",
+      "departureTime": "12:25",
+      "arrivalTime": "13:10",
+      "departureName": "장양리시내버스공영정류장",
+      "arrivalName": "미래고",
+      "category": "공통",
+      "note": "토, 일, 공휴일 미운행"
+    },
+    {
+      "operationNumber": "5",
+      "departureTime": "14:20",
+      "arrivalTime": "15:05",
+      "departureName": "장양리시내버스공영정류장",
+      "arrivalName": "미래고",
+      "category": "공통",
+      "note": "토, 일, 공휴일 미운행"
+    },
+    {
+      "operationNumber": "6",
+      "departureTime": "16:20",
+      "arrivalTime": "17:05",
+      "departureName": "장양리시내버스공영정류장",
+      "arrivalName": "미래고",
+      "category": "공통",
+      "note": "토, 일, 공휴일 미운행"
+    },
+    {
+      "operationNumber": "7",
+      "departureTime": "18:15",
+      "arrivalTime": "19:00",
+      "departureName": "장양리시내버스공영정류장",
+      "arrivalName": "미래고",
+      "category": "공통",
+      "note": "토, 일, 공휴일 미운행"
+    }
+  ]
+}

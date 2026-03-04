@@ -1,0 +1,67 @@
+{
+  "routeInfo": {
+    "routeNumber": "공영 14",
+    "origin": "평원로 중앙시장",
+    "destination": "풍물시장",
+    "firstBusTime": "07:05",
+    "lastBusTime": "19:10",
+    "operationCount": "5.5회",
+    "interval": "1일 5.5회"
+  },
+  "operationInfo": [
+    {
+      "operationNumber": "1",
+      "departureTime": "-",
+      "arrivalTime": "06:30",
+      "departureName": "평원로 중앙시장",
+      "arrivalName": "풍물시장",
+      "category": "공통",
+      "note": "첫차 안국선원 출발, 못골마을 경유"
+    },
+    {
+      "operationNumber": "2",
+      "departureTime": "07:05",
+      "arrivalTime": "-",
+      "departureName": "평원로 중앙시장",
+      "arrivalName": "풍물시장",
+      "category": "공통",
+      "note": "화실>살대울길>번재"
+    },
+    {
+      "operationNumber": "3",
+      "departureTime": "10:25",
+      "arrivalTime": "-",
+      "departureName": "평원로 중앙시장",
+      "arrivalName": "풍물시장",
+      "category": "공통",
+      "note": "화실>살대울길>번재"
+    },
+    {
+      "operationNumber": "4",
+      "departureTime": "13:00",
+      "arrivalTime": "-",
+      "departureName": "평원로 중앙시장",
+      "arrivalName": "풍물시장",
+      "category": "공통",
+      "note": "번재>살대울길>화실"
+    },
+    {
+      "operationNumber": "5",
+      "departureTime": "16:05",
+      "arrivalTime": "-",
+      "departureName": "평원로 중앙시장",
+      "arrivalName": "풍물시장",
+      "category": "공통",
+      "note": "번재>살대울길>화실"
+    },
+    {
+      "operationNumber": "6",
+      "departureTime": "19:10",
+      "arrivalTime": "-",
+      "departureName": "평원로 중앙시장",
+      "arrivalName": "풍물시장",
+      "category": "공통",
+      "note": "번재>살대울길>화실"
+    }
+  ]
+}

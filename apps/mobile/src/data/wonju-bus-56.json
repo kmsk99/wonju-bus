@@ -1,0 +1,40 @@
+{
+  "routeInfo": {
+    "routeNumber": "56",
+    "origin": "관설동종점",
+    "destination": "월송리",
+    "firstBusTime": "08:45",
+    "lastBusTime": "17:40",
+    "operationCount": "3회",
+    "interval": "1일 3회"
+  },
+  "operationInfo": [
+    {
+      "operationNumber": "1",
+      "departureTime": "8:45",
+      "arrivalTime": "10:25",
+      "departureName": "관설동종점",
+      "arrivalName": "월송리",
+      "category": "공통",
+      "note": "월송리발)송호마을경유"
+    },
+    {
+      "operationNumber": "2",
+      "departureTime": "12:40",
+      "arrivalTime": "14:20",
+      "departureName": "관설동종점",
+      "arrivalName": "월송리",
+      "category": "공통",
+      "note": "관설동발)송호마을경유"
+    },
+    {
+      "operationNumber": "3",
+      "departureTime": "16:45",
+      "arrivalTime": "18:25",
+      "departureName": "관설동종점",
+      "arrivalName": "월송리",
+      "category": "공통",
+      "note": "관설동발)송호마을경유"
+    }
+  ]
+}
