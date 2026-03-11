@@ -8,7 +8,7 @@ applications:
           commands:
             - nvm use 20
             - npm install -g pnpm@10.24.0
-            - pnpm install --frozen-lockfile
+            - pnpm install --frozen-lockfile --filter @wonju-bus/site...
         build:
           commands:
             - pnpm --filter @wonju-bus/site build
