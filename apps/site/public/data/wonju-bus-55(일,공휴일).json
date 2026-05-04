@@ -16,7 +16,7 @@
       "departureName": "관설동종점",
       "arrivalName": "부론",
       "category": "공통",
-      "note": "관설동발)면허시험장 미경유, 부론발)면허시험장경유 ※방학,토,일,공휴일 경동대 미경유"
+      "note": "부론발) 면허시험장 경유"
     },
     {
       "operationNumber": "2",
@@ -25,7 +25,7 @@
       "departureName": "관설동종점",
       "arrivalName": "부론",
       "category": "공통",
-      "note": "면허시험장 경유 ※방학,토,일,공휴일 경동대 미경유"
+      "note": "면허시험장 경유"
     },
     {
       "operationNumber": "3",
@@ -34,7 +34,7 @@
       "departureName": "관설동종점",
       "arrivalName": "부론",
       "category": "공통",
-      "note": "※방학,토,일,공휴일 경동대 미경유"
+      "note": ""
     },
     {
       "operationNumber": "4",
@@ -43,7 +43,7 @@
       "departureName": "관설동종점",
       "arrivalName": "부론",
       "category": "공통",
-      "note": "부론발)면허시험장 경유 ※방학,토,일,공휴일 경동대 미경유"
+      "note": "부론발) 면허시험장 경유"
     },
     {
       "operationNumber": "5",
@@ -52,7 +52,7 @@
       "departureName": "관설동종점",
       "arrivalName": "부론",
       "category": "공통",
-      "note": "면허시험장 경유 ※방학,토,일,공휴일 경동대 미경유"
+      "note": "면허시험장 경유"
     },
     {
       "operationNumber": "6",
@@ -61,7 +61,7 @@
       "departureName": "관설동종점",
       "arrivalName": "부론",
       "category": "공통",
-      "note": "※방학,토,일,공휴일 경동대 미경유"
+      "note": ""
     },
     {
       "operationNumber": "7",
@@ -70,7 +70,7 @@
       "departureName": "관설동종점",
       "arrivalName": "부론",
       "category": "공통",
-      "note": "※방학,토,일,공휴일 경동대 미경유"
+      "note": ""
     },
     {
       "operationNumber": "8",
@@ -79,7 +79,7 @@
       "departureName": "관설동종점",
       "arrivalName": "부론",
       "category": "공통",
-      "note": "면허시험장 경유 ※방학,토,일,공휴일 경동대 미경유"
+      "note": "면허시험장 경유"
     },
     {
       "operationNumber": "9",
@@ -88,7 +88,7 @@
       "departureName": "관설동종점",
       "arrivalName": "부론",
       "category": "공통",
-      "note": "※면허시험장 경유 ※부론면소재지,노림경유,문막2리종료※ 방학,토,일,공휴일 경동대 미경유"
+      "note": "면허시험장 경유, 부론→문막새마을금고종료"
     },
     {
       "operationNumber": "10",
@@ -97,7 +97,7 @@
       "departureName": "관설동종점",
       "arrivalName": "부론",
       "category": "공통",
-      "note": "※부론면소재지,노림경유,문막2리종료 ※방학,토,일,공휴일 경동대 미경유"
+      "note": "부론→문막새마을금고 종료"
     }
   ]
 }
