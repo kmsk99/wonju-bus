@@ -16,25 +16,25 @@
       "departureName": "관설동종점",
       "arrivalName": "부론",
       "category": "공통",
-      "note": "경동대 미경유, 구만이 경유"
+      "note": ""
     },
     {
       "operationNumber": "2",
-      "departureTime": "10:00",
-      "arrivalTime": "11:50",
+      "departureTime": "10:05",
+      "arrivalTime": "12:00",
       "departureName": "관설동종점",
       "arrivalName": "부론",
       "category": "공통",
-      "note": "경동대 경유, 구만이 경유 ※토요일, 방학 경동대 미경유"
+      "note": "관설동발) 경동대 경유"
     },
     {
       "operationNumber": "3",
-      "departureTime": "14:20",
-      "arrivalTime": "16:15",
+      "departureTime": "14:35",
+      "arrivalTime": "16:30",
       "departureName": "관설동종점",
       "arrivalName": "부론",
       "category": "공통",
-      "note": "경동대 경유, 구만이 경유 ※토요일, 방학 경동대 미경유"
+      "note": "관설동발) 경동대 경유"
     },
     {
       "operationNumber": "4",
@@ -43,7 +43,7 @@
       "departureName": "관설동종점",
       "arrivalName": "부론",
       "category": "공통",
-      "note": "경동대 미경유, 구만이 경유, 부론면,노림,문막2리종료"
+      "note": "부론→문막새마을금고 종료"
     }
   ]
 }
