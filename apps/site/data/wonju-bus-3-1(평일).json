@@ -1,0 +1,12 @@
+{
+  "routeInfo": {
+    "routeNumber": "3-1(평일)",
+    "origin": "장양리시내버스공영정류장",
+    "destination": "장양리시내버스공영정류장",
+    "firstBusTime": "07:05",
+    "lastBusTime": "20:00",
+    "operationCount": "6회",
+    "interval": "1일6회"
+  },
+  "operationInfo": []
+}

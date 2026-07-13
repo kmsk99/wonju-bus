@@ -1,0 +1,12 @@
+{
+  "routeInfo": {
+    "routeNumber": "34-1(평일)",
+    "origin": "장양리시내버스공영정류장",
+    "destination": "회촌",
+    "firstBusTime": "06:05",
+    "lastBusTime": "20:22",
+    "operationCount": "33회",
+    "interval": "평균25분"
+  },
+  "operationInfo": []
+}
