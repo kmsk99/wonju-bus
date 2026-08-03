@@ -8,24 +8,5 @@
     "operationCount": "2회",
     "interval": "1일 2회"
   },
-  "operationInfo": [
-    {
-      "operationNumber": "1",
-      "departureTime": "09:00",
-      "arrivalTime": "10:10",
-      "departureName": "터미널",
-      "arrivalName": "추모공원",
-      "category": "공통",
-      "note": "만종역 (09:20) 출발 ※(터미널 ~ 만종역 ~ 추모공원)"
-    },
-    {
-      "operationNumber": "2",
-      "departureTime": "14:00",
-      "arrivalTime": "15:05",
-      "departureName": "터미널",
-      "arrivalName": "추모공원",
-      "category": "공통",
-      "note": "만종역(14:20) 출발 ※(터미널 ~ 만종역 ~ 추모공원)"
-    }
-  ]
+  "operationInfo": []
 }
