@@ -1,0 +1,12 @@
+{
+  "routeInfo": {
+    "routeNumber": "34(평일)",
+    "origin": "장양리시내버스공영정류장",
+    "destination": "연세대",
+    "firstBusTime": "06:25",
+    "lastBusTime": "21:05",
+    "operationCount": "25.5회",
+    "interval": "평균40분"
+  },
+  "operationInfo": []
+}
