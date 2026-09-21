@@ -1,0 +1,12 @@
+{
+  "routeInfo": {
+    "routeNumber": "31(평일)",
+    "origin": "장양리시내버스공영정류장",
+    "destination": "귀래,운남,용암",
+    "firstBusTime": "05:50",
+    "lastBusTime": "19:50",
+    "operationCount": "21회",
+    "interval": "평균40분"
+  },
+  "operationInfo": []
+}
