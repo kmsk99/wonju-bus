@@ -82,6 +82,39 @@ export default function Home() {
           </Link>
         </div>
       </section>
+      <section className="app-download" aria-labelledby="app-download-title">
+        <div>
+          <span className="choice-kicker">ANDROID APP</span>
+          <h2 id="app-download-title">원주버스를 앱으로 만나보세요</h2>
+          <p>한 번 확인한 시간표는 인터넷 연결 없이도 볼 수 있어요.</p>
+          <span className="download-meta">Android 7.0 이상 · v1.0.0 · 약 50 MB</span>
+        </div>
+        <a
+          className="download-button"
+          href="https://github.com/kmsk99/wonju-bus/releases/download/android-v1.0.0/wonju-bus-1.0.0.apk"
+        >
+          <svg
+            width="20"
+            height="20"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            aria-hidden="true"
+          >
+            <path d="M12 3v12m-5-5 5 5 5-5M5 16v5h14v-5" />
+          </svg>
+          Android 앱 다운로드
+        </a>
+        <details className="install-help">
+          <summary>설치 방법 보기</summary>
+          <p>
+            다운로드한 APK 파일을 열어 설치하세요. 휴대폰에서 요청하면 이
+            브라우저의 앱 설치를 허용해 주세요. iPhone에서는 웹사이트를 이용할
+            수 있어요.
+          </p>
+        </details>
+      </section>
       <aside className="schedule-note">
         <span className="note-symbol" aria-hidden="true">
           i
