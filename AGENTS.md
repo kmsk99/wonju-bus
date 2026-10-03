@@ -1,23 +1,35 @@
 # Repository Guidelines
 
-## 프로젝트 구조 및 모듈 구성
-이 저장소는 pnpm 기반 모노레포로 `apps/` 하위에 웹·크롤러·Flutter 및 기존 React Native 앱이 있습니다. `apps/site`는 Next.js 15 기반 프런트엔드로 `src/{app,entities,shared,widgets}` 구조를 따르며 Tailwind UI와 JSON 시간표(`data/`)를 사용합니다. 정적 자산은 `public/`에 둡니다. Vercel Mason Hobby 팀의 `wonju-bus` 프로젝트로 배포합니다. `apps/flutter`는 Flutter 앱이며 공용 `/api/schedules`을 받고 기기에 캐시합니다. `apps/mobile`의 기존 React Native 코드는 보존합니다. `apps/crawl`은 fetch + cheerio 기반 TypeScript 크롤러이며 주요 로직은 `src/`에, 크롤링 결과는 `data/`에 저장됩니다. `pnpm crawl`을 실행하면 최신 JSON을 생성하여 사이트 패키지의 `data/`까지 동기화합니다.
+## 범위와 구조
 
-## 빌드·테스트·개발 명령어
-- `pnpm install` — 워크스페이스 전역 의존성을 설치하고 패키지를 링크합니다.
-- `pnpm dev` — 사이트 패키지의 Next.js 개발 서버를 가동합니다.
-- `pnpm --filter @wonju-bus/site build` — Next.js 프로덕션 빌드를 생성합니다.
-- `pnpm start:site` — 빌드된 사이트를 로컬에서 확인합니다.
-- `pnpm crawl` — 크롤러를 실행하고 결과 JSON을 사이트로 복사합니다.
+운영 앱은 `apps/site`(Next.js 15), `apps/crawl`(TypeScript), `apps/flutter`(Flutter)입니다. pnpm workspace는 사이트와 크롤러만 포함합니다. `legacy/react-native`는 이전 구현 보관본이며 기본 설치·검증·배포에서 제외합니다.
 
-## 코드 스타일 및 네이밍 규칙
-TypeScript는 `strict` 모드가 활성화되어 있으므로 명시적 타입을 유지하고 2칸 들여쓰기를 지킵니다. `pnpm --filter @wonju-bus/site lint`로 Next.js ESLint 규칙을 준수하며 import와 JSX 속성에는 가능한 한 단일 따옴표를 사용합니다. React 컴포넌트·훅은 PascalCase/`use*` 패턴을, 유틸 함수는 camelCase를 사용합니다. 크롤러가 생성하는 JSON 파일은 `wonju-bus-<노선>.json` 형식을 따라야 사이트 로더가 인식합니다. 경로 참조 시에는 `@/shared/ui/Clock`처럼 설정된 alias를 선호합니다.
+웹은 Vercel Hobby, DB는 **Vercel Marketplace Neon Free**를 사용합니다. AWS Amplify 설정을 되살리지 않습니다. 운영 흐름과 현재 제약은 `docs/architecture.md`, `docs/operations.md`, `docs/status.md`를 읽고 실제 코드·배포 상태와 대조합니다.
 
-## 테스트 가이드라인
-크롤러 검증은 `apps/crawl/src`에 위치한 테스트 스크립트로 진행합니다. `pnpm --filter @wonju-bus/crawl test:basic-info`로 기본 정보 추출을, `test:detail`로 상세 시간표 파싱을, `test:multi`로 다중 노선 크롤링을 확인합니다. 필요한 보조 스크립트는 다른 `test*.ts` 파일과 같은 디렉터리에 둡니다. 현재 사이트 앱에는 자동화 테스트가 없으므로 UI 변경 시 `src/widgets/<기능>/__tests__/`와 같은 경로에 테스트를 추가하거나 PR에 수동 검증 절차를 명시합니다.
+## 개발·검증
 
-## 커밋 및 PR 가이드라인
-기존 Git 히스토리는 영어 명령형이지만, 앞으로는 한국어 현재형으로 간결하게 작성합니다(예: `버스 데이터 갱신`, `크롤러 오류 처리 개선`). 관련 이슈나 참고 티켓이 있다면 본문에 링크합니다. Pull Request에는 변경 요약, 크롤러·사이트 영향, UI 변경 시 스크린샷 또는 GIF, 재현 방법(`pnpm crawl`, `pnpm dev` 등)을 포함합니다. 시간표 JSON을 재생성했다면 명확히 언급해 리뷰어가 동일한 환경을 갖출 수 있도록 안내합니다.
+- Node.js 22 이상, pnpm 10.24.0, Flutter 버전은 `.flutter-version` 참고
+- `pnpm install --frozen-lockfile`
+- `pnpm dev`: 사이트 개발
+- `pnpm check`: 웹 lint(경고 허용 안 함), 크롤러 회귀·데이터 정합성 검사, 크롤러·웹 빌드
+- Flutter 변경: `cd apps/flutter && flutter analyze && flutter test`
+- UI 변경: 320px 모바일 화면과 실제 검색·상세 이동 확인
+- APK 배포: `pnpm build:apk`, 서명 검사, 기기 설치/업데이트 확인, GitHub Release 업로드, 운영 다운로드 확인
 
-## 데이터 운영
-Vercel Marketplace Neon Free 플랜을 사용합니다. Actions는 `pnpm crawl:publish`로 DB를 갱신하며 JSON 커밋이나 사이트 재배포를 하지 않습니다. `pnpm crawl`은 오프라인 사본 갱신용입니다. DB 연결 문자열은 서버 환경변수와 GitHub secret에만 저장합니다.
+크롤러의 `test:session`은 외부 통신 없는 회귀 테스트입니다. `test:basic-info`, `test:detail`, `test:multi`, `test:route`는 원본 ITS를 호출하는 진단 명령입니다. 필요하지 않은 실제 크롤링은 반복하지 않습니다.
+
+## 데이터·비밀 정보
+
+- `pnpm crawl`: 검증 후 웹·Flutter 내장 snapshot 2개 갱신
+- `pnpm crawl:publish`: GitHub Actions에서 Neon만 갱신, 커밋·PR·재배포 없음
+- 수집 중간 JSON과 APK는 생성물이며 Git에서 제외
+- `DATABASE_URL`은 서버/Actions에만 저장하고 Flutter에는 공용 API URL만 제공
+- `.env.local`, `key.properties`, keystore를 커밋하거나 로그에 출력하지 않음
+- APK 버전은 `pubspec.yaml`에서 관리하며 웹 메타데이터는 패키징 스크립트로 생성
+- 같은 앱의 업데이트는 기존 서명 키를 유지하고 versionCode를 증가시킴
+
+## 스타일·변경 관리
+
+TypeScript strict, 2칸 들여쓰기, React 컴포넌트 PascalCase, 훅 use 접두어를 사용합니다. `@/shared/...` 별칭을 우선 사용하고 Dart는 `dart format`을 적용합니다. 사용하지 않는 코드·오래된 문서는 남겨 두지 않되 보관본을 운영 코드로 혼동하지 않습니다.
+
+커밋은 논리 단위별 한국어 한 줄(`<prefix>: <한국어 설명>`)로 작성합니다. PR에는 영향 범위, 실행한 검증, UI 스크린샷, 데이터 재생성 여부를 기록합니다. 배포 요청 시 push만으로 완료했다고 하지 말고 CI와 Vercel 운영 상태·API·APK 링크를 확인합니다.

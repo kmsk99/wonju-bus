@@ -1,91 +1,81 @@
-# 원주시 버스 시간표
+# 원주버스
 
-원주시 ITS 시간표를 수집해 웹과 Flutter 앱에 제공하는 모노레포입니다.
+원주시 ITS의 종점·노선 시간표를 웹과 Android 앱에서 조회합니다. 표시하는 남은 시간은 시간표 기준이며 실시간 차량 위치 정보가 아닙니다.
 
-## 구성
+- **웹:** https://wonju-bus-mason.vercel.app
+- **Android:** 홈페이지의 앱 다운로드 버튼 또는 [GitHub Releases](https://github.com/kmsk99/wonju-bus/releases)
+- **운영:** Vercel Hobby + Vercel Marketplace Neon Free, 싱가포르 리전
 
-- `apps/site`: Next.js 15 웹. Vercel의 Mason Hobby 팀에서 배포합니다.
-- `apps/crawl`: TypeScript + cheerio 크롤러.
-- `apps/flutter`: Flutter 앱. 이전 `wonju_bus_flutter`의 전체 Git 이력을 통합했습니다.
-- `apps/mobile`: 기존 React Native 앱을 보존한 디렉터리입니다. 이번 웹·Flutter 데이터 통합 대상에는 포함하지 않습니다.
+## 저장소 구성
 
-Node.js 22 이상, pnpm 10.24.0을 사용합니다. Flutter는 별도 SDK로 관리합니다.
+| 경로 | 역할 |
+| --- | --- |
+| `apps/site` | Next.js 15 / React 19 / Tailwind 웹과 공용 API |
+| `apps/crawl` | fetch + cheerio 기반 TypeScript 크롤러 |
+| `apps/flutter` | Flutter Android 앱 및 다른 플랫폼 소스 |
+| `database/schema.sql` | Neon snapshot·실행 이력 스키마 |
+| `scripts` | APK 패키징 및 버전·오프라인 데이터 검증 |
+| `docs` | 아키텍처, 운영·배포, 현재 지원 범위 |
+| `legacy/react-native` | 이전 React Native 구현 보관. 운영·기본 빌드 대상에서 제외 |
 
-## 개발과 검증
+pnpm workspace에는 사이트와 크롤러만 포함합니다. Flutter는 Flutter SDK로 관리합니다.
+
+## 시작하기
+
+Node.js 22 이상(`.nvmrc`), pnpm 10.24.0, Flutter 3.44.9(`.flutter-version`)를 기준으로 검증합니다.
 
 ```sh
-pnpm install
+pnpm install --frozen-lockfile
+cp apps/site/.env.example apps/site/.env.local
+# .env.local의 DATABASE_URL을 Vercel Marketplace Neon 연결 문자열로 설정
 pnpm dev
-pnpm --filter @wonju-bus/site build
-pnpm --filter @wonju-bus/crawl build
-pnpm crawl
+```
+
+DB가 없거나 연결이 실패하면 웹은 내장 시간표로 조회할 수 있습니다. `/api/schedules`는 DB 연결이 필요합니다. 실제 `.env` 및 서명 키는 커밋하지 않습니다.
+
+```sh
+pnpm check                 # lint(경고도 실패), 회귀·정합성 검사, 크롤러·웹 빌드
+pnpm crawl                 # 원주시 ITS 수집 → 웹·Flutter 내장 snapshot 갱신
+pnpm start:site            # 빌드한 웹 실행
 cd apps/flutter
 flutter pub get
+flutter analyze
 flutter test
-flutter run
+flutter run               # flutter devices로 장치 ID 확인 가능
 ```
 
-## 배포
-
-- 운영 주소: https://wonju-bus-mason.vercel.app
-- Vercel 프로젝트: `mason-a806/wonju-bus`, Hobby 플랜
-- Git 저장소: `kmsk99/wonju-bus`, 운영 브랜치 `main`
-- Root Directory: `apps/site`, 프레임워크 Next.js
-- 수동 배포: 저장소 루트에서 `vercel --prod`
-
-## 시간표 갱신과 Neon
-
-Vercel Marketplace에서 만든 Neon `wonju-bus` **Free** 플랜을 사용합니다. DB와 API는 싱가포르 리전입니다. 유료 자동 업그레이드는 구성하지 않습니다.
+## 데이터 흐름
 
 ```text
-원주시 ITS → GitHub Actions → 검증된 snapshot → Neon Postgres
-                                            ↓
-                             Vercel /api/schedules
-                                  ↙              ↘
-                                웹              Flutter
+원주시 ITS → GitHub Actions(월요일 09:00 KST) → 검증 → Neon
+                                                       ↓
+                                              /api/schedules
+                                                ↙         ↘
+                                              웹         Flutter
 ```
 
-- 매주 월요일 09:00 KST에 Actions가 `pnpm crawl:publish`를 실행합니다. 수동 실행도 가능합니다.
-- 세션 쿠키와 CSRF 토큰을 유지하며 최대 3개 요청을 동시에 처리합니다. 30초 제한과 지수형 재시도를 적용합니다.
-- 모든 노선이 수집되고 비어 있지 않은 경우에만 게시합니다. 노선 수가 이전보다 20% 이상 감소하면 원본 확인을 위해 게시를 중단합니다.
-- 트랜잭션으로 완성된 snapshot을 교체합니다. SHA-256이 같으면 데이터 변경 시각을 유지하고 확인 시각만 갱신합니다.
-- 현재 snapshot 하나와 최근 실행 60건을 보관합니다. API는 CDN에서 5분 캐시하므로 시간표 갱신에 커밋·PR·사이트 재배포가 필요하지 않습니다.
-- DB 연결은 Vercel 서버와 Actions의 `DATABASE_URL` secret에만 둡니다. 웹·앱에는 연결 문자열을 전달하지 않습니다.
+- 운영 수집은 `pnpm crawl:publish`로 DB만 갱신합니다. JSON 커밋이나 웹 재배포가 필요하지 않습니다.
+- API CDN 캐시는 5분이며, 변경 반영까지 수 분이 걸릴 수 있습니다.
+- Flutter는 시작할 때 API를 조회하고, 실패하면 마지막 정상 캐시 → 내장 시간표 순서로 읽습니다.
+- `pnpm crawl`로 갱신하는 내장 사본은 웹의 `public/data/snapshot.json`과 Flutter의 `assets/data/snapshot.json`입니다. APK 릴리스 전에 실행합니다.
 
-스키마는 `database/schema.sql`이며 처음 준비할 때 `DATABASE_URL`을 설정하고 `pnpm db:migrate`를 실행합니다. Vercel 환경변수는 `vercel env pull`로 받을 수 있습니다. `.env.local`은 커밋하지 않습니다.
+## 배포와 APK
+
+`main`에 push하면 Vercel 프로젝트 `mason-a806/wonju-bus`가 `apps/site`를 배포합니다. CI에서는 웹·크롤러와 Flutter를 검증합니다.
 
 ```sh
-# 로컬 검증 및 내장 오프라인 데이터 동기화
-pnpm crawl
-# Neon 운영 데이터 갱신 (DATABASE_URL 필요)
-pnpm crawl:publish
-# 세션·오류·동시 요청 제한·재시도 회귀 테스트
-pnpm --filter @wonju-bus/crawl test:session
+pnpm build:apk
 ```
 
-## 공용 API와 오프라인 데이터
+전용 서명 키와 `apps/flutter/android/key.properties`가 필요합니다. 결과는 `dist/android/<버전>/`에 생성되고 홈페이지 다운로드 정보도 갱신됩니다. APK를 GitHub Release에 업로드한 뒤 웹 변경을 push합니다. APK 파일과 비밀 키는 Git에 넣지 않습니다.
 
-`GET /api/schedules`는 파일명을 키로 하는 전체 시간표를 반환합니다. `?meta=1`은 시간표 수·변경 시각·확인 시각을 반환합니다. ETag/304 및 공개 읽기용 CORS를 지원합니다. 캐시 때문에 변경 반영까지 수 분 걸릴 수 있습니다.
+- [웹 개발](apps/site/README.md)
+- [크롤러 사용](apps/crawl/README.md)
+- [Flutter 개발](apps/flutter/README.md)
+- [아키텍처·API](docs/architecture.md)
+- [운영·배포·APK 릴리스](docs/operations.md)
+- [지원 범위와 남은 과제](docs/status.md)
 
-웹은 공용 API를 우선 사용하고 실패하면 배포에 포함된 JSON을 읽습니다. Flutter는 API 응답을 검증한 뒤 기기에 저장하며, 실패하면 마지막 정상 캐시, 그다음 내장 snapshot을 사용합니다. 앱 시작 시 다시 확인합니다.
+## 기여
 
-```sh
-cd apps/flutter
-flutter run --dart-define=BUS_DATA_URL=https://wonju-bus-mason.vercel.app/api/schedules
-```
-
-`pnpm crawl`은 `apps/crawl/data`, `apps/site/data`, `apps/site/public/data`, `apps/flutter/assets/data`의 오프라인 사본을 동기화합니다. 정기 운영 갱신은 Neon만 변경하므로 이 사본은 다음 앱 릴리스 전에 갱신하세요.
-
-## Android APK 배포
-
-홈의 **Android 앱 다운로드** 버튼은 GitHub Release `android-v1.0.0`의 `wonju-bus-1.0.0.apk`로 연결됩니다. APK는 Git에 넣지 않고 Release 자산으로 배포합니다.
-
-릴리스 빌드에는 `apps/flutter/android/key.properties`와 전용 서명 키가 필요합니다. 둘 다 Git에서 제외합니다. 현재 머신의 키 원본은 `~/.config/wonju-bus/android/`에 있습니다. 기존 설치에 업데이트하려면 같은 키를 유지하고 버전 코드를 올려야 합니다.
-
-```sh
-cd apps/flutter
-flutter build apk --release
-# 결과: build/app/outputs/flutter-apk/app-release.apk
-```
-
-새 버전은 `pubspec.yaml`의 버전을 올려 빌드한 뒤 GitHub Release에 APK와 SHA-256 체크섬을 업로드하고, 홈페이지의 버전 및 다운로드 링크를 함께 변경합니다. 배포 전에 `apksigner verify`로 서명을 확인합니다. 디버그 키로 릴리스를 대체하지 않습니다.
+변경에 맞는 검증을 실행하고 한국어 한 줄 커밋(`fix: 시간표 오류 처리 개선`)을 사용합니다. UI 변경은 작은 화면과 실제 동작을 확인합니다. 자세한 작업 규칙은 [AGENTS.md](AGENTS.md)에 있습니다.
