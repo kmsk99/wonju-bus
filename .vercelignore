@@ -1,0 +1,7 @@
+graphify-out/
+apps/flutter/
+apps/mobile/
+apps/crawl/
+**/node_modules/
+**/.next/
+.env*

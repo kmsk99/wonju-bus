@@ -1,4 +1,5 @@
 "use client";
+import Link from "next/link";
 
 import { useEffect, useState } from "react";
 
@@ -85,9 +86,9 @@ export default function StopsPage() {
       )}
 
       <div className="mt-6 text-center">
-        <a href="/" className="text-blue-500 hover:underline">
+        <Link href="/" className="text-blue-500 hover:underline">
           홈으로 돌아가기
-        </a>
+        </Link>
       </div>
     </div>
   );

@@ -153,8 +153,8 @@ export async function loadBusData(
     }
 
     // 현재 요일에 맞는 파일과 그렇지 않은 파일 분류
-    let matchingFiles: string[] = [];
-    let nonMatchingFiles: string[] = [];
+    const matchingFiles: string[] = [];
+    const nonMatchingFiles: string[] = [];
 
     for (const file of files) {
       const fileInfo = parseBusFileName(file);
@@ -172,8 +172,8 @@ export async function loadBusData(
     }
 
     // 일치하는 파일이 있으면 사용, 없으면 아무 파일이나 사용
-    let fileToLoad = matchingFiles.length > 0 ? matchingFiles[0] : files[0];
-    let operatesToday = matchingFiles.length > 0;
+    const fileToLoad = matchingFiles.length > 0 ? matchingFiles[0] : files[0];
+    const operatesToday = matchingFiles.length > 0;
 
     // 파일 로드
     const fileUrl = `/data/${fileToLoad}`;

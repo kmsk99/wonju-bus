@@ -302,7 +302,7 @@ export default function StopDetailPage() {
           <div className="my-8 flex flex-col items-center justify-center bg-white rounded-lg shadow-sm py-8">
             <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500 mb-4"></div>
             <p className="text-gray-600 text-center">
-              "{stopName}" 정류장 정보를 불러오는 중입니다.
+              &quot;{stopName}&quot; 정류장 정보를 불러오는 중입니다.
               <br />
               잠시만 기다려주세요.
             </p>
