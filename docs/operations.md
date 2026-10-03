@@ -32,9 +32,13 @@ pnpm crawl:publish
 pnpm db:migrate
 # 운영 Actions 수동 실행
 gh workflow run update-bus-data.yml --ref main
+# Ubuntu/macOS의 DNS·IPv4·Node fetch 연결 비교 (DB 변경 없음)
+gh workflow run check-source.yml --ref main
 ```
 
 Actions는 월요일 09:00 KST에 실행되도록 예약되어 있습니다. GitHub 실행 대기 상황에 따라 시작이 늦어질 수 있습니다. 실행 시간 초과·원본 응답 오류는 실패로 표시됩니다. 같은 작업을 동시에 게시하지 않도록 concurrency 그룹을 사용합니다.
+
+GitHub 실행 환경에서 원본 ITS의 최초 TCP 연결 시간 초과가 간헐적으로 관측됐습니다. 별도 연결 진단에서는 Ubuntu와 macOS 모두 정상 응답한 사례가 있으므로 특정 OS 문제로 단정하지 않습니다. 목록 요청 3회가 모두 실패하면 작업을 실패로 남기며, 연결 진단 후 실패한 작업을 재실행할 수 있습니다.
 
 장애 시 Actions 로그부터 확인합니다. ITS의 HTTP 주소, 세션/CSRF, 표 구조를 점검하세요. 실패를 숨기거나 부분 데이터로 정상 snapshot을 덮어쓰지 않습니다. 노선 수 급감 차단은 실제 노선 개편 여부를 확인한 후에만 기준을 조정합니다.
 
