@@ -1,7 +1,7 @@
 # Repository Guidelines
 
 ## 프로젝트 구조 및 모듈 구성
-이 저장소는 pnpm 기반 모노레포로 `apps/` 하위에 두 개의 앱이 있습니다. `apps/site`는 Next.js 16 기반 프런트엔드로 `src/{app,entities,shared,widgets}` 구조를 따르며 Tailwind UI와 JSON 시간표(`data/`)를 사용합니다. 정적 자산은 `public/`에 둡니다. `apps/crawl`은 fetch + cheerio 기반 TypeScript 크롤러이며 주요 로직은 `src/`에, 크롤링 결과는 `data/`에 저장됩니다. `pnpm crawl`을 실행하면 최신 JSON을 생성하여 사이트 패키지의 `data/`까지 동기화합니다.
+이 저장소는 pnpm 기반 모노레포로 `apps/` 하위에 웹·크롤러·Flutter 및 기존 React Native 앱이 있습니다. `apps/site`는 Next.js 15 기반 프런트엔드로 `src/{app,entities,shared,widgets}` 구조를 따르며 Tailwind UI와 JSON 시간표(`data/`)를 사용합니다. 정적 자산은 `public/`에 둡니다. Vercel Mason Hobby 팀의 `wonju-bus` 프로젝트로 배포합니다. `apps/flutter`는 Flutter 앱이며 공용 `/data/snapshot.json`을 받고 기기에 캐시합니다. `apps/mobile`의 기존 React Native 코드는 보존합니다. `apps/crawl`은 fetch + cheerio 기반 TypeScript 크롤러이며 주요 로직은 `src/`에, 크롤링 결과는 `data/`에 저장됩니다. `pnpm crawl`을 실행하면 최신 JSON을 생성하여 사이트 패키지의 `data/`까지 동기화합니다.
 
 ## 빌드·테스트·개발 명령어
 - `pnpm install` — 워크스페이스 전역 의존성을 설치하고 패키지를 링크합니다.

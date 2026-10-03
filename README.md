@@ -1,63 +1,65 @@
 # 원주시 버스 시간표
 
-## 개요
-원주시 버스 시간표는 공식 ITS 포털에서 데이터를 수집하고, Next.js 기반 웹사이트로 종점 출발 시간을 제공하는 모노레포입니다. 크롤러가 최신 JSON 일정을 생성하며, 프런트엔드는 이를 활용해 빠르고 모바일 친화적인 화면을 제공합니다.
+원주시 ITS 시간표를 수집해 웹과 Flutter 앱에 제공하는 모노레포입니다.
 
-## 프로젝트 구조
-- `apps/site` – Next.js 16 + Tailwind CSS 프런트엔드. `src/{app,entities,shared,widgets}` 구조를 따르며 `data/`의 시간표 JSON을 읽습니다.
-- `apps/crawl` – TypeScript/cheerio 기반 크롤러. http://its.wonju.go.kr 에서 fetch로 전체 노선 정보를 수집해 정규화된 JSON을 `data/`에 저장합니다.
-- `apps/*/data` – 크롤링 결과가 저장되는 JSON 디렉터리로, `pnpm crawl` 실행 시 두 패키지 간에 동기화됩니다.
+## 구성
 
-## 필요 조건
-- Node.js 20 이상 (Next.js 16 요구)
-- pnpm 10.24.0 (`corepack enable pnpm`으로 활성화 권장)
+- `apps/site`: Next.js 15 웹. Vercel의 Mason Hobby 팀에서 배포합니다.
+- `apps/crawl`: TypeScript + cheerio 크롤러.
+- `apps/flutter`: Flutter 앱. 이전 `wonju_bus_flutter`의 전체 Git 이력을 통합했습니다.
+- `apps/mobile`: 기존 React Native 앱을 보존한 디렉터리입니다. 이번 웹·Flutter 데이터 통합 대상에는 포함하지 않습니다.
 
-## 설치 방법
-```bash
+Node.js 22 이상, pnpm 10.24.0을 사용합니다. Flutter는 별도 SDK로 관리합니다.
+
+## 개발과 검증
+
+```sh
 pnpm install
-```
-워크스페이스 전체 의존성을 설치하고 두 패키지를 링크합니다.
-
-## 사용 방법
-### 사이트 개발
-```bash
-pnpm dev                # http://localhost:3000 에서 Next.js 개발 서버 실행
+pnpm dev
 pnpm --filter @wonju-bus/site build
-pnpm start:site         # 프로덕션 빌드 로컬 검증
+pnpm --filter @wonju-bus/crawl build
+pnpm crawl
+cd apps/flutter
+flutter pub get
+flutter test
+flutter run
 ```
 
-### Amplify 배포(SSR)
-이 프로젝트는 Amplify에서 Next.js SSR로 배포해야 하므로 앱 플랫폼을 `WEB_COMPUTE`로 설정해야 합니다.
+## 배포
 
-```bash
-aws amplify update-app --app-id <APP_ID> --platform WEB_COMPUTE --region <REGION>
-aws amplify update-branch --app-id <APP_ID> --branch-name main --framework "Next.js - SSR" --region <REGION>
+- 운영 주소: https://wonju-bus-mason.vercel.app
+- Vercel 프로젝트: `mason-a806/wonju-bus`, Hobby 플랜
+- Git 저장소: `kmsk99/wonju-bus`, 운영 브랜치 `main`
+- Root Directory: `apps/site`, 프레임워크 Next.js
+- 수동 배포: 저장소 루트에서 `vercel --prod`
+
+## 시간표 갱신
+
+`.github/workflows/update-bus-data.yml`이 매주 월요일 09:00 KST에 실행됩니다. Actions에서 수동 실행도 가능합니다.
+
+1. 원주시 ITS 목록 페이지의 세션 쿠키와 CSRF 토큰을 사용해 상세 시간표를 수집합니다.
+2. 임시 폴더에서 전체 노선 수집과 시간표 검증을 마친 뒤 데이터 파일을 교체합니다. HTTP 오류, 빈 시간표, 일부 노선 실패 시 기존 데이터는 유지합니다.
+3. 크롤러·사이트 데이터와 Flutter 내장 데이터를 함께 갱신합니다.
+4. 실행별 브랜치에서 PR을 생성하고 main에 머지합니다.
+5. `VERCEL_DEPLOY_HOOK` 저장소 secret으로 Vercel 운영 배포를 요청합니다. 데이터 변경이 없어도 재실행으로 배포를 복구할 수 있습니다.
+
+GitHub 저장소의 Actions 설정에서 **Allow GitHub Actions to create and approve pull requests**가 활성화되어 있어야 합니다. Deploy Hook은 Vercel 프로젝트의 main 브랜치에 연결합니다. Hook URL은 저장소에 커밋하지 않습니다.
+
+## 웹·Flutter 데이터
+
+`/data/snapshot.json`은 파일명을 키로 하는 전체 시간표입니다. 개별 JSON과 같은 수집 결과에서 생성되며 공개 읽기용 CORS를 허용합니다.
+
+Flutter는 시작 시 운영 snapshot을 가져와 검증하고 기기에 저장합니다. 네트워크 오류 또는 잘못된 응답은 마지막 정상 캐시로 대체하며, 첫 오프라인 실행은 내장 snapshot을 사용합니다. 앱 재시작 시 최신 데이터를 다시 확인합니다.
+
+다른 데이터 서버를 사용할 경우:
+
+```sh
+flutter run --dart-define=BUS_DATA_URL=https://example.com/data
 ```
 
-루트의 `amplify.yml`은 모노레포 기준으로 `@wonju-bus/site`를 빌드하고 `apps/site/.next` 아티팩트를 업로드하도록 구성되어 있습니다.
+네트워크 수집 없이 개발할 때도 내장 JSON을 삭제하지 마세요. `pnpm crawl`이 다음 디렉터리를 함께 갱신합니다.
 
-### 시간표 데이터 갱신
-```bash
-pnpm crawl              # 크롤링 후 data/ 갱신 및 사이트 동기화
-pnpm start:crawl        # 콘솔 로그를 확인하며 연속 크롤링
-pnpm --filter @wonju-bus/crawl selector:test   # 셀렉터 검증 대화형 도구
-```
-크롤링으로 생성된 JSON은 코드 변경과 함께 커밋해 배포본과 데이터가 일치하도록 유지합니다.
-
-## 자동 데이터 갱신
-GitHub Actions 워크플로우(`.github/workflows/update-bus-data.yml`)가 **매주 월요일 09:00 KST**에 자동 실행됩니다.
-1. 크롤러가 최신 버스 시간표를 수집합니다.
-2. 변경 사항이 있으면 `data/update-YYYYMMDD` 브랜치를 생성합니다.
-3. PR을 만들어 자동으로 main에 머지하고 브랜치를 삭제합니다.
-
-Actions 탭의 **버스 데이터 자동 갱신** 워크플로우에서 `workflow_dispatch`로 수동 실행도 가능합니다.
-
-## 테스트와 품질 점검
-테스트 스크립트는 `apps/crawl/src`에 위치합니다.
-- `pnpm --filter @wonju-bus/crawl test:basic-info` – 기본 정보 추출 확인
-- `pnpm --filter @wonju-bus/crawl test:detail` – 노선별 상세 시간표 파싱 점검
-- `pnpm --filter @wonju-bus/crawl test:multi` – 다중 노선 크롤링 검증
-프런트엔드 자동화 테스트는 아직 없으므로 UI 기능 추가 시 수동 확인 절차를 PR 본문에 기록하거나 테스트 디렉터리에 케이스를 추가하세요.
-
-## 기여 안내
-자세한 공헌 지침은 `AGENTS.md`를 참조하세요. 커밋은 한국어 현재형으로 간결하게 작성하고, 데이터 재생성 여부를 명시하며, UI 변경 시 스크린샷 또는 재현 방법을 첨부하면 리뷰가 수월해집니다.
+- `apps/crawl/data`
+- `apps/site/data`
+- `apps/site/public/data`
+- `apps/flutter/assets/data`
