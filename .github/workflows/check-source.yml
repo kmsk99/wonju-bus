@@ -1,0 +1,23 @@
+name: ITS 연결 진단
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  connectivity:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-15]
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 5
+    steps:
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 22
+      - name: DNS와 IPv4 연결 확인
+        run: |
+          node -e "require('dns').lookup('its.wonju.go.kr',{all:true},(e,r)=>console.log(e||r))"
+          curl -4 --connect-timeout 15 --max-time 25 --silent --show-error --output /dev/null --write-out 'HTTP %{http_code}, remote %{remote_ip}, connect %{time_connect}s\n' http://its.wonju.go.kr/bus/bus04.do
+      - name: Node fetch 연결 확인
+        run: node -e "fetch('http://its.wonju.go.kr/bus/bus04.do',{signal:AbortSignal.timeout(30000)}).then(r=>{console.log('HTTP',r.status);if(!r.ok)process.exitCode=1}).catch(e=>{console.error(e);process.exitCode=1})"
