@@ -1,7 +1,7 @@
 # Repository Guidelines
 
 ## 프로젝트 구조 및 모듈 구성
-이 저장소는 pnpm 기반 모노레포로 `apps/` 하위에 웹·크롤러·Flutter 및 기존 React Native 앱이 있습니다. `apps/site`는 Next.js 15 기반 프런트엔드로 `src/{app,entities,shared,widgets}` 구조를 따르며 Tailwind UI와 JSON 시간표(`data/`)를 사용합니다. 정적 자산은 `public/`에 둡니다. Vercel Mason Hobby 팀의 `wonju-bus` 프로젝트로 배포합니다. `apps/flutter`는 Flutter 앱이며 공용 `/data/snapshot.json`을 받고 기기에 캐시합니다. `apps/mobile`의 기존 React Native 코드는 보존합니다. `apps/crawl`은 fetch + cheerio 기반 TypeScript 크롤러이며 주요 로직은 `src/`에, 크롤링 결과는 `data/`에 저장됩니다. `pnpm crawl`을 실행하면 최신 JSON을 생성하여 사이트 패키지의 `data/`까지 동기화합니다.
+이 저장소는 pnpm 기반 모노레포로 `apps/` 하위에 웹·크롤러·Flutter 및 기존 React Native 앱이 있습니다. `apps/site`는 Next.js 15 기반 프런트엔드로 `src/{app,entities,shared,widgets}` 구조를 따르며 Tailwind UI와 JSON 시간표(`data/`)를 사용합니다. 정적 자산은 `public/`에 둡니다. Vercel Mason Hobby 팀의 `wonju-bus` 프로젝트로 배포합니다. `apps/flutter`는 Flutter 앱이며 공용 `/api/schedules`을 받고 기기에 캐시합니다. `apps/mobile`의 기존 React Native 코드는 보존합니다. `apps/crawl`은 fetch + cheerio 기반 TypeScript 크롤러이며 주요 로직은 `src/`에, 크롤링 결과는 `data/`에 저장됩니다. `pnpm crawl`을 실행하면 최신 JSON을 생성하여 사이트 패키지의 `data/`까지 동기화합니다.
 
 ## 빌드·테스트·개발 명령어
 - `pnpm install` — 워크스페이스 전역 의존성을 설치하고 패키지를 링크합니다.
@@ -18,3 +18,6 @@ TypeScript는 `strict` 모드가 활성화되어 있으므로 명시적 타입�
 
 ## 커밋 및 PR 가이드라인
 기존 Git 히스토리는 영어 명령형이지만, 앞으로는 한국어 현재형으로 간결하게 작성합니다(예: `버스 데이터 갱신`, `크롤러 오류 처리 개선`). 관련 이슈나 참고 티켓이 있다면 본문에 링크합니다. Pull Request에는 변경 요약, 크롤러·사이트 영향, UI 변경 시 스크린샷 또는 GIF, 재현 방법(`pnpm crawl`, `pnpm dev` 등)을 포함합니다. 시간표 JSON을 재생성했다면 명확히 언급해 리뷰어가 동일한 환경을 갖출 수 있도록 안내합니다.
+
+## 데이터 운영
+Vercel Marketplace Neon Free 플랜을 사용합니다. Actions는 `pnpm crawl:publish`로 DB를 갱신하며 JSON 커밋이나 사이트 재배포를 하지 않습니다. `pnpm crawl`은 오프라인 사본 갱신용입니다. DB 연결 문자열은 서버 환경변수와 GitHub secret에만 저장합니다.
