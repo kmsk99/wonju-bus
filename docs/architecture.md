@@ -64,8 +64,12 @@ AWS Amplify 배포는 종료했습니다. 이전 개별 사이트·크롤러·Fl
 
 ## 장애 시 동작
 
-웹은 API 실패 시 배포에 포함된 snapshot을 요청합니다. 완전한 오프라인 웹/PWA를 보장하지는 않습니다. Flutter는 앱 시작 시 API → 기기 캐시 → 내장 snapshot 순서로 읽습니다. 화면 전환에서는 메모리 데이터를 재사용합니다.
+웹은 API 실패 시 배포에 포함된 snapshot을 요청합니다. 완전한 오프라인 웹/PWA를 보장하지는 않습니다. Flutter는 앱 시작 시 API → 기기 캐시 → 내장 snapshot 순서로 읽습니다. 화면 전환에서는 5분 동안 메모리 데이터를 재사용하며 운행일은 다시 계산합니다. 동시 조회는 합칩니다.
 
 ## 저장소 경계
 
 pnpm은 `apps/site`, `apps/crawl`만 관리합니다. Flutter 도구체인, APK 산출물(`dist/`), 이전 React Native 보관본은 독립적으로 관리합니다. runtime snapshot 2개 외의 수집 중간 JSON은 저장소에서 추적하지 않습니다.
+
+## 공휴일 API와 운행일
+
+`GET /api/holidays?year=<연도>`는 인증키 없는 공개 달력 JSON을 검증해 웹·Flutter에 제공합니다. DB 자격 증명이나 추가 API 키가 필요하지 않습니다. [자료 출처, 캐시와 장애 처리, 운행일 계산 계약](calendar-and-service.md)을 참고하세요.

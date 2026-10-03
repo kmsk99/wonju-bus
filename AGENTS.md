@@ -33,3 +33,7 @@
 TypeScript strict, 2칸 들여쓰기, React 컴포넌트 PascalCase, 훅 use 접두어를 사용합니다. `@/shared/...` 별칭을 우선 사용하고 Dart는 `dart format`을 적용합니다. 사용하지 않는 코드·오래된 문서는 남겨 두지 않되 보관본을 운영 코드로 혼동하지 않습니다.
 
 커밋은 논리 단위별 한국어 한 줄(`<prefix>: <한국어 설명>`)로 작성합니다. PR에는 영향 범위, 실행한 검증, UI 스크린샷, 데이터 재생성 여부를 기록합니다. 배포 요청 시 push만으로 완료했다고 하지 말고 CI와 Vercel 운영 상태·API·APK 링크를 확인합니다.
+
+## 공휴일·운행일 변경
+
+운행일은 한국 시간 기준이며 웹과 Flutter의 규칙을 함께 수정합니다. `pnpm test:logic`과 `flutter test`를 실행합니다. 내장 달력은 `pnpm holidays:sync`로 두 앱에 동기화하고 공개 자료의 MIT 고지를 유지합니다. 자세한 계약은 `docs/calendar-and-service.md`에 있습니다.

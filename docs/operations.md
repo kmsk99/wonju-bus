@@ -61,7 +61,7 @@ Android 앱 ID: `com.portzone.wonjubus`. Android 7.0 이상, 통합 ARM/ARM64/x8
 예시(버전은 실제 생성 파일에 맞춥니다):
 
 ```sh
-gh release create android-v1.0.1 dist/android/1.0.1/wonju-bus-1.0.1.apk dist/android/1.0.1/SHA256SUMS.txt --target main --title '원주버스 Android 1.0.1' --notes-file /tmp/release-notes.md
+gh release create android-v1.0.2 dist/android/1.0.2/wonju-bus-1.0.2.apk dist/android/1.0.2/SHA256SUMS.txt --target main --title '원주버스 Android 1.0.2' --notes-file /tmp/release-notes.md
 ```
 
 ### 서명 키
@@ -76,3 +76,7 @@ keyAlias=wonju-bus
 ```
 
 키와 `key.properties`는 Git에서 제외합니다. APK 업데이트 호환성을 위해 동일한 키를 보관·백업하세요. 릴리스 키가 없으면 빌드는 실패해야 하며 디버그 키로 대신 서명하지 않습니다. CI는 분석·테스트만 수행하고 공개 APK 서명·업로드는 위 절차로 진행합니다.
+
+## 공휴일 자료 관리
+
+웹·앱은 `/api/holidays`에서 공개 원본의 변경을 확인합니다. 서버와 클라이언트가 각각 6시간 캐시하므로 변경 반영까지 약 12시간 걸릴 수 있습니다. API 키는 없습니다. APK 릴리스 전 `pnpm holidays:sync`로 내장 자료도 갱신하고 `pnpm test:logic`을 실행합니다. 장애·연도 범위·방학 제한은 [운행일 계약](calendar-and-service.md)을 참고하세요.

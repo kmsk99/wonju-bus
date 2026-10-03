@@ -35,6 +35,7 @@ DB가 없거나 연결이 실패하면 웹은 내장 시간표로 조회할 수 
 
 ```sh
 pnpm check                 # lint(경고도 실패), 회귀·정합성 검사, 크롤러·웹 빌드
+pnpm holidays:sync         # 공개 공휴일 자료 → 웹·Flutter 내장 달력 갱신
 pnpm crawl                 # 원주시 ITS 수집 → 웹·Flutter 내장 snapshot 갱신
 pnpm start:site            # 빌드한 웹 실행
 cd apps/flutter
@@ -56,7 +57,8 @@ flutter run               # flutter devices로 장치 ID 확인 가능
 
 - 운영 수집은 `pnpm crawl:publish`로 DB만 갱신합니다. JSON 커밋이나 웹 재배포가 필요하지 않습니다.
 - API CDN 캐시는 5분이며, 변경 반영까지 수 분이 걸릴 수 있습니다.
-- Flutter는 시작할 때 API를 조회하고, 실패하면 마지막 정상 캐시 → 내장 시간표 순서로 읽습니다.
+- 웹·Flutter는 공휴일 API를 공유하고 한국 시간으로 운행일과 오늘·내일 출발을 계산합니다. [공휴일 처리·비고 제한·방학 안내](docs/calendar-and-service.md)를 참고하세요.
+- Flutter는 시간표 API를 조회하고, 실패하면 마지막 정상 캐시 → 내장 시간표 순서로 읽습니다. 메모리 사본은 5분 후 다시 조회합니다.
 - `pnpm crawl`로 갱신하는 내장 사본은 웹의 `public/data/snapshot.json`과 Flutter의 `assets/data/snapshot.json`입니다. APK 릴리스 전에 실행합니다.
 
 ## 배포와 APK
