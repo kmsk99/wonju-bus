@@ -1,9 +1,12 @@
+import '../data/holiday_calendar.dart';
 import '../models/bus_models.dart';
 
 typedef DayType = String;
 
 /// Patterns that appear in data file names mapped to the concrete day types.
 const Map<String, List<DayType>> _dayTypePatterns = {
+  '토': ['토요일'],
+  '일': ['일요일'],
   '평일': ['평일'],
   '토요일': ['토요일'],
   '일요일': ['일요일'],
@@ -41,7 +44,8 @@ BusFileInfo parseBusFileName(String fileName) {
 bool isDayTypeMatch(
   String? dayTypeGroup, {
   bool isVacation = false,
-  bool isHoliday = false,
+  bool? isHoliday,
+  DateTime? now,
 }) {
   if (dayTypeGroup == null) {
     return true;
@@ -51,6 +55,7 @@ bool isDayTypeMatch(
   final currentDayTypes = getCurrentDayTypes(
     isVacation: isVacation,
     isHoliday: isHoliday,
+    now: now,
   );
 
   return currentDayTypes.any(groupDayTypes.contains);
@@ -59,57 +64,47 @@ bool isDayTypeMatch(
 /// Returns the applicable day types for today taking vacation/holiday mode into account.
 List<DayType> getCurrentDayTypes({
   bool isVacation = false,
-  bool isHoliday = false,
+  bool? isHoliday,
+  DateTime? now,
 }) {
-  final now = DateTime.now();
-  final dayOfWeek = now.weekday; // 1 = Monday, 7 = Sunday
-
-  final dayTypes = <DayType>{};
-
-  switch (dayOfWeek) {
-    case DateTime.saturday:
-      dayTypes.add('토요일');
-      dayTypes.add('휴일');
-      break;
-    case DateTime.sunday:
-      dayTypes.add('일요일');
-      dayTypes.add('휴일');
-      break;
-    default:
-      dayTypes.add('평일');
-      break;
-  }
-
-  if (isHoliday) {
-    dayTypes.addAll({'공휴일', '휴일'});
-  }
-
+  final day = koreaTime(now).weekday;
+  final holiday = isHoliday ?? HolidayCalendar.instance.names(now).isNotEmpty;
+  if (isHoliday == null && !HolidayCalendar.instance.known(now)) return ['공통'];
+  final types = holiday
+      ? <String>['공휴일', '휴일']
+      : day == DateTime.sunday
+      ? <String>['일요일', '휴일']
+      : day == DateTime.saturday
+      ? <String>['토요일', '휴일']
+      : <String>['평일'];
   if (isVacation) {
-    dayTypes.add('방학');
+    types.remove('평일');
+    types.add('방학');
   }
-
-  dayTypes.add('공통');
-
-  return dayTypes.toList();
+  return [...types, '공통'];
 }
 
-/// Parses human-readable day type text for display.
-String generateDayTypeText({bool isVacation = false, bool isHoliday = false}) {
-  final now = DateTime.now();
-  final dayOfWeek = now.weekday;
-
-  if (dayOfWeek == DateTime.saturday) {
-    return '토요일';
+String generateDayTypeText({
+  bool isVacation = false,
+  bool? isHoliday,
+  DateTime? now,
+}) {
+  if (isHoliday == null && !HolidayCalendar.instance.known(now)) {
+    return '공휴일 정보 확인 필요';
   }
-  if (dayOfWeek == DateTime.sunday) {
-    return '일요일';
-  }
-  return '평일';
+  final names = HolidayCalendar.instance.names(now);
+  return names.isNotEmpty
+      ? names.join(', ')
+      : getCurrentDayTypes(
+          isVacation: isVacation,
+          isHoliday: isHoliday,
+          now: now,
+        ).first;
 }
 
 /// Converts a stored day-type group string to the underlying types.
 List<DayType> getDayTypesFromGroup(String dayTypeGroup) {
-  final normalized = dayTypeGroup.trim();
+  final normalized = dayTypeGroup.replaceAll(RegExp(r'\s'), '');
 
   final directMatch = _dayTypePatterns[normalized];
   if (directMatch != null) {
@@ -118,7 +113,7 @@ List<DayType> getDayTypesFromGroup(String dayTypeGroup) {
 
   return normalized
       .split(',')
-      .map((type) => type.trim())
+      .expand((type) => _dayTypePatterns[type.trim()] ?? [type.trim()])
       .where((type) => type.isNotEmpty)
       .toList();
 }

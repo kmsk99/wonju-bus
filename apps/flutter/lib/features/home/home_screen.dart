@@ -125,7 +125,7 @@ class HomeScreen extends StatelessWidget {
                         ),
                         SizedBox(height: 8),
                         Text(
-                          '매주 월요일 시간표 업데이트\n연결이 끊겨도 저장된 시간표를 볼 수 있어요.\n남은 시간은 시간표 기준이며, 실시간 위치 정보는 아닙니다.',
+                          '매주 월요일 시간표 업데이트\n연결이 끊겨도 저장된 시간표를 볼 수 있어요.\n남은 시간은 시간표 기준이며, 실시간 위치 정보는 아닙니다.\n방학·통학 운행은 노선별 비고와 원주시 공지를 확인하세요.',
                           style: TextStyle(
                             color: Color(0xFF4C655E),
                             fontSize: 13,

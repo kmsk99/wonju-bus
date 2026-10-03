@@ -5,6 +5,7 @@ const root = new URL('../', import.meta.url);
 const read = (file) => readFileSync(new URL(file, root), 'utf8');
 const web = read('apps/site/public/data/snapshot.json');
 assert.equal(web, read('apps/flutter/assets/data/snapshot.json'), '웹과 Flutter 오프라인 시간표가 다릅니다. pnpm crawl을 실행하세요.');
+assert.equal(read('apps/site/src/shared/lib/calendar/holidays.json'), read('apps/flutter/assets/data/holidays.json'), '웹과 Flutter 공휴일 데이터가 다릅니다.');
 const snapshot = JSON.parse(web);
 assert.ok(Object.keys(snapshot).length > 0);
 for (const [file, route] of Object.entries(snapshot)) {

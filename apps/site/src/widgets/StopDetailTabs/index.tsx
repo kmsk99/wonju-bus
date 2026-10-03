@@ -44,7 +44,7 @@ export function StopDetailTabs({
         }`}
         onClick={() => onTabChange("to")}
       >
-        도착 노선 ({arrivalRoutesCount}개)
+        반대 종점 노선 ({arrivalRoutesCount}개)
       </button>
     </div>
   );

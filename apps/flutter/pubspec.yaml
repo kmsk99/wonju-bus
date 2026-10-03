@@ -2,7 +2,7 @@ name: wonju_bus_flutter
 description: "원주시 종점·노선 시간표와 오프라인 조회 앱"
 publish_to: 'none'
 
-version: 1.0.1+2
+version: 1.0.2+3
 
 environment:
   sdk: ^3.9.2
@@ -27,3 +27,5 @@ flutter:
 
   assets:
     - assets/data/snapshot.json
+    - assets/data/holidays.json
+    - assets/data/holidays-LICENSE.txt

@@ -1,8 +1,8 @@
 {
-  "version": "1.0.1",
-  "buildNumber": 2,
+  "version": "1.0.2",
+  "buildNumber": 3,
   "minimumAndroid": "7.0",
-  "sizeBytes": 50031525,
-  "sha256": "8846d87aba2f6ceda235c7ed9af87225b3a6e9cb36ddf5f9fc6951710e021a33",
-  "url": "https://github.com/kmsk99/wonju-bus/releases/download/android-v1.0.1/wonju-bus-1.0.1.apk"
+  "sizeBytes": 50049462,
+  "sha256": "037ddd3f7302099f00745537971450a0069e736b77e9bebb91d36acfb13ceca4",
+  "url": "https://github.com/kmsk99/wonju-bus/releases/download/android-v1.0.2/wonju-bus-1.0.2.apk"
 }

@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 
 import '../../app_routes.dart';
@@ -19,12 +20,20 @@ class StopDetailScreen extends StatefulWidget {
 class _StopDetailScreenState extends State<StopDetailScreen> {
   final _repository = BusRepository.instance;
   late Future<_StopDetailViewData> _dataFuture;
+  Timer? _timer;
   StopDetailTab _activeTab = StopDetailTab.all;
 
   @override
   void initState() {
     super.initState();
     _dataFuture = _loadData();
+    _timer = Timer.periodic(const Duration(minutes: 1), (_) => _refresh());
+  }
+
+  @override
+  void dispose() {
+    _timer?.cancel();
+    super.dispose();
   }
 
   Future<_StopDetailViewData> _loadData() async {
@@ -33,9 +42,17 @@ class _StopDetailScreenState extends State<StopDetailScreen> {
     final arrivalRoutes = await _repository.loadRoutesToTerminal(stopName);
     final grouped = await _repository.groupDeparturesByRoute(
       stopName,
-    ); // includes summary
+      isFromTerminal: _activeTab == StopDetailTab.all
+          ? null
+          : _activeTab == StopDetailTab.from,
+    );
 
+    final statuses = <String, bool>{};
+    for (final route in {...departureRoutes, ...arrivalRoutes}) {
+      statuses[route] = await _repository.isRouteOperatingToday(route);
+    }
     return _StopDetailViewData(
+      operatesToday: statuses,
       departureRoutes: departureRoutes,
       arrivalRoutes: arrivalRoutes,
       groupedDepartures: Map<String, GroupedDeparture>.from(grouped),
@@ -209,7 +226,7 @@ class _StopDetailTabs extends StatelessWidget {
               isCompact: isCompact,
             ),
             _TabChip(
-              label: '도착 노선 ($arrivalCount)',
+              label: '반대 종점 노선 ($arrivalCount)',
               isActive: activeTab == StopDetailTab.to,
               onTap: () => onChanged(StopDetailTab.to),
               isCompact: isCompact,
@@ -282,20 +299,16 @@ class _DepartureSection extends StatelessWidget {
           if (activeTab == StopDetailTab.to) return !isFromTerminal;
           return true;
         }).toList()..sort((a, b) {
-          // Prioritize operating routes, then time
-          if (a.value.operatesToday != b.value.operatesToday) {
-            return a.value.operatesToday ? -1 : 1;
-          }
-          final aMinutes = _timeToMinutes(a.value.nextDeparture.departureTime);
-          final bMinutes = _timeToMinutes(b.value.nextDeparture.departureTime);
-          return aMinutes.compareTo(bMinutes);
+          return a.value.nextDeparture.nextDepartureMinutes.compareTo(
+            b.value.nextDeparture.nextDepartureMinutes,
+          );
         });
 
     if (entries.isEmpty) {
       return const SliverToBoxAdapter(
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-          child: _EmptyState(message: '해당 조건에 맞는 노선이 없습니다.'),
+          child: _EmptyState(message: '오늘과 내일 남은 출발이 없습니다. 전체 시간표를 확인하세요.'),
         ),
       );
     }
@@ -387,10 +400,12 @@ class _DepartureCard extends StatelessWidget {
               if (departure.tripIndex != null)
                 _infoChip('회차 ${departure.tripIndex}'),
               _infoChip(departure.isFromTerminal ? '기점' : '경유'),
+              if (departure.note.isNotEmpty)
+                _infoChip('운행 참고: ${departure.note}'),
               if (departure.category.isNotEmpty) _infoChip(departure.category),
               if (isDepartureRoute && isArrivalRoute) _infoChip('출발 · 도착'),
               if (isDepartureRoute && !isArrivalRoute) _infoChip('출발 노선'),
-              if (!isDepartureRoute && isArrivalRoute) _infoChip('도착 노선'),
+              if (!isDepartureRoute && isArrivalRoute) _infoChip('반대 종점 노선'),
             ],
           ),
           const SizedBox(height: 12),
@@ -465,7 +480,7 @@ class _RoutesSummarySection extends StatelessWidget {
         final summary = data.groupedDepartures[routeNumber];
         final isDeparture = data.departureRoutes.contains(routeNumber);
         final isArrival = data.arrivalRoutes.contains(routeNumber);
-        final operatesToday = summary?.operatesToday ?? false;
+        final operatesToday = data.operatesToday[routeNumber] ?? false;
         final remaining = summary?.remainingCount ?? 0;
 
         return Padding(
@@ -552,7 +567,7 @@ class _RouteSummaryCard extends StatelessWidget {
                     runSpacing: 8,
                     children: [
                       if (isDeparture) _badge('출발', theme.colorScheme.primary),
-                      if (isArrival) _badge('도착', Colors.purple),
+                      if (isArrival) _badge('반대 종점', Colors.purple),
                       if (!operatesToday)
                         _badge('오늘 미운행', Colors.grey.shade500),
                     ],
@@ -661,24 +676,16 @@ class _ErrorState extends StatelessWidget {
   }
 }
 
-int _timeToMinutes(String time) {
-  final parts = time.split(':');
-  if (parts.length != 2) {
-    return 0;
-  }
-  final hours = int.tryParse(parts[0]) ?? 0;
-  final minutes = int.tryParse(parts[1]) ?? 0;
-  return hours * 60 + minutes;
-}
-
 class _StopDetailViewData {
   const _StopDetailViewData({
     required this.departureRoutes,
     required this.arrivalRoutes,
     required this.groupedDepartures,
+    required this.operatesToday,
   });
 
   final List<String> departureRoutes;
   final List<String> arrivalRoutes;
   final Map<String, GroupedDeparture> groupedDepartures;
+  final Map<String, bool> operatesToday;
 }

@@ -5,7 +5,10 @@ import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
 import { loadBusData } from "@/entities/bus/api/loadBusData";
-import { BusData, DayType } from "@/entities/bus/model/types";
+import { koreaDate, dayStart } from "@/shared/lib/calendar/calendar";
+import { getCurrentDayTypes } from "@/entities/bus/model/dayTypeUtils";
+import { operatesOn, operationApplies, timeMinutes } from "@/entities/bus/model/schedule";
+import { BusData } from "@/entities/bus/model/types";
 import { Clock } from "@/shared/ui/Clock";
 
 export default function BusDetailPage() {
@@ -17,8 +20,9 @@ export default function BusDetailPage() {
   const [busData, setBusData] = useState<BusData | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [activeTab, setActiveTab] = useState<DayType>("평일");
+  const [activeTab, setActiveTab] = useState<string>("공통");
   const [currentTime, setCurrentTime] = useState(new Date());
+  const currentDate = koreaDate(currentTime);
   const [expandedCard, setExpandedCard] = useState<number | null>(null);
   const [animateCards, setAnimateCards] = useState(false);
 
@@ -43,18 +47,8 @@ export default function BusDetailPage() {
 
           // 노선 데이터의 운행 정보에서 사용 가능한 첫 번째 카테고리로 탭 설정
           if (data.operationInfo && data.operationInfo.length > 0) {
-            const categories = new Set(
-              data.operationInfo.map((op) => op.category)
-            );
-            if (categories.has("평일")) {
-              setActiveTab("평일");
-            } else if (categories.has("토요일")) {
-              setActiveTab("토요일");
-            } else if (categories.has("일요일")) {
-              setActiveTab("일요일");
-            } else if (categories.has("공통")) {
-              setActiveTab("공통");
-            }
+            const categories = [...new Set(data.operationInfo.map(op => op.category))];
+            setActiveTab(getCurrentDayTypes().find(day => categories.includes(day)) ?? categories[0]);
           }
         } else {
           setError(`${routeNumber}번 노선 데이터를 찾을 수 없습니다.`);
@@ -71,7 +65,7 @@ export default function BusDetailPage() {
     if (routeNumber) {
       fetchBusData();
     }
-  }, [routeNumber]);
+  }, [routeNumber, currentDate]);
 
   useEffect(() => {
     if (!isLoading && busData) {
@@ -87,66 +81,19 @@ export default function BusDetailPage() {
     busData?.operationInfo.filter(
       (op) =>
         op.category === activeTab ||
-        (activeTab === "평일" && op.category === "공통")
+        op.category === "공통"
     ) || [];
 
-  // 가능한 Day Type 목록 생성
-  const availableTabs: DayType[] = ["평일", "토요일", "일요일", "공통"].filter(
-    (tab) => {
-      if (tab === "공통") return true; // 공통 탭은 항상 표시
-      return busData?.operationInfo.some((op) => op.category === tab);
-    }
-  ) as DayType[];
-
-  // 현재 시간 기준으로 출발 시간 분류 (간단화된 버전)
-  function getTimeStatus(
-    timeStr: string
-  ): "past" | "current" | "future" {
-    if (timeStr === "-") return "future";
-
-    const [hours, minutes] = timeStr.split(":").map(Number);
-    const timeDate = new Date();
-    timeDate.setHours(hours, minutes, 0);
-
-    const now = currentTime;
-
-    // 30분 전후로 current 간주
-    const diffMinutes = Math.floor(
-      (timeDate.getTime() - now.getTime()) / (60 * 1000)
-    );
-
-    if (diffMinutes >= -30 && diffMinutes <= 30) {
-      return "current";
-    }
-
-    return timeDate < now ? "past" : "future";
+  const availableTabs = [...new Set(busData?.operationInfo.map(op => op.category) ?? [])];
+  function getTimeStatus(time: string): "past" | "current" | "future" {
+    const minutes = timeMinutes(time);
+    if (minutes === null || !busData || !operatesOn(busData, currentTime)) return "future";
+    const delta = dayStart(currentTime) + minutes * 60000 - currentTime.getTime();
+    return delta < 0 ? "past" : delta <= 300000 ? "current" : "future";
   }
-
-  // 운행 회차 전체 상태 판별 (간단화된 버전)
-  function getOperationStatus(
-    departureTime: string,
-    arrivalTime: string
-  ): "current" | "past" | "future" {
-    const departureStatus = getTimeStatus(departureTime);
-    const arrivalStatus = getTimeStatus(arrivalTime);
-
-    // 현재 운행 중
-    if (departureStatus === "current" || arrivalStatus === "current") {
-      return "current";
-    }
-
-    // 출발은 지났지만 도착은 아직
-    if (departureStatus === "past" && arrivalStatus === "future") {
-      return "current";
-    }
-
-    // 모두 지난 경우
-    if (departureStatus === "past" && arrivalStatus === "past") {
-      return "past";
-    }
-
-    // 나머지는 미래
-    return "future";
+  function getOperationStatus(departure: string, reverse: string): "past" | "current" | "future" {
+    const statuses = [departure, reverse].filter(t => timeMinutes(t) !== null).map(getTimeStatus);
+    return statuses.includes("current") ? "current" : statuses.length && statuses.every(s => s === "past") ? "past" : "future";
   }
 
   // 운행 회차 정렬 함수 - 단순 회차 번호순 정렬
@@ -157,43 +104,11 @@ export default function BusDetailPage() {
     return aOpNum - bOpNum;
   });
 
-  /**
-   * 출발시간과 도착시간 사이의 소요 시간을 계산합니다.
-   */
-  function calculateTravelTime(
-    departureTime: string,
-    arrivalTime: string
-  ): string {
-    if (departureTime === "-" || arrivalTime === "-") return "-";
-
-    const [depHours, depMinutes] = departureTime.split(":").map(Number);
-    const [arrHours, arrMinutes] = arrivalTime.split(":").map(Number);
-
-    let diffMinutes = arrHours * 60 + arrMinutes - (depHours * 60 + depMinutes);
-
-    // 날짜를 넘어가는 경우 (도착시간이 출발시간보다 이른 경우)
-    if (diffMinutes < 0) {
-      diffMinutes += 24 * 60; // 24시간(1440분) 추가
-    }
-
-    const hours = Math.floor(diffMinutes / 60);
-    const minutes = diffMinutes % 60;
-
-    if (hours > 0) {
-      return `${hours}시간 ${minutes}분`;
-    } else {
-      return `${minutes}분`;
-    }
-  }
-
   return (
     <div className="container mx-auto p-3">
       <div className="flex flex-col items-center mb-6">
         <h1 className="text-2xl font-bold mb-2">{routeNumber}번 버스</h1>
         <Clock />
-        <div className="text-sm text-gray-500 mt-2">
-          현재 시간: {currentTime.toLocaleTimeString()}
-        </div>
       </div>
 
       {isLoading ? (
@@ -206,13 +121,14 @@ export default function BusDetailPage() {
         <div>
           <div className="bg-white shadow-md rounded-lg p-3 mb-6">
             <h2 className="text-xl font-bold mb-3">노선 정보</h2>
+            <p className="text-sm text-gray-600 mb-3">양쪽 종점의 출발 시간입니다. 실시간 도착 정보는 제공하지 않습니다. {operatesOn(busData, currentTime) ? "오늘 적용되는 시간표입니다." : "오늘 적용되지 않는 시간표입니다."}</p>
             <div className="grid grid-cols-2 gap-3">
               <div>
                 <p className="font-semibold">출발 종점</p>
                 <p>{busData.routeInfo.origin}</p>
               </div>
               <div>
-                <p className="font-semibold">도착 종점</p>
+                <p className="font-semibold">반대 종점</p>
                 <p>{busData.routeInfo.destination}</p>
               </div>
               <div>
@@ -262,16 +178,17 @@ export default function BusDetailPage() {
             ) : (
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
                 {sortedOperations.map((op, index) => {
-                  const departureStatus = getTimeStatus(
+                  const applicable = operationApplies(busData, op, currentTime);
+                  const departureStatus = applicable ? getTimeStatus(
                     op.departureTime
-                  );
-                  const arrivalStatus = getTimeStatus(
+                  ) : "future";
+                  const arrivalStatus = applicable ? getTimeStatus(
                     op.arrivalTime
-                  );
-                  const operationStatus = getOperationStatus(
+                  ) : "future";
+                  const operationStatus = applicable ? getOperationStatus(
                     op.departureTime,
                     op.arrivalTime
-                  );
+                  ) : "future";
                   const isExpanded = expandedCard === index;
 
                   return (
@@ -330,11 +247,11 @@ export default function BusDetailPage() {
                               : "bg-blue-100 text-blue-800"
                           }`}
                         >
-                          {operationStatus === "current"
-                            ? "현재 운행 중"
+                          {!applicable ? "오늘 미운행" : operationStatus === "current"
+                            ? "5분 내 출발 예정"
                             : operationStatus === "past"
-                            ? "운행 완료"
-                            : "운행 예정"}
+                            ? "출발 시각 지남"
+                            : "시간표"}
                         </div>
                       </div>
 
@@ -438,7 +355,7 @@ export default function BusDetailPage() {
                           </div>
                           <div className="flex-1">
                             <div className="text-sm text-gray-600 mb-1">
-                              도착
+                              반대 종점 출발
                             </div>
                             <div className="flex justify-between items-center">
                               <div>
@@ -496,20 +413,6 @@ export default function BusDetailPage() {
                             <div className="grid grid-cols-2 gap-2 mt-2">
                               <div>
                                 <span className="text-xs text-gray-500">
-                                  소요 시간
-                                </span>
-                                <div className="font-medium">
-                                  {op.departureTime !== "-" &&
-                                  op.arrivalTime !== "-"
-                                    ? calculateTravelTime(
-                                        op.departureTime,
-                                        op.arrivalTime
-                                      )
-                                    : "-"}
-                                </div>
-                              </div>
-                              <div>
-                                <span className="text-xs text-gray-500">
                                   카테고리
                                 </span>
                                 <div className="font-medium">
@@ -529,15 +432,15 @@ export default function BusDetailPage() {
             <div className="flex justify-center space-x-4 mt-6 text-sm text-gray-600">
               <div className="flex items-center">
                 <div className="w-4 h-4 rounded-full bg-green-500 mr-2"></div>
-                <span>현재 운행 중 (±30분)</span>
+                <span>5분 내 출발 예정</span>
               </div>
               <div className="flex items-center">
                 <div className="w-4 h-4 rounded-full bg-blue-100 mr-2"></div>
-                <span>운행 예정</span>
+                <span>시간표</span>
               </div>
               <div className="flex items-center">
                 <div className="w-4 h-4 rounded-full bg-gray-400 mr-2"></div>
-                <span>운행 완료</span>
+                <span>출발 시각 지남</span>
               </div>
             </div>
           </div>

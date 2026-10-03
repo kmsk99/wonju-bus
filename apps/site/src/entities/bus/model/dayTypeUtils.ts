@@ -1,7 +1,10 @@
+import { holidayKnown, holidayNames, KST_OFFSET } from '../../../shared/lib/calendar/calendar';
 import { BusFileInfo, DayType, DayTypeGroup, DayTypePattern } from "./types";
 
-// 데이 타입 패턴 정의
+// 원본 비고에서 쓰는 축약형도 같은 운행일로 해석합니다.
 const DAY_TYPE_PATTERNS: DayTypePattern[] = [
+  { pattern: "토", dayTypes: ["토요일"] },
+  { pattern: "일", dayTypes: ["일요일"] },
   { pattern: "평일", dayTypes: ["평일"] },
   { pattern: "토요일", dayTypes: ["토요일"] },
   { pattern: "일요일", dayTypes: ["일요일"] },
@@ -58,12 +61,13 @@ export function parseBusFileName(fileName: string): BusFileInfo {
 export function isDayTypeMatch(
   dayTypeGroup: DayTypeGroup | null,
   isVacation: boolean = false,
-  isHoliday: boolean = false
+  isHoliday?: boolean,
+  now: Date = new Date()
 ): boolean {
   if (!dayTypeGroup) return true; // 요일 타입이 지정되지 않은 경우 모든 날짜에 적용
 
   // 현재 날짜의 요일 타입 목록
-  const currentDayTypes: DayType[] = getCurrentDayTypes(isVacation, isHoliday);
+  const currentDayTypes: DayType[] = getCurrentDayTypes(isVacation, isHoliday, now);
 
   // 요일 타입 그룹에 해당하는 모든
   const groupDayTypes: DayType[] = getDayTypesFromGroup(dayTypeGroup);
@@ -80,40 +84,22 @@ export function isDayTypeMatch(
  */
 export function getCurrentDayTypes(
   isVacation: boolean = false,
-  isHoliday: boolean = false
+  isHoliday?: boolean,
+  now: Date = new Date()
 ): DayType[] {
-  const now = new Date();
-  const dayOfWeek = now.getDay(); // 0: 일요일, 1-5: 평일, 6: 토요일
-
-  const dayTypes: DayType[] = [];
-
-  // 기본 요일 추가
-  if (dayOfWeek === 0) {
-    dayTypes.push("일요일");
-  } else if (dayOfWeek === 6) {
-    dayTypes.push("토요일");
-  } else {
-    dayTypes.push("평일");
-  }
-
-  // 공휴일 여부 추가
-  if (isHoliday) {
-    dayTypes.push("공휴일");
-    dayTypes.push("휴일");
-  }
-
-  // 주말은 휴일로도 간주
-  if (dayOfWeek === 0 || dayOfWeek === 6) {
-    dayTypes.push("휴일");
-  }
-
-  // 방학 여부 추가
+  const dayOfWeek = new Date(now.getTime() + KST_OFFSET).getUTCDay();
+  const holiday = isHoliday ?? holidayNames(now).length > 0;
+  // An unknown year must not silently select weekday service.
+  if (isHoliday === undefined && !holidayKnown(now)) return ['공통'];
+  const dayTypes: DayType[] = holiday ? ['공휴일', '휴일']
+    : dayOfWeek === 0 ? ['일요일', '휴일']
+    : dayOfWeek === 6 ? ['토요일', '휴일'] : ['평일'];
   if (isVacation) {
-    dayTypes.push("방학");
+    const weekday = dayTypes.indexOf('평일');
+    if (weekday >= 0) dayTypes.splice(weekday, 1);
+    dayTypes.push('방학');
   }
-
-  // 항상 공통 추가
-  dayTypes.push("공통");
+  dayTypes.push('공통');
 
   return dayTypes;
 }
@@ -126,11 +112,14 @@ export function getCurrentDayTypes(
 export function getDayTypesFromGroup(dayTypeGroup: DayTypeGroup): DayType[] {
   // 패턴 매칭
   for (const pattern of DAY_TYPE_PATTERNS) {
-    if (pattern.pattern === dayTypeGroup) {
+    if (pattern.pattern === dayTypeGroup.replace(/\s/g, "")) {
       return pattern.pattern === "공통" ? ["공통"] : pattern.dayTypes;
     }
   }
 
   // 패턴에 없는 경우 쉼표로 분리해서 개별 타입으로 처리
-  return dayTypeGroup.split(",").map((type) => type.trim() as DayType);
+  return dayTypeGroup.split(",").flatMap(type => {
+    const normalized = type.trim();
+    return DAY_TYPE_PATTERNS.find(p => p.pattern === normalized)?.dayTypes ?? [normalized as DayType];
+  });
 }

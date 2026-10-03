@@ -1,4 +1,6 @@
 import 'dart:async';
+import '../data/holiday_calendar.dart';
+import '../utils/day_type_utils.dart';
 import 'package:flutter/material.dart';
 
 class LiveClock extends StatefulWidget {
@@ -14,6 +16,9 @@ class _LiveClockState extends State<LiveClock> {
   @override
   void initState() {
     super.initState();
+    HolidayCalendar.instance.load().then((_) {
+      if (mounted) setState(() {});
+    });
     _timer = Timer.periodic(
       const Duration(seconds: 1),
       (_) => setState(() {
@@ -36,19 +41,31 @@ class _LiveClockState extends State<LiveClock> {
       _time.second,
     ].map((n) => n.toString().padLeft(2, '0')).join(':');
     return Semantics(
-      label: '현재 한국 시각 $text',
+      label: '현재 한국 시각 $text ${generateDayTypeText()}',
       child: ExcludeSemantics(
-        child: Text(
-          text,
-          style: TextStyle(
-            color: widget.onDark
-                ? const Color(0xFFF7D88C)
-                : const Color(0xFF17343D),
-            fontSize: 38,
-            fontWeight: FontWeight.w600,
-            height: 1.5,
-            fontFeatures: const [FontFeature.tabularFigures()],
-          ),
+        child: Column(
+          children: [
+            Text(
+              text,
+              style: TextStyle(
+                color: widget.onDark
+                    ? const Color(0xFFF7D88C)
+                    : const Color(0xFF17343D),
+                fontSize: 38,
+                fontWeight: FontWeight.w600,
+                height: 1.5,
+                fontFeatures: const [FontFeature.tabularFigures()],
+              ),
+            ),
+            Text(
+              generateDayTypeText(),
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontSize: 13,
+                color: widget.onDark ? Colors.white70 : const Color(0xFF526970),
+              ),
+            ),
+          ],
         ),
       ),
     );

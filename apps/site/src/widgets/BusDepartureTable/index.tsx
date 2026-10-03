@@ -15,6 +15,7 @@ export interface BusDepartureInfo {
   operatesToday?: boolean;
   isNextDay?: boolean;
   tripIndex?: number;
+  note?: string;
 }
 
 export interface BusDepartureTableProps {
@@ -33,25 +34,8 @@ export function BusDepartureTable({
 }: BusDepartureTableProps) {
   const { dayTypeText } = useDayTypeStore();
 
-  // 시간을 분으로 변환하는 유틸리티 함수
-  const getTimeMinutes = (time: string) => {
-    const [hours, minutes] = time.split(":").map(Number);
-    return hours * 60 + minutes;
-  };
-
-
-  // 시간표 정렬 (운행 예정/운행 완료 기준)
-  const sortedDepartures = [...departures].sort((a, b) => {
-    // 1. 운행일 기준 정렬 (운행하는 날이 먼저 오도록)
-    if (a.operatesToday !== b.operatesToday) {
-      return a.operatesToday ? -1 : 1;
-    }
-
-    // 2. 시간 기준으로 항상 오름차순 정렬
-    const timeA = getTimeMinutes(a.departureTime);
-    const timeB = getTimeMinutes(b.departureTime);
-    return timeA - timeB;
-  });
+  const sortedDepartures = [...departures].sort((a, b) =>
+    (a.nextDepartureMinutes ?? Infinity) - (b.nextDepartureMinutes ?? Infinity));
 
   if (isLoading) {
     return (
@@ -68,7 +52,7 @@ export function BusDepartureTable({
   if (departures.length === 0) {
     return (
       <div className="py-3 text-center text-gray-500">
-        시간표 정보가 없습니다.
+        오늘과 내일 남은 출발이 없습니다. 아래 노선에서 전체 시간표를 확인하세요.
       </div>
     );
   }
@@ -102,7 +86,7 @@ export function BusDepartureTable({
                 </span>
               )}
               <span className="whitespace-nowrap rounded bg-gray-100 px-2 py-1 text-xs text-gray-600 transition-colors duration-300 hover:bg-gray-200">
-                {bus.isFromTerminal ? "기점" : "경유"}
+                {bus.isFromTerminal ? "기점 출발" : "반대 종점 출발"}
               </span>
               {bus.category && (
                 <span className="whitespace-nowrap rounded bg-gray-100 px-2 py-1 text-xs text-gray-600 transition-colors duration-300 hover:bg-gray-200">
@@ -126,6 +110,7 @@ export function BusDepartureTable({
             )}
           </div>
 
+          {bus.note && <p className="mt-2 text-sm text-gray-600">운행 참고: {bus.note}</p>}
           {!bus.operatesToday && (
             <div className="mt-1 text-xs text-gray-500">
               ({dayTypeText} 미운행)

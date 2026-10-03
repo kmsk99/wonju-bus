@@ -11,9 +11,11 @@
     "start:site": "pnpm --filter @wonju-bus/site start",
     "crawl:publish": "pnpm --filter @wonju-bus/crawl publish-data",
     "db:migrate": "pnpm --filter @wonju-bus/crawl db:migrate",
-    "test": "pnpm --filter @wonju-bus/crawl test:session && node scripts/check-project.mjs",
+    "test": "pnpm --filter @wonju-bus/crawl test:session && pnpm test:logic && node scripts/check-project.mjs",
     "check": "pnpm lint && pnpm test && pnpm build",
-    "build:apk": "cd apps/flutter && flutter build apk --release && cd ../.. && node scripts/package-android-release.mjs"
+    "build:apk": "cd apps/flutter && flutter build apk --release && cd ../.. && node scripts/package-android-release.mjs",
+    "test:logic": "pnpm --filter @wonju-bus/crawl exec ts-node --project ../../scripts/tsconfig.tests.json ../../scripts/test-schedules.ts",
+    "holidays:sync": "pnpm --filter @wonju-bus/crawl exec ts-node --project ../../scripts/tsconfig.tests.json ../../scripts/sync-holidays.ts"
   },
   "pnpm": {
     "overrides": {

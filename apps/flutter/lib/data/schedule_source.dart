@@ -79,11 +79,27 @@ class ScheduleSource {
       }
       for (final operation in route['operationInfo'] as List) {
         if (operation is! Map<String, dynamic> ||
-            operation.values.any((value) => value is! String)) {
+            ![
+              'operationNumber',
+              'departureTime',
+              'arrivalTime',
+              'departureName',
+              'arrivalName',
+              'category',
+              'note',
+            ].every((key) => operation[key] is String)) {
           throw const FormatException('Invalid departure');
         }
       }
-      if ((route['routeInfo'] as Map).values.any((value) => value is! String)) {
+      if (![
+        'routeNumber',
+        'origin',
+        'destination',
+        'firstBusTime',
+        'lastBusTime',
+        'operationCount',
+        'interval',
+      ].every((key) => route['routeInfo'][key] is String)) {
         throw const FormatException('Invalid route');
       }
     }

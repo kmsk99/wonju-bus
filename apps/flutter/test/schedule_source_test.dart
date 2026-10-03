@@ -7,9 +7,25 @@ import 'package:wonju_bus_flutter/data/schedule_source.dart';
 
 String snapshot(String number) => jsonEncode({
   'wonju-bus-$number.json': {
-    'routeInfo': {'routeNumber': number},
+    'routeInfo': {
+      'routeNumber': number,
+      'origin': 'A',
+      'destination': 'B',
+      'firstBusTime': '09:00',
+      'lastBusTime': '09:00',
+      'operationCount': '1',
+      'interval': '-',
+    },
     'operationInfo': [
-      {'departureTime': '09:00'},
+      {
+        'operationNumber': '1',
+        'departureTime': '09:00',
+        'arrivalTime': '-',
+        'departureName': 'A',
+        'arrivalName': 'B',
+        'category': '공통',
+        'note': '',
+      },
     ],
   },
 });
@@ -20,7 +36,11 @@ void main() {
     final online = ScheduleSource(
       client: MockClient((request) async {
         expect(request.url.path, '/api/schedules');
-        return http.Response(snapshot('2'), 200);
+        return http.Response(
+          snapshot('2'),
+          200,
+          headers: {'content-type': 'application/json; charset=utf-8'},
+        );
       }),
       loadBundled: () async => snapshot('1'),
     );

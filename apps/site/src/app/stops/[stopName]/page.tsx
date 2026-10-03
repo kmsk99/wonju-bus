@@ -22,6 +22,7 @@ interface DepartureInfo {
   isFromTerminal: boolean;
   isNextDay?: boolean;
   tripIndex?: number;
+  note?: string;
 }
 
 interface GroupedDeparture {
@@ -37,6 +38,7 @@ export default function StopDetailPage() {
 
   // 노선 데이터 상태
   const [departureRoutes, setDepartureRoutes] = useState<string[]>([]);
+  const [routeStatuses, setRouteStatuses] = useState<Record<string, boolean>>({});
   const [arrivalRoutes, setArrivalRoutes] = useState<string[]>([]);
   const [groupedDepartures, setGroupedDepartures] = useState<
     Record<string, GroupedDeparture>
@@ -54,7 +56,8 @@ export default function StopDetailPage() {
   // 출발 시간표 로드 함수
   const loadDepartureTimes = useCallback(async () => {
     try {
-      const times = await getAllDepartureTimesFromStop(stopName);
+      const times = (await getAllDepartureTimesFromStop(stopName)).filter(time =>
+        activeTab === "all" || time.isFromTerminal === (activeTab === "from"));
       console.log(`${stopName}의 출발 시간표 ${times.length}개 로드 완료`);
 
       // 노선별로 그룹화하고 남은 버스 개수 계산
@@ -63,32 +66,23 @@ export default function StopDetailPage() {
 
       // 모든 노선 목록 가져오기
       const uniqueRoutes = Array.from(
-        new Set(times.map((time) => time.routeNumber))
+        new Set([...await loadRoutesByTerminal(stopName), ...await loadRoutesToTerminal(stopName)])
       );
 
+      const statuses: Record<string, boolean> = {};
       // 각 노선에 대해 운행 정보 가져오기
       for (const routeNumber of uniqueRoutes) {
         const busData = await loadBusData(routeNumber);
         if (!busData) continue;
+        statuses[routeNumber] = busData.operatesToday ?? false;
 
         // 해당 노선의 모든 출발 시간
         const routeTimes = times.filter(
           (time) => time.routeNumber === routeNumber
         );
 
-        // 시간순 정렬
-        routeTimes.sort((a, b) => {
-          // 시간을 분으로 변환
-          const getTimeMinutes = (time: string) => {
-            const [hours, minutes] = time.split(":").map(Number);
-            return hours * 60 + minutes;
-          };
-
-          // 항상 오름차순 정렬
-          return (
-            getTimeMinutes(a.departureTime) - getTimeMinutes(b.departureTime)
-          );
-        });
+        if (!routeTimes.length) continue;
+        routeTimes.sort((a, b) => a.nextDepartureMinutes - b.nextDepartureMinutes);
 
         // 아직 출발하지 않은 시간들 (오늘)
         const remainingTimes = routeTimes.filter(
@@ -127,10 +121,11 @@ export default function StopDetailPage() {
       }
 
       setGroupedDepartures(grouped);
+      setRouteStatuses(statuses);
     } catch (err) {
       console.error(`${stopName} 출발 시간표 로딩 중 오류:`, err);
     }
-  }, [stopName]);
+  }, [stopName, activeTab]);
 
   // 초기 마운트 후 클라이언트 사이드 상태 업데이트
   useEffect(() => {
@@ -215,28 +210,13 @@ export default function StopDetailPage() {
       if (activeTab === "to") return !data.nextDeparture.isFromTerminal;
       return true;
     })
-    .sort((a, b) => {
-      // 1. 운행일 기준 정렬 (운행하는 날이 먼저 오도록)
-      if (a[1].operatesToday !== b[1].operatesToday) {
-        return a[1].operatesToday ? -1 : 1;
-      }
-
-      // 시간 문자열을 분 단위로 변환 (예: "08:30" -> 510)
-      const getTimeMinutes = (time: string) => {
-        const [hours, minutes] = time.split(":").map(Number);
-        return hours * 60 + minutes;
-      };
-
-      // 시간 기준으로 항상 오름차순 정렬
-      const timeA = getTimeMinutes(a[1].nextDeparture.departureTime);
-      const timeB = getTimeMinutes(b[1].nextDeparture.departureTime);
-      return timeA - timeB;
-    })
+    .sort((a, b) => a[1].nextDeparture.nextDepartureMinutes - b[1].nextDeparture.nextDepartureMinutes)
     .map(([routeNumber, data]) => ({
       routeNumber,
       departureTime: data.nextDeparture.departureTime,
       nextDepartureMinutes: data.nextDeparture.nextDepartureMinutes,
       category: data.nextDeparture.category,
+      note: data.nextDeparture.note,
       isFromTerminal: data.nextDeparture.isFromTerminal,
       remainingCount: data.remainingCount,
       operatesToday: data.operatesToday,
@@ -254,7 +234,7 @@ export default function StopDetailPage() {
       isDeparture: departureRoutes.includes(routeNumber),
       isArrival: arrivalRoutes.includes(routeNumber),
       remainingCount: routeData?.remainingCount || 0,
-      operatesToday: routeData?.operatesToday || false,
+      operatesToday: routeStatuses[routeNumber] ?? false,
     };
   });
 

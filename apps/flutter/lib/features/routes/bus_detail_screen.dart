@@ -3,6 +3,9 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 
 import '../../app_routes.dart';
+import '../../data/holiday_calendar.dart';
+import '../../utils/schedule.dart';
+import '../../utils/day_type_utils.dart';
 import '../../data/bus_repository.dart';
 import '../../models/bus_models.dart';
 import '../../widgets/live_clock.dart';
@@ -29,7 +32,10 @@ class _BusDetailScreenState extends State<BusDetailScreen> {
     _dataFuture = _loadData();
     _timer = Timer.periodic(
       const Duration(minutes: 1),
-      (_) => setState(() => _currentTime = DateTime.now()),
+      (_) => setState(() {
+        _currentTime = DateTime.now();
+        _dataFuture = _loadData();
+      }),
     );
   }
 
@@ -151,16 +157,18 @@ class _BusDetailScreenState extends State<BusDetailScreen> {
                   }
 
                   final operation = operations[index - 4];
-                  final status = _operationStatus(operation, _currentTime);
-                  final travelTime = _calculateTravelTime(
-                    operation.departureTime,
-                    operation.arrivalTime,
-                  );
-
+                  final status =
+                      operationApplies(data.busData, operation, _currentTime)
+                      ? _operationStatus(operation, _currentTime)
+                      : OperationStatus.future;
                   return _OperationCard(
                     operationInfo: operation,
                     status: status,
-                    travelTime: travelTime,
+                    appliesToday: operationApplies(
+                      data.busData,
+                      operation,
+                      _currentTime,
+                    ),
                   );
                 },
               ),
@@ -180,7 +188,7 @@ class _BusDetailScreenState extends State<BusDetailScreen> {
           if (activeTab == '공통') {
             return op.category.trim() == activeTab;
           }
-          if (activeTab == '평일') {
+          if (activeTab != '공통') {
             return op.category.trim() == activeTab ||
                 op.category.trim() == '공통';
           }
@@ -203,22 +211,16 @@ class _BusDetailScreenState extends State<BusDetailScreen> {
   }
 
   OperationStatus _operationStatus(BusOperationInfo operation, DateTime now) {
-    final departureTime = _parseTime(operation.departureTime, now);
-    final arrivalTime = _parseTime(operation.arrivalTime, now);
-
-    final departureStatus = _timeStatus(departureTime, now);
-    final arrivalStatus = _timeStatus(arrivalTime, now);
-
-    if (departureStatus == OperationStatus.current ||
-        arrivalStatus == OperationStatus.current) {
+    final statuses = [operation.departureTime, operation.arrivalTime]
+        .map((time) => _parseTime(time, now))
+        .whereType<DateTime>()
+        .map((time) => _timeStatus(time, now))
+        .toList();
+    if (statuses.contains(OperationStatus.current)) {
       return OperationStatus.current;
     }
-    if (departureStatus == OperationStatus.past &&
-        arrivalStatus == OperationStatus.future) {
-      return OperationStatus.current;
-    }
-    if (departureStatus == OperationStatus.past &&
-        arrivalStatus == OperationStatus.past) {
+    if (statuses.isNotEmpty &&
+        statuses.every((s) => s == OperationStatus.past)) {
       return OperationStatus.past;
     }
     return OperationStatus.future;
@@ -259,7 +261,7 @@ class _RouteInfoCard extends StatelessWidget {
     final theme = Theme.of(context);
     final items = [
       _RouteInfoItem(label: '출발 종점', value: routeInfo.origin),
-      _RouteInfoItem(label: '도착 종점', value: routeInfo.destination),
+      _RouteInfoItem(label: '반대 종점', value: routeInfo.destination),
       _RouteInfoItem(label: '첫차', value: routeInfo.firstBusTime),
       _RouteInfoItem(label: '막차', value: routeInfo.lastBusTime),
       _RouteInfoItem(label: '운행 횟수', value: routeInfo.operationCount),
@@ -371,12 +373,12 @@ class _OperationCard extends StatefulWidget {
   const _OperationCard({
     required this.operationInfo,
     required this.status,
-    required this.travelTime,
+    required this.appliesToday,
   });
 
   final BusOperationInfo operationInfo;
   final OperationStatus status;
-  final String travelTime;
+  final bool appliesToday;
 
   @override
   State<_OperationCard> createState() => _OperationCardState();
@@ -395,15 +397,15 @@ class _OperationCardState extends State<_OperationCard> {
     switch (widget.status) {
       case OperationStatus.current:
         statusColor = Colors.green;
-        statusLabel = '현재 운행 중';
+        statusLabel = '5분 내 출발 예정';
         break;
       case OperationStatus.past:
         statusColor = Colors.grey;
-        statusLabel = '운행 완료';
+        statusLabel = '출발 시각 지남';
         break;
       case OperationStatus.future:
         statusColor = theme.colorScheme.primary;
-        statusLabel = '운행 예정';
+        statusLabel = widget.appliesToday ? '시간표' : '오늘 미운행';
         break;
     }
 
@@ -481,7 +483,7 @@ class _OperationCardState extends State<_OperationCard> {
               const SizedBox(height: 12),
               _StopInfoRow(
                 icon: Icons.flag_rounded,
-                label: '도착',
+                label: '반대 종점 출발',
                 stopName: op.arrivalName,
                 time: op.arrivalTime,
                 status: widget.status,
@@ -523,7 +525,6 @@ class _OperationCardState extends State<_OperationCard> {
                   spacing: 12,
                   runSpacing: 8,
                   children: [
-                    _DetailChip(icon: Icons.schedule, label: widget.travelTime),
                     _DetailChip(
                       icon: Icons.category_outlined,
                       label: op.category.isEmpty ? '카테고리 없음' : op.category,
@@ -741,14 +742,10 @@ List<String> _extractCategories(BusData busData) {
 }
 
 String _chooseDefaultCategory(List<String> categories) {
-  const priority = ['평일', '공통', '토요일', '일요일', '공휴일', '휴일', '방학'];
-
-  for (final item in priority) {
-    if (categories.contains(item)) {
-      return item;
-    }
+  for (final day in getCurrentDayTypes()) {
+    if (categories.contains(day)) return day;
   }
-  return categories.isNotEmpty ? categories.first : '공통';
+  return categories.isEmpty ? '공통' : categories.first;
 }
 
 int _categoryPriority(String category) {
@@ -773,63 +770,24 @@ int _categoryPriority(String category) {
 }
 
 String _formatTime(DateTime time) {
+  time = koreaTime(time);
   final hours = time.hour.toString().padLeft(2, '0');
   final minutes = time.minute.toString().padLeft(2, '0');
   return '$hours:$minutes';
 }
 
 DateTime? _parseTime(String time, DateTime reference) {
-  if (time.isEmpty || time == '-') return null;
-  final parts = time.split(':');
-  if (parts.length != 2) return null;
-  final hours = int.tryParse(parts[0]) ?? 0;
-  final minutes = int.tryParse(parts[1]) ?? 0;
-  return DateTime(
-    reference.year,
-    reference.month,
-    reference.day,
-    hours,
-    minutes,
-  );
+  final minutes = timeMinutes(time);
+  return minutes == null
+      ? null
+      : koreaDayStart(reference).add(Duration(minutes: minutes));
 }
 
 OperationStatus _timeStatus(DateTime? time, DateTime now) {
-  if (time == null) {
-    return OperationStatus.future;
-  }
-  final diffMinutes = time.difference(now).inMinutes;
-  if (diffMinutes.abs() <= 30) {
-    return OperationStatus.current;
-  }
-  if (diffMinutes < 0) {
-    return OperationStatus.past;
-  }
-  return OperationStatus.future;
-}
-
-String _calculateTravelTime(String departureTime, String arrivalTime) {
-  if (departureTime == '-' || arrivalTime == '-') return '-';
-
-  final depParts = departureTime.split(':');
-  final arrParts = arrivalTime.split(':');
-  if (depParts.length != 2 || arrParts.length != 2) return '-';
-
-  final depMinutes =
-      (int.tryParse(depParts[0]) ?? 0) * 60 + (int.tryParse(depParts[1]) ?? 0);
-  final arrMinutes =
-      (int.tryParse(arrParts[0]) ?? 0) * 60 + (int.tryParse(arrParts[1]) ?? 0);
-
-  var diffMinutes = arrMinutes - depMinutes;
-  if (diffMinutes < 0) {
-    diffMinutes += 24 * 60;
-  }
-
-  final hours = diffMinutes ~/ 60;
-  final minutes = diffMinutes % 60;
-  if (hours == 0) {
-    return '$minutes분 소요';
-  }
-  return '$hours시간 $minutes분 소요';
+  if (time == null) return OperationStatus.future;
+  final delta = time.difference(now).inMilliseconds;
+  if (delta < 0) return OperationStatus.past;
+  return delta <= 300000 ? OperationStatus.current : OperationStatus.future;
 }
 
 int _parseOperationNumber(String value) {

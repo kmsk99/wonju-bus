@@ -1,3 +1,4 @@
+import { ensureCalendar, holidayKnown, holidayNames } from '../../../shared/lib/calendar/calendar';
 import { create } from 'zustand';
 import { getCurrentDayTypes } from './dayTypeUtils';
 import { DayType } from './types';
@@ -10,11 +11,11 @@ interface DayTypeState {
 
 function currentState() {
   const currentDayTypes = getCurrentDayTypes();
-  return { currentDayTypes, dayTypeText: currentDayTypes[0] };
+  return { currentDayTypes, dayTypeText: !holidayKnown() ? "공휴일 정보 확인 필요" : holidayNames().join(", ") || currentDayTypes[0] };
 }
 
-// 공휴일·방학 자동 판별은 아직 제공하지 않습니다.
+// API 갱신 후 모든 화면에서 같은 한국 날짜를 사용합니다.
 export const useDayTypeStore = create<DayTypeState>((set) => ({
   ...currentState(),
-  updateDayTypes: () => set(currentState()),
+  updateDayTypes: async () => { await ensureCalendar(); set(currentState()); },
 }));
