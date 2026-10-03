@@ -4,7 +4,7 @@
     "origin": "관설동종점",
     "destination": "상구현",
     "firstBusTime": "06:10",
-    "lastBusTime": "16:25",
+    "lastBusTime": "17:00",
     "operationCount": "4.5회",
     "interval": "1일 3회"
   },
@@ -47,8 +47,8 @@
     },
     {
       "operationNumber": "5",
-      "departureTime": "16:25",
-      "arrivalTime": "18:35",
+      "departureTime": "17:00",
+      "arrivalTime": "19:10",
       "departureName": "관설동종점",
       "arrivalName": "상구현",
       "category": "공통",

@@ -278,6 +278,87 @@
       "arrivalName": "횡성",
       "category": "공통",
       "note": ""
+    },
+    {
+      "operationNumber": "31",
+      "departureTime": "17:45",
+      "arrivalTime": "18:50",
+      "departureName": "관설동종점",
+      "arrivalName": "횡성",
+      "category": "공통",
+      "note": ""
+    },
+    {
+      "operationNumber": "32",
+      "departureTime": "18:00",
+      "arrivalTime": "19:15",
+      "departureName": "관설동종점",
+      "arrivalName": "횡성",
+      "category": "공통",
+      "note": ""
+    },
+    {
+      "operationNumber": "33",
+      "departureTime": "18:25",
+      "arrivalTime": "19:30",
+      "departureName": "관설동종점",
+      "arrivalName": "횡성",
+      "category": "공통",
+      "note": ""
+    },
+    {
+      "operationNumber": "34",
+      "departureTime": "18:50",
+      "arrivalTime": "-",
+      "departureName": "관설동종점",
+      "arrivalName": "횡성",
+      "category": "공통",
+      "note": ""
+    },
+    {
+      "operationNumber": "35",
+      "departureTime": "19:25",
+      "arrivalTime": "20:30",
+      "departureName": "관설동종점",
+      "arrivalName": "횡성",
+      "category": "공통",
+      "note": ""
+    },
+    {
+      "operationNumber": "36",
+      "departureTime": "19:45",
+      "arrivalTime": "20:50",
+      "departureName": "관설동종점",
+      "arrivalName": "횡성",
+      "category": "공통",
+      "note": ""
+    },
+    {
+      "operationNumber": "37",
+      "departureTime": "20:05",
+      "arrivalTime": "21:10",
+      "departureName": "관설동종점",
+      "arrivalName": "횡성",
+      "category": "공통",
+      "note": ""
+    },
+    {
+      "operationNumber": "38",
+      "departureTime": "20:25",
+      "arrivalTime": "21:25",
+      "departureName": "관설동종점",
+      "arrivalName": "횡성",
+      "category": "공통",
+      "note": ""
+    },
+    {
+      "operationNumber": "39",
+      "departureTime": "20:45",
+      "arrivalTime": "-",
+      "departureName": "관설동종점",
+      "arrivalName": "횡성",
+      "category": "공통",
+      "note": ""
     }
   ]
 }

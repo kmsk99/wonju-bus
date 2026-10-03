@@ -3,7 +3,7 @@
     "routeNumber": "51(평일)",
     "origin": "관설동종점",
     "destination": "문막읍",
-    "firstBusTime": "06:20",
+    "firstBusTime": "06:15",
     "lastBusTime": "19:10",
     "operationCount": "10.5회",
     "interval": "평균 75분"
@@ -20,7 +20,7 @@
     },
     {
       "operationNumber": "2",
-      "departureTime": "6:20",
+      "departureTime": "6:15",
       "arrivalTime": "7:45",
       "departureName": "관설동종점",
       "arrivalName": "문막읍",

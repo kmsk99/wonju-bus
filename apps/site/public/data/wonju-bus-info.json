@@ -1871,7 +1871,7 @@
       "origin": "관설동종점",
       "destination": "상구현",
       "firstBusTime": "06:10",
-      "lastBusTime": "16:25",
+      "lastBusTime": "17:00",
       "operationCount": "4.5회",
       "interval": "1일 3회"
     },
@@ -1914,8 +1914,8 @@
       },
       {
         "operationNumber": "5",
-        "departureTime": "16:25",
-        "arrivalTime": "18:35",
+        "departureTime": "17:00",
+        "arrivalTime": "19:10",
         "departureName": "관설동종점",
         "arrivalName": "상구현",
         "category": "공통",
@@ -1951,6 +1951,172 @@
         "arrivalName": "양동",
         "category": "공통",
         "note": ""
+      }
+    ]
+  },
+  "59": {
+    "routeInfo": {
+      "routeNumber": "59",
+      "origin": "관설동종점",
+      "destination": "경동대",
+      "firstBusTime": "06:30",
+      "lastBusTime": "20:50",
+      "operationCount": "17회",
+      "interval": "평균50분"
+    },
+    "operationInfo": [
+      {
+        "operationNumber": "1",
+        "departureTime": "6:30",
+        "arrivalTime": "7:30",
+        "departureName": "관설동종점",
+        "arrivalName": "경동대",
+        "category": "공통",
+        "note": "토, 일, 공휴일, 방학 미운행"
+      },
+      {
+        "operationNumber": "2",
+        "departureTime": "7:20",
+        "arrivalTime": "8:35",
+        "departureName": "관설동종점",
+        "arrivalName": "경동대",
+        "category": "공통",
+        "note": "토, 일, 공휴일, 방학 미운행"
+      },
+      {
+        "operationNumber": "3",
+        "departureTime": "8:05",
+        "arrivalTime": "9:20",
+        "departureName": "관설동종점",
+        "arrivalName": "경동대",
+        "category": "공통",
+        "note": "토, 일, 공휴일, 방학 미운행"
+      },
+      {
+        "operationNumber": "4",
+        "departureTime": "9:05",
+        "arrivalTime": "10:10",
+        "departureName": "관설동종점",
+        "arrivalName": "경동대",
+        "category": "공통",
+        "note": "토, 일, 공휴일, 방학 미운행"
+      },
+      {
+        "operationNumber": "5",
+        "departureTime": "10:10",
+        "arrivalTime": "11:15",
+        "departureName": "관설동종점",
+        "arrivalName": "경동대",
+        "category": "공통",
+        "note": "토, 일, 공휴일, 방학 미운행"
+      },
+      {
+        "operationNumber": "6",
+        "departureTime": "10:55",
+        "arrivalTime": "12:00",
+        "departureName": "관설동종점",
+        "arrivalName": "경동대",
+        "category": "공통",
+        "note": "토, 일, 공휴일, 방학 미운행"
+      },
+      {
+        "operationNumber": "7",
+        "departureTime": "11:45",
+        "arrivalTime": "12:50",
+        "departureName": "관설동종점",
+        "arrivalName": "경동대",
+        "category": "공통",
+        "note": "토, 일, 공휴일, 방학 미운행"
+      },
+      {
+        "operationNumber": "8",
+        "departureTime": "12:50",
+        "arrivalTime": "13:55",
+        "departureName": "관설동종점",
+        "arrivalName": "경동대",
+        "category": "공통",
+        "note": "토, 일, 공휴일, 방학 미운행"
+      },
+      {
+        "operationNumber": "9",
+        "departureTime": "13:35",
+        "arrivalTime": "14:40",
+        "departureName": "관설동종점",
+        "arrivalName": "경동대",
+        "category": "공통",
+        "note": "토, 일, 공휴일, 방학 미운행"
+      },
+      {
+        "operationNumber": "10",
+        "departureTime": "14:25",
+        "arrivalTime": "15:25",
+        "departureName": "관설동종점",
+        "arrivalName": "경동대",
+        "category": "공통",
+        "note": "토, 일, 공휴일, 방학 미운행"
+      },
+      {
+        "operationNumber": "11",
+        "departureTime": "15:30",
+        "arrivalTime": "16:35",
+        "departureName": "관설동종점",
+        "arrivalName": "경동대",
+        "category": "공통",
+        "note": "토, 일, 공휴일, 방학 미운행"
+      },
+      {
+        "operationNumber": "12",
+        "departureTime": "16:20",
+        "arrivalTime": "17:35",
+        "departureName": "관설동종점",
+        "arrivalName": "경동대",
+        "category": "공통",
+        "note": "토, 일, 공휴일, 방학 미운행"
+      },
+      {
+        "operationNumber": "13",
+        "departureTime": "17:05",
+        "arrivalTime": "18:20",
+        "departureName": "관설동종점",
+        "arrivalName": "경동대",
+        "category": "공통",
+        "note": "토, 일, 공휴일, 방학 미운행"
+      },
+      {
+        "operationNumber": "14",
+        "departureTime": "18:15",
+        "arrivalTime": "19:25",
+        "departureName": "관설동종점",
+        "arrivalName": "경동대",
+        "category": "공통",
+        "note": "토, 일, 공휴일, 방학 미운행"
+      },
+      {
+        "operationNumber": "15",
+        "departureTime": "19:20",
+        "arrivalTime": "20:25",
+        "departureName": "관설동종점",
+        "arrivalName": "경동대",
+        "category": "공통",
+        "note": "토, 일, 공휴일, 방학 미운행"
+      },
+      {
+        "operationNumber": "16",
+        "departureTime": "20:05",
+        "arrivalTime": "21:05",
+        "departureName": "관설동종점",
+        "arrivalName": "경동대",
+        "category": "공통",
+        "note": "토, 일, 공휴일, 방학 미운행"
+      },
+      {
+        "operationNumber": "17",
+        "departureTime": "20:50",
+        "arrivalTime": "21:50",
+        "departureName": "관설동종점",
+        "arrivalName": "경동대",
+        "category": "공통",
+        "note": "토, 일, 공휴일, 방학 미운행"
       }
     ]
   },
@@ -2037,14 +2203,14 @@
       "destination": "한라대학교",
       "firstBusTime": "06:00",
       "lastBusTime": "22:55",
-      "operationCount": "32회",
-      "interval": "평균 30분"
+      "operationCount": "29회",
+      "interval": "평균 35분"
     },
     "operationInfo": [
       {
         "operationNumber": "1",
-        "departureTime": "6:00",
-        "arrivalTime": "7:10",
+        "departureTime": "6:20",
+        "arrivalTime": "7:35",
         "departureName": "장양리시내버스공영정류장",
         "arrivalName": "한라대학교",
         "category": "공통",
@@ -2052,8 +2218,8 @@
       },
       {
         "operationNumber": "2",
-        "departureTime": "6:30",
-        "arrivalTime": "7:40",
+        "departureTime": "7:00",
+        "arrivalTime": "8:25",
         "departureName": "장양리시내버스공영정류장",
         "arrivalName": "한라대학교",
         "category": "공통",
@@ -2061,8 +2227,8 @@
       },
       {
         "operationNumber": "3",
-        "departureTime": "7:00",
-        "arrivalTime": "8:15",
+        "departureTime": "7:25",
+        "arrivalTime": "8:50",
         "departureName": "장양리시내버스공영정류장",
         "arrivalName": "한라대학교",
         "category": "공통",
@@ -2070,25 +2236,7 @@
       },
       {
         "operationNumber": "4",
-        "departureTime": "7:30",
-        "arrivalTime": "8:50",
-        "departureName": "장양리시내버스공영정류장",
-        "arrivalName": "한라대학교",
-        "category": "공통",
-        "note": "흥대 경유"
-      },
-      {
-        "operationNumber": "5",
-        "departureTime": "8:05",
-        "arrivalTime": "9:15",
-        "departureName": "장양리시내버스공영정류장",
-        "arrivalName": "한라대학교",
-        "category": "공통",
-        "note": ""
-      },
-      {
-        "operationNumber": "6",
-        "departureTime": "-",
+        "departureTime": "8:20",
         "arrivalTime": "9:40",
         "departureName": "장양리시내버스공영정류장",
         "arrivalName": "한라대학교",
@@ -2096,18 +2244,36 @@
         "note": ""
       },
       {
-        "operationNumber": "7",
-        "departureTime": "8:45",
-        "arrivalTime": "9:55",
+        "operationNumber": "5",
+        "departureTime": "9:25",
+        "arrivalTime": "10:40",
         "departureName": "장양리시내버스공영정류장",
         "arrivalName": "한라대학교",
         "category": "공통",
-        "note": "한라대발)합포원 경유"
+        "note": ""
+      },
+      {
+        "operationNumber": "6",
+        "departureTime": "9:45",
+        "arrivalTime": "11:00",
+        "departureName": "장양리시내버스공영정류장",
+        "arrivalName": "한라대학교",
+        "category": "공통",
+        "note": ""
+      },
+      {
+        "operationNumber": "7",
+        "departureTime": "10:15",
+        "arrivalTime": "11:30",
+        "departureName": "장양리시내버스공영정류장",
+        "arrivalName": "한라대학교",
+        "category": "공통",
+        "note": ""
       },
       {
         "operationNumber": "8",
-        "departureTime": "9:25",
-        "arrivalTime": "10:35",
+        "departureTime": "10:35",
+        "arrivalTime": "11:50",
         "departureName": "장양리시내버스공영정류장",
         "arrivalName": "한라대학교",
         "category": "공통",
@@ -2115,8 +2281,8 @@
       },
       {
         "operationNumber": "9",
-        "departureTime": "9:55",
-        "arrivalTime": "11:05",
+        "departureTime": "11:00",
+        "arrivalTime": "12:15",
         "departureName": "장양리시내버스공영정류장",
         "arrivalName": "한라대학교",
         "category": "공통",
@@ -2124,8 +2290,8 @@
       },
       {
         "operationNumber": "10",
-        "departureTime": "10:25",
-        "arrivalTime": "11:35",
+        "departureTime": "11:20",
+        "arrivalTime": "12:40",
         "departureName": "장양리시내버스공영정류장",
         "arrivalName": "한라대학교",
         "category": "공통",
@@ -2133,43 +2299,16 @@
       },
       {
         "operationNumber": "11",
-        "departureTime": "10:50",
-        "arrivalTime": "12:00",
+        "departureTime": "12:20",
+        "arrivalTime": "13:35",
         "departureName": "장양리시내버스공영정류장",
         "arrivalName": "한라대학교",
         "category": "공통",
-        "note": "흥대 경유"
+        "note": ""
       },
       {
         "operationNumber": "12",
-        "departureTime": "11:20",
-        "arrivalTime": "12:30",
-        "departureName": "장양리시내버스공영정류장",
-        "arrivalName": "한라대학교",
-        "category": "공통",
-        "note": ""
-      },
-      {
-        "operationNumber": "13",
-        "departureTime": "11:45",
-        "arrivalTime": "12:55",
-        "departureName": "장양리시내버스공영정류장",
-        "arrivalName": "한라대학교",
-        "category": "공통",
-        "note": ""
-      },
-      {
-        "operationNumber": "14",
-        "departureTime": "12:15",
-        "arrivalTime": "13:25",
-        "departureName": "장양리시내버스공영정류장",
-        "arrivalName": "한라대학교",
-        "category": "공통",
-        "note": ""
-      },
-      {
-        "operationNumber": "15",
-        "departureTime": "12:45",
+        "departureTime": "12:40",
         "arrivalTime": "13:55",
         "departureName": "장양리시내버스공영정류장",
         "arrivalName": "한라대학교",
@@ -2177,17 +2316,17 @@
         "note": ""
       },
       {
-        "operationNumber": "16",
+        "operationNumber": "13",
         "departureTime": "13:10",
-        "arrivalTime": "14:20",
+        "arrivalTime": "14:25",
         "departureName": "장양리시내버스공영정류장",
         "arrivalName": "한라대학교",
         "category": "공통",
         "note": ""
       },
       {
-        "operationNumber": "17",
-        "departureTime": "13:35",
+        "operationNumber": "14",
+        "departureTime": "13:30",
         "arrivalTime": "14:45",
         "departureName": "장양리시내버스공영정류장",
         "arrivalName": "한라대학교",
@@ -2195,9 +2334,36 @@
         "note": ""
       },
       {
+        "operationNumber": "15",
+        "departureTime": "13:55",
+        "arrivalTime": "15:10",
+        "departureName": "장양리시내버스공영정류장",
+        "arrivalName": "한라대학교",
+        "category": "공통",
+        "note": ""
+      },
+      {
+        "operationNumber": "16",
+        "departureTime": "14:25",
+        "arrivalTime": "15:40",
+        "departureName": "장양리시내버스공영정류장",
+        "arrivalName": "한라대학교",
+        "category": "공통",
+        "note": ""
+      },
+      {
+        "operationNumber": "17",
+        "departureTime": "15:05",
+        "arrivalTime": "16:20",
+        "departureName": "장양리시내버스공영정류장",
+        "arrivalName": "한라대학교",
+        "category": "공통",
+        "note": ""
+      },
+      {
         "operationNumber": "18",
-        "departureTime": "14:10",
-        "arrivalTime": "15:20",
+        "departureTime": "15:35",
+        "arrivalTime": "16:55",
         "departureName": "장양리시내버스공영정류장",
         "arrivalName": "한라대학교",
         "category": "공통",
@@ -2205,8 +2371,8 @@
       },
       {
         "operationNumber": "19",
-        "departureTime": "14:35",
-        "arrivalTime": "15:45",
+        "departureTime": "16:05",
+        "arrivalTime": "17:25",
         "departureName": "장양리시내버스공영정류장",
         "arrivalName": "한라대학교",
         "category": "공통",
@@ -2214,17 +2380,17 @@
       },
       {
         "operationNumber": "20",
-        "departureTime": "15:00",
-        "arrivalTime": "16:15",
+        "departureTime": "16:25",
+        "arrivalTime": "17:50",
         "departureName": "장양리시내버스공영정류장",
         "arrivalName": "한라대학교",
         "category": "공통",
-        "note": "흥대 경유"
+        "note": ""
       },
       {
         "operationNumber": "21",
-        "departureTime": "15:30",
-        "arrivalTime": "16:40",
+        "departureTime": "16:50",
+        "arrivalTime": "18:20",
         "departureName": "장양리시내버스공영정류장",
         "arrivalName": "한라대학교",
         "category": "공통",
@@ -2232,8 +2398,8 @@
       },
       {
         "operationNumber": "22",
-        "departureTime": "16:00",
-        "arrivalTime": "17:15",
+        "departureTime": "17:25",
+        "arrivalTime": "18:50",
         "departureName": "장양리시내버스공영정류장",
         "arrivalName": "한라대학교",
         "category": "공통",
@@ -2241,8 +2407,8 @@
       },
       {
         "operationNumber": "23",
-        "departureTime": "16:30",
-        "arrivalTime": "17:45",
+        "departureTime": "18:10",
+        "arrivalTime": "19:35",
         "departureName": "장양리시내버스공영정류장",
         "arrivalName": "한라대학교",
         "category": "공통",
@@ -2250,8 +2416,8 @@
       },
       {
         "operationNumber": "24",
-        "departureTime": "17:05",
-        "arrivalTime": "18:25",
+        "departureTime": "18:45",
+        "arrivalTime": "20:10",
         "departureName": "장양리시내버스공영정류장",
         "arrivalName": "한라대학교",
         "category": "공통",
@@ -2259,8 +2425,8 @@
       },
       {
         "operationNumber": "25",
-        "departureTime": "17:35",
-        "arrivalTime": "18:55",
+        "departureTime": "19:15",
+        "arrivalTime": "-",
         "departureName": "장양리시내버스공영정류장",
         "arrivalName": "한라대학교",
         "category": "공통",
@@ -2268,17 +2434,17 @@
       },
       {
         "operationNumber": "26",
-        "departureTime": "18:05",
-        "arrivalTime": "19:25",
+        "departureTime": "19:35",
+        "arrivalTime": "21:00",
         "departureName": "장양리시내버스공영정류장",
         "arrivalName": "한라대학교",
         "category": "공통",
-        "note": "흥대 경유"
+        "note": ""
       },
       {
         "operationNumber": "27",
-        "departureTime": "18:30",
-        "arrivalTime": "19:40",
+        "departureTime": "20:05",
+        "arrivalTime": "21:30",
         "departureName": "장양리시내버스공영정류장",
         "arrivalName": "한라대학교",
         "category": "공통",
@@ -2286,8 +2452,8 @@
       },
       {
         "operationNumber": "28",
-        "departureTime": "18:55",
-        "arrivalTime": "20:05",
+        "departureTime": "20:35",
+        "arrivalTime": "21:45",
         "departureName": "장양리시내버스공영정류장",
         "arrivalName": "한라대학교",
         "category": "공통",
@@ -2295,34 +2461,7 @@
       },
       {
         "operationNumber": "29",
-        "departureTime": "19:20",
-        "arrivalTime": "20:30",
-        "departureName": "장양리시내버스공영정류장",
-        "arrivalName": "한라대학교",
-        "category": "공통",
-        "note": ""
-      },
-      {
-        "operationNumber": "30",
-        "departureTime": "20:10",
-        "arrivalTime": "21:20",
-        "departureName": "장양리시내버스공영정류장",
-        "arrivalName": "한라대학교",
-        "category": "공통",
-        "note": ""
-      },
-      {
-        "operationNumber": "31",
-        "departureTime": "21:05",
-        "arrivalTime": "22:05",
-        "departureName": "장양리시내버스공영정류장",
-        "arrivalName": "한라대학교",
-        "category": "공통",
-        "note": ""
-      },
-      {
-        "operationNumber": "32",
-        "departureTime": "21:55",
+        "departureTime": "21:50",
         "arrivalTime": "22:55",
         "departureName": "장양리시내버스공영정류장",
         "arrivalName": "한라대학교",
@@ -2330,20 +2469,20 @@
         "note": ""
       },
       {
-        "operationNumber": "33",
+        "operationNumber": "30",
         "departureTime": "22:55",
         "arrivalTime": "-",
         "departureName": "장양리시내버스공영정류장",
         "arrivalName": "한라대학교",
         "category": "공통",
-        "note": ""
+        "note": "원주역 미경유"
       }
     ]
   },
   "111": {
     "routeInfo": {
       "routeNumber": "111",
-      "origin": "중흥2단지",
+      "origin": "관설동종점",
       "destination": "롯데캐슬2차",
       "firstBusTime": "07:30",
       "lastBusTime": "23:00",
@@ -2355,7 +2494,7 @@
         "operationNumber": "1",
         "departureTime": "-",
         "arrivalTime": "7:30",
-        "departureName": "중흥2단지",
+        "departureName": "관설동종점",
         "arrivalName": "롯데캐슬2차",
         "category": "공통",
         "note": ""
@@ -2364,7 +2503,7 @@
         "operationNumber": "2",
         "departureTime": "7:30",
         "arrivalTime": "8:55",
-        "departureName": "중흥2단지",
+        "departureName": "관설동종점",
         "arrivalName": "롯데캐슬2차",
         "category": "공통",
         "note": ""
@@ -2372,17 +2511,17 @@
       {
         "operationNumber": "3",
         "departureTime": "9:00",
-        "arrivalTime": "10:20",
-        "departureName": "중흥2단지",
+        "arrivalTime": "10:25",
+        "departureName": "관설동종점",
         "arrivalName": "롯데캐슬2차",
         "category": "공통",
         "note": ""
       },
       {
         "operationNumber": "4",
-        "departureTime": "9:45",
+        "departureTime": "9:40",
         "arrivalTime": "11:05",
-        "departureName": "중흥2단지",
+        "departureName": "관설동종점",
         "arrivalName": "롯데캐슬2차",
         "category": "공통",
         "note": ""
@@ -2391,7 +2530,7 @@
         "operationNumber": "5",
         "departureTime": "10:45",
         "arrivalTime": "12:05",
-        "departureName": "중흥2단지",
+        "departureName": "관설동종점",
         "arrivalName": "롯데캐슬2차",
         "category": "공통",
         "note": ""
@@ -2399,8 +2538,8 @@
       {
         "operationNumber": "6",
         "departureTime": "11:30",
-        "arrivalTime": "12:50",
-        "departureName": "중흥2단지",
+        "arrivalTime": "12:55",
+        "departureName": "관설동종점",
         "arrivalName": "롯데캐슬2차",
         "category": "공통",
         "note": ""
@@ -2408,35 +2547,35 @@
       {
         "operationNumber": "7",
         "departureTime": "12:30",
-        "arrivalTime": "13:50",
-        "departureName": "중흥2단지",
+        "arrivalTime": "13:55",
+        "departureName": "관설동종점",
         "arrivalName": "롯데캐슬2차",
         "category": "공통",
         "note": ""
       },
       {
         "operationNumber": "8",
-        "departureTime": "13:20",
+        "departureTime": "13:15",
         "arrivalTime": "14:40",
-        "departureName": "중흥2단지",
+        "departureName": "관설동종점",
         "arrivalName": "롯데캐슬2차",
         "category": "공통",
         "note": ""
       },
       {
         "operationNumber": "9",
-        "departureTime": "14:35",
+        "departureTime": "14:30",
         "arrivalTime": "15:55",
-        "departureName": "중흥2단지",
+        "departureName": "관설동종점",
         "arrivalName": "롯데캐슬2차",
         "category": "공통",
         "note": ""
       },
       {
         "operationNumber": "10",
-        "departureTime": "15:25",
+        "departureTime": "15:20",
         "arrivalTime": "16:45",
-        "departureName": "중흥2단지",
+        "departureName": "관설동종점",
         "arrivalName": "롯데캐슬2차",
         "category": "공통",
         "note": ""
@@ -2444,17 +2583,17 @@
       {
         "operationNumber": "11",
         "departureTime": "16:00",
-        "arrivalTime": "17:20",
-        "departureName": "중흥2단지",
+        "arrivalTime": "17:30",
+        "departureName": "관설동종점",
         "arrivalName": "롯데캐슬2차",
         "category": "공통",
         "note": ""
       },
       {
         "operationNumber": "12",
-        "departureTime": "17:10",
-        "arrivalTime": "18:35",
-        "departureName": "중흥2단지",
+        "departureTime": "17:00",
+        "arrivalTime": "18:25",
+        "departureName": "관설동종점",
         "arrivalName": "롯데캐슬2차",
         "category": "공통",
         "note": ""
@@ -2462,26 +2601,26 @@
       {
         "operationNumber": "13",
         "departureTime": "18:00",
-        "arrivalTime": "19:25",
-        "departureName": "중흥2단지",
+        "arrivalTime": "19:30",
+        "departureName": "관설동종점",
         "arrivalName": "롯데캐슬2차",
         "category": "공통",
         "note": ""
       },
       {
         "operationNumber": "14",
-        "departureTime": "19:00",
+        "departureTime": "18:55",
         "arrivalTime": "20:20",
-        "departureName": "중흥2단지",
+        "departureName": "관설동종점",
         "arrivalName": "롯데캐슬2차",
         "category": "공통",
         "note": ""
       },
       {
         "operationNumber": "15",
-        "departureTime": "19:45",
+        "departureTime": "19:40",
         "arrivalTime": "21:05",
-        "departureName": "중흥2단지",
+        "departureName": "관설동종점",
         "arrivalName": "롯데캐슬2차",
         "category": "공통",
         "note": ""
@@ -2490,16 +2629,16 @@
         "operationNumber": "16",
         "departureTime": "20:55",
         "arrivalTime": "22:35",
-        "departureName": "중흥2단지",
+        "departureName": "관설동종점",
         "arrivalName": "롯데캐슬2차",
         "category": "공통",
         "note": "롯데캐슬발)연세대경유"
       },
       {
         "operationNumber": "17",
-        "departureTime": "22:10",
+        "departureTime": "22:05",
         "arrivalTime": "23:20",
-        "departureName": "중흥2단지",
+        "departureName": "관설동종점",
         "arrivalName": "롯데캐슬2차",
         "category": "공통",
         "note": "롯데캐슬발)원주역미경유"
@@ -2508,7 +2647,7 @@
         "operationNumber": "18",
         "departureTime": "23:00",
         "arrivalTime": "-",
-        "departureName": "중흥2단지",
+        "departureName": "관설동종점",
         "arrivalName": "롯데캐슬2차",
         "category": "공통",
         "note": ""
@@ -3952,6 +4091,289 @@
       }
     ]
   },
+  "3(평일)": {
+    "routeInfo": {
+      "routeNumber": "3(평일)",
+      "origin": "장양리시내버스공영정류장",
+      "destination": "장양리시내버스공영정류장",
+      "firstBusTime": "06:30",
+      "lastBusTime": "20:50",
+      "operationCount": "30회",
+      "interval": "평균30분"
+    },
+    "operationInfo": [
+      {
+        "operationNumber": "1",
+        "departureTime": "통학8번",
+        "arrivalTime": "순환",
+        "departureName": "장양리시내버스공영정류장",
+        "arrivalName": "장양리시내버스공영정류장",
+        "category": "공통",
+        "note": ""
+      },
+      {
+        "operationNumber": "2",
+        "departureTime": "통학6번",
+        "arrivalTime": "순환",
+        "departureName": "장양리시내버스공영정류장",
+        "arrivalName": "장양리시내버스공영정류장",
+        "category": "공통",
+        "note": ""
+      },
+      {
+        "operationNumber": "3",
+        "departureTime": "6:30",
+        "arrivalTime": "순환",
+        "departureName": "장양리시내버스공영정류장",
+        "arrivalName": "장양리시내버스공영정류장",
+        "category": "공통",
+        "note": ""
+      },
+      {
+        "operationNumber": "4",
+        "departureTime": "7:30",
+        "arrivalTime": "순환",
+        "departureName": "장양리시내버스공영정류장",
+        "arrivalName": "장양리시내버스공영정류장",
+        "category": "공통",
+        "note": ""
+      },
+      {
+        "operationNumber": "5",
+        "departureTime": "7:55",
+        "arrivalTime": "순환",
+        "departureName": "장양리시내버스공영정류장",
+        "arrivalName": "장양리시내버스공영정류장",
+        "category": "공통",
+        "note": ""
+      },
+      {
+        "operationNumber": "6",
+        "departureTime": "8:20",
+        "arrivalTime": "순환",
+        "departureName": "장양리시내버스공영정류장",
+        "arrivalName": "장양리시내버스공영정류장",
+        "category": "공통",
+        "note": ""
+      },
+      {
+        "operationNumber": "7",
+        "departureTime": "8:45",
+        "arrivalTime": "순환",
+        "departureName": "장양리시내버스공영정류장",
+        "arrivalName": "장양리시내버스공영정류장",
+        "category": "공통",
+        "note": ""
+      },
+      {
+        "operationNumber": "8",
+        "departureTime": "9:15",
+        "arrivalTime": "순환",
+        "departureName": "장양리시내버스공영정류장",
+        "arrivalName": "장양리시내버스공영정류장",
+        "category": "공통",
+        "note": ""
+      },
+      {
+        "operationNumber": "9",
+        "departureTime": "10:05",
+        "arrivalTime": "순환",
+        "departureName": "장양리시내버스공영정류장",
+        "arrivalName": "장양리시내버스공영정류장",
+        "category": "공통",
+        "note": ""
+      },
+      {
+        "operationNumber": "10",
+        "departureTime": "10:30",
+        "arrivalTime": "순환",
+        "departureName": "장양리시내버스공영정류장",
+        "arrivalName": "장양리시내버스공영정류장",
+        "category": "공통",
+        "note": ""
+      },
+      {
+        "operationNumber": "11",
+        "departureTime": "10:55",
+        "arrivalTime": "순환",
+        "departureName": "장양리시내버스공영정류장",
+        "arrivalName": "장양리시내버스공영정류장",
+        "category": "공통",
+        "note": ""
+      },
+      {
+        "operationNumber": "12",
+        "departureTime": "11:20",
+        "arrivalTime": "순환",
+        "departureName": "장양리시내버스공영정류장",
+        "arrivalName": "장양리시내버스공영정류장",
+        "category": "공통",
+        "note": ""
+      },
+      {
+        "operationNumber": "13",
+        "departureTime": "11:55",
+        "arrivalTime": "순환",
+        "departureName": "장양리시내버스공영정류장",
+        "arrivalName": "장양리시내버스공영정류장",
+        "category": "공통",
+        "note": ""
+      },
+      {
+        "operationNumber": "14",
+        "departureTime": "12:45",
+        "arrivalTime": "순환",
+        "departureName": "장양리시내버스공영정류장",
+        "arrivalName": "장양리시내버스공영정류장",
+        "category": "공통",
+        "note": ""
+      },
+      {
+        "operationNumber": "15",
+        "departureTime": "13:10",
+        "arrivalTime": "순환",
+        "departureName": "장양리시내버스공영정류장",
+        "arrivalName": "장양리시내버스공영정류장",
+        "category": "공통",
+        "note": ""
+      },
+      {
+        "operationNumber": "16",
+        "departureTime": "13:35",
+        "arrivalTime": "순환",
+        "departureName": "장양리시내버스공영정류장",
+        "arrivalName": "장양리시내버스공영정류장",
+        "category": "공통",
+        "note": ""
+      },
+      {
+        "operationNumber": "17",
+        "departureTime": "14:00",
+        "arrivalTime": "순환",
+        "departureName": "장양리시내버스공영정류장",
+        "arrivalName": "장양리시내버스공영정류장",
+        "category": "공통",
+        "note": ""
+      },
+      {
+        "operationNumber": "18",
+        "departureTime": "14:25",
+        "arrivalTime": "순환",
+        "departureName": "장양리시내버스공영정류장",
+        "arrivalName": "장양리시내버스공영정류장",
+        "category": "공통",
+        "note": ""
+      },
+      {
+        "operationNumber": "19",
+        "departureTime": "15:15",
+        "arrivalTime": "순환",
+        "departureName": "장양리시내버스공영정류장",
+        "arrivalName": "장양리시내버스공영정류장",
+        "category": "공통",
+        "note": ""
+      },
+      {
+        "operationNumber": "20",
+        "departureTime": "15:40",
+        "arrivalTime": "순환",
+        "departureName": "장양리시내버스공영정류장",
+        "arrivalName": "장양리시내버스공영정류장",
+        "category": "공통",
+        "note": ""
+      },
+      {
+        "operationNumber": "21",
+        "departureTime": "16:05",
+        "arrivalTime": "순환",
+        "departureName": "장양리시내버스공영정류장",
+        "arrivalName": "장양리시내버스공영정류장",
+        "category": "공통",
+        "note": ""
+      },
+      {
+        "operationNumber": "22",
+        "departureTime": "16:30",
+        "arrivalTime": "순환",
+        "departureName": "장양리시내버스공영정류장",
+        "arrivalName": "장양리시내버스공영정류장",
+        "category": "공통",
+        "note": ""
+      },
+      {
+        "operationNumber": "23",
+        "departureTime": "17:00",
+        "arrivalTime": "순환",
+        "departureName": "장양리시내버스공영정류장",
+        "arrivalName": "장양리시내버스공영정류장",
+        "category": "공통",
+        "note": ""
+      },
+      {
+        "operationNumber": "24",
+        "departureTime": "17:50",
+        "arrivalTime": "순환",
+        "departureName": "장양리시내버스공영정류장",
+        "arrivalName": "장양리시내버스공영정류장",
+        "category": "공통",
+        "note": ""
+      },
+      {
+        "operationNumber": "25",
+        "departureTime": "18:15",
+        "arrivalTime": "순환",
+        "departureName": "장양리시내버스공영정류장",
+        "arrivalName": "장양리시내버스공영정류장",
+        "category": "공통",
+        "note": ""
+      },
+      {
+        "operationNumber": "26",
+        "departureTime": "18:40",
+        "arrivalTime": "순환",
+        "departureName": "장양리시내버스공영정류장",
+        "arrivalName": "장양리시내버스공영정류장",
+        "category": "공통",
+        "note": ""
+      },
+      {
+        "operationNumber": "27",
+        "departureTime": "19:05",
+        "arrivalTime": "순환",
+        "departureName": "장양리시내버스공영정류장",
+        "arrivalName": "장양리시내버스공영정류장",
+        "category": "공통",
+        "note": ""
+      },
+      {
+        "operationNumber": "28",
+        "departureTime": "19:35",
+        "arrivalTime": "순환",
+        "departureName": "장양리시내버스공영정류장",
+        "arrivalName": "장양리시내버스공영정류장",
+        "category": "공통",
+        "note": ""
+      },
+      {
+        "operationNumber": "29",
+        "departureTime": "20:25",
+        "arrivalTime": "순환",
+        "departureName": "장양리시내버스공영정류장",
+        "arrivalName": "장양리시내버스공영정류장",
+        "category": "공통",
+        "note": ""
+      },
+      {
+        "operationNumber": "30",
+        "departureTime": "20:50",
+        "arrivalTime": "순환",
+        "departureName": "장양리시내버스공영정류장",
+        "arrivalName": "장양리시내버스공영정류장",
+        "category": "공통",
+        "note": ""
+      }
+    ]
+  },
   "3(방학,휴일)": {
     "routeInfo": {
       "routeNumber": "3(방학,휴일)",
@@ -4127,6 +4549,73 @@
       }
     ]
   },
+  "3-1(평일)": {
+    "routeInfo": {
+      "routeNumber": "3-1(평일)",
+      "origin": "장양리시내버스공영정류장",
+      "destination": "장양리시내버스공영정류장",
+      "firstBusTime": "07:05",
+      "lastBusTime": "20:00",
+      "operationCount": "6회",
+      "interval": "1일6회"
+    },
+    "operationInfo": [
+      {
+        "operationNumber": "1",
+        "departureTime": "7:05",
+        "arrivalTime": "순환",
+        "departureName": "장양리시내버스공영정류장",
+        "arrivalName": "장양리시내버스공영정류장",
+        "category": "공통",
+        "note": ""
+      },
+      {
+        "operationNumber": "2",
+        "departureTime": "9:40",
+        "arrivalTime": "순환",
+        "departureName": "장양리시내버스공영정류장",
+        "arrivalName": "장양리시내버스공영정류장",
+        "category": "공통",
+        "note": ""
+      },
+      {
+        "operationNumber": "3",
+        "departureTime": "12:20",
+        "arrivalTime": "순환",
+        "departureName": "장양리시내버스공영정류장",
+        "arrivalName": "장양리시내버스공영정류장",
+        "category": "공통",
+        "note": ""
+      },
+      {
+        "operationNumber": "4",
+        "departureTime": "14:50",
+        "arrivalTime": "순환",
+        "departureName": "장양리시내버스공영정류장",
+        "arrivalName": "장양리시내버스공영정류장",
+        "category": "공통",
+        "note": ""
+      },
+      {
+        "operationNumber": "5",
+        "departureTime": "17:25",
+        "arrivalTime": "순환",
+        "departureName": "장양리시내버스공영정류장",
+        "arrivalName": "장양리시내버스공영정류장",
+        "category": "공통",
+        "note": ""
+      },
+      {
+        "operationNumber": "6",
+        "departureTime": "20:00",
+        "arrivalTime": "순환",
+        "departureName": "장양리시내버스공영정류장",
+        "arrivalName": "장양리시내버스공영정류장",
+        "category": "공통",
+        "note": ""
+      }
+    ]
+  },
   "3-1(방학,휴일)": {
     "routeInfo": {
       "routeNumber": "3-1(방학,휴일)",
@@ -4186,6 +4675,280 @@
       {
         "operationNumber": "6",
         "departureTime": "19:45",
+        "arrivalTime": "순환",
+        "departureName": "장양리시내버스공영정류장",
+        "arrivalName": "장양리시내버스공영정류장",
+        "category": "공통",
+        "note": ""
+      }
+    ]
+  },
+  "4(평일)": {
+    "routeInfo": {
+      "routeNumber": "4(평일)",
+      "origin": "장양리시내버스공영정류장",
+      "destination": "장양리시내버스공영정류장",
+      "firstBusTime": "06:30",
+      "lastBusTime": "21:05",
+      "operationCount": "29회",
+      "interval": "평균30분"
+    },
+    "operationInfo": [
+      {
+        "operationNumber": "1",
+        "departureTime": "통학3번",
+        "arrivalTime": "순환",
+        "departureName": "장양리시내버스공영정류장",
+        "arrivalName": "장양리시내버스공영정류장",
+        "category": "공통",
+        "note": ""
+      },
+      {
+        "operationNumber": "2",
+        "departureTime": "6:30",
+        "arrivalTime": "순환",
+        "departureName": "장양리시내버스공영정류장",
+        "arrivalName": "장양리시내버스공영정류장",
+        "category": "공통",
+        "note": ""
+      },
+      {
+        "operationNumber": "3",
+        "departureTime": "6:55",
+        "arrivalTime": "순환",
+        "departureName": "장양리시내버스공영정류장",
+        "arrivalName": "장양리시내버스공영정류장",
+        "category": "공통",
+        "note": ""
+      },
+      {
+        "operationNumber": "4",
+        "departureTime": "7:45",
+        "arrivalTime": "순환",
+        "departureName": "장양리시내버스공영정류장",
+        "arrivalName": "장양리시내버스공영정류장",
+        "category": "공통",
+        "note": ""
+      },
+      {
+        "operationNumber": "5",
+        "departureTime": "8:10",
+        "arrivalTime": "순환",
+        "departureName": "장양리시내버스공영정류장",
+        "arrivalName": "장양리시내버스공영정류장",
+        "category": "공통",
+        "note": ""
+      },
+      {
+        "operationNumber": "6",
+        "departureTime": "8:35",
+        "arrivalTime": "순환",
+        "departureName": "장양리시내버스공영정류장",
+        "arrivalName": "장양리시내버스공영정류장",
+        "category": "공통",
+        "note": ""
+      },
+      {
+        "operationNumber": "7",
+        "departureTime": "9:10",
+        "arrivalTime": "순환",
+        "departureName": "장양리시내버스공영정류장",
+        "arrivalName": "장양리시내버스공영정류장",
+        "category": "공통",
+        "note": ""
+      },
+      {
+        "operationNumber": "8",
+        "departureTime": "9:35",
+        "arrivalTime": "순환",
+        "departureName": "장양리시내버스공영정류장",
+        "arrivalName": "장양리시내버스공영정류장",
+        "category": "공통",
+        "note": ""
+      },
+      {
+        "operationNumber": "9",
+        "departureTime": "10:25",
+        "arrivalTime": "순환",
+        "departureName": "장양리시내버스공영정류장",
+        "arrivalName": "장양리시내버스공영정류장",
+        "category": "공통",
+        "note": ""
+      },
+      {
+        "operationNumber": "10",
+        "departureTime": "10:50",
+        "arrivalTime": "순환",
+        "departureName": "장양리시내버스공영정류장",
+        "arrivalName": "장양리시내버스공영정류장",
+        "category": "공통",
+        "note": ""
+      },
+      {
+        "operationNumber": "11",
+        "departureTime": "11:15",
+        "arrivalTime": "순환",
+        "departureName": "장양리시내버스공영정류장",
+        "arrivalName": "장양리시내버스공영정류장",
+        "category": "공통",
+        "note": ""
+      },
+      {
+        "operationNumber": "12",
+        "departureTime": "11:50",
+        "arrivalTime": "순환",
+        "departureName": "장양리시내버스공영정류장",
+        "arrivalName": "장양리시내버스공영정류장",
+        "category": "공통",
+        "note": ""
+      },
+      {
+        "operationNumber": "13",
+        "departureTime": "12:15",
+        "arrivalTime": "순환",
+        "departureName": "장양리시내버스공영정류장",
+        "arrivalName": "장양리시내버스공영정류장",
+        "category": "공통",
+        "note": ""
+      },
+      {
+        "operationNumber": "14",
+        "departureTime": "13:05",
+        "arrivalTime": "순환",
+        "departureName": "장양리시내버스공영정류장",
+        "arrivalName": "장양리시내버스공영정류장",
+        "category": "공통",
+        "note": ""
+      },
+      {
+        "operationNumber": "15",
+        "departureTime": "13:30",
+        "arrivalTime": "순환",
+        "departureName": "장양리시내버스공영정류장",
+        "arrivalName": "장양리시내버스공영정류장",
+        "category": "공통",
+        "note": ""
+      },
+      {
+        "operationNumber": "16",
+        "departureTime": "13:55",
+        "arrivalTime": "순환",
+        "departureName": "장양리시내버스공영정류장",
+        "arrivalName": "장양리시내버스공영정류장",
+        "category": "공통",
+        "note": ""
+      },
+      {
+        "operationNumber": "17",
+        "departureTime": "14:30",
+        "arrivalTime": "순환",
+        "departureName": "장양리시내버스공영정류장",
+        "arrivalName": "장양리시내버스공영정류장",
+        "category": "공통",
+        "note": ""
+      },
+      {
+        "operationNumber": "18",
+        "departureTime": "14:55",
+        "arrivalTime": "순환",
+        "departureName": "장양리시내버스공영정류장",
+        "arrivalName": "장양리시내버스공영정류장",
+        "category": "공통",
+        "note": ""
+      },
+      {
+        "operationNumber": "19",
+        "departureTime": "15:45",
+        "arrivalTime": "순환",
+        "departureName": "장양리시내버스공영정류장",
+        "arrivalName": "장양리시내버스공영정류장",
+        "category": "공통",
+        "note": ""
+      },
+      {
+        "operationNumber": "20",
+        "departureTime": "16:10",
+        "arrivalTime": "순환",
+        "departureName": "장양리시내버스공영정류장",
+        "arrivalName": "장양리시내버스공영정류장",
+        "category": "공통",
+        "note": ""
+      },
+      {
+        "operationNumber": "21",
+        "departureTime": "16:35",
+        "arrivalTime": "순환",
+        "departureName": "장양리시내버스공영정류장",
+        "arrivalName": "장양리시내버스공영정류장",
+        "category": "공통",
+        "note": ""
+      },
+      {
+        "operationNumber": "22",
+        "departureTime": "17:10",
+        "arrivalTime": "순환",
+        "departureName": "장양리시내버스공영정류장",
+        "arrivalName": "장양리시내버스공영정류장",
+        "category": "공통",
+        "note": ""
+      },
+      {
+        "operationNumber": "23",
+        "departureTime": "17:35",
+        "arrivalTime": "순환",
+        "departureName": "장양리시내버스공영정류장",
+        "arrivalName": "장양리시내버스공영정류장",
+        "category": "공통",
+        "note": ""
+      },
+      {
+        "operationNumber": "24",
+        "departureTime": "18:25",
+        "arrivalTime": "순환",
+        "departureName": "장양리시내버스공영정류장",
+        "arrivalName": "장양리시내버스공영정류장",
+        "category": "공통",
+        "note": ""
+      },
+      {
+        "operationNumber": "25",
+        "departureTime": "18:50",
+        "arrivalTime": "순환",
+        "departureName": "장양리시내버스공영정류장",
+        "arrivalName": "장양리시내버스공영정류장",
+        "category": "공통",
+        "note": ""
+      },
+      {
+        "operationNumber": "26",
+        "departureTime": "19:15",
+        "arrivalTime": "순환",
+        "departureName": "장양리시내버스공영정류장",
+        "arrivalName": "장양리시내버스공영정류장",
+        "category": "공통",
+        "note": ""
+      },
+      {
+        "operationNumber": "27",
+        "departureTime": "19:50",
+        "arrivalTime": "순환",
+        "departureName": "장양리시내버스공영정류장",
+        "arrivalName": "장양리시내버스공영정류장",
+        "category": "공통",
+        "note": ""
+      },
+      {
+        "operationNumber": "28",
+        "departureTime": "20:15",
+        "arrivalTime": "순환",
+        "departureName": "장양리시내버스공영정류장",
+        "arrivalName": "장양리시내버스공영정류장",
+        "category": "공통",
+        "note": ""
+      },
+      {
+        "operationNumber": "29",
+        "departureTime": "21:05",
         "arrivalTime": "순환",
         "departureName": "장양리시내버스공영정류장",
         "arrivalName": "장양리시내버스공영정류장",
@@ -4352,6 +5115,73 @@
       {
         "operationNumber": "17",
         "departureTime": "21:05",
+        "arrivalTime": "순환",
+        "departureName": "장양리시내버스공영정류장",
+        "arrivalName": "장양리시내버스공영정류장",
+        "category": "공통",
+        "note": ""
+      }
+    ]
+  },
+  "4-1(평일)": {
+    "routeInfo": {
+      "routeNumber": "4-1(평일)",
+      "origin": "장양리시내버스공영정류장",
+      "destination": "장양리시내버스공영정류장",
+      "firstBusTime": "07:20",
+      "lastBusTime": "20:40",
+      "operationCount": "6회",
+      "interval": "1일6회"
+    },
+    "operationInfo": [
+      {
+        "operationNumber": "1",
+        "departureTime": "7:20",
+        "arrivalTime": "순환",
+        "departureName": "장양리시내버스공영정류장",
+        "arrivalName": "장양리시내버스공영정류장",
+        "category": "공통",
+        "note": ""
+      },
+      {
+        "operationNumber": "2",
+        "departureTime": "10:00",
+        "arrivalTime": "순환",
+        "departureName": "장양리시내버스공영정류장",
+        "arrivalName": "장양리시내버스공영정류장",
+        "category": "공통",
+        "note": ""
+      },
+      {
+        "operationNumber": "3",
+        "departureTime": "12:40",
+        "arrivalTime": "순환",
+        "departureName": "장양리시내버스공영정류장",
+        "arrivalName": "장양리시내버스공영정류장",
+        "category": "공통",
+        "note": ""
+      },
+      {
+        "operationNumber": "4",
+        "departureTime": "15:20",
+        "arrivalTime": "순환",
+        "departureName": "장양리시내버스공영정류장",
+        "arrivalName": "장양리시내버스공영정류장",
+        "category": "공통",
+        "note": ""
+      },
+      {
+        "operationNumber": "5",
+        "departureTime": "18:00",
+        "arrivalTime": "순환",
+        "departureName": "장양리시내버스공영정류장",
+        "arrivalName": "장양리시내버스공영정류장",
+        "category": "공통",
+        "note": ""
+      },
+      {
+        "operationNumber": "6",
+        "departureTime": "20:40",
         "arrivalTime": "순환",
         "departureName": "장양리시내버스공영정류장",
         "arrivalName": "장양리시내버스공영정류장",
@@ -5785,8 +6615,8 @@
       },
       {
         "operationNumber": "3",
-        "departureTime": "7:40",
-        "arrivalTime": "9:00",
+        "departureTime": "7:35",
+        "arrivalTime": "9:05",
         "departureName": "관설동종점",
         "arrivalName": "한라대학교",
         "category": "공통",
@@ -6005,6 +6835,217 @@
       }
     ]
   },
+  "31(평일)": {
+    "routeInfo": {
+      "routeNumber": "31(평일)",
+      "origin": "장양리시내버스공영정류장",
+      "destination": "귀래,운남,용암",
+      "firstBusTime": "05:50",
+      "lastBusTime": "19:50",
+      "operationCount": "21회",
+      "interval": "평균40분"
+    },
+    "operationInfo": [
+      {
+        "operationNumber": "1",
+        "departureTime": "-",
+        "arrivalTime": "6:35",
+        "departureName": "장양리시내버스공영정류장",
+        "arrivalName": "귀래,운남,용암",
+        "category": "공통",
+        "note": "외촌발)원주역 경유"
+      },
+      {
+        "operationNumber": "2",
+        "departureTime": "5:50",
+        "arrivalTime": "7:10",
+        "departureName": "장양리시내버스공영정류장",
+        "arrivalName": "귀래,운남,용암",
+        "category": "공통",
+        "note": "용암, 용암발)귀래3리, 서곡 경유"
+      },
+      {
+        "operationNumber": "3",
+        "departureTime": "5:45",
+        "arrivalTime": "7:00",
+        "departureName": "장양리시내버스공영정류장",
+        "arrivalName": "귀래,운남,용암",
+        "category": "공통",
+        "note": "운남, 운남발)귀래3리, 귀래1리 경유"
+      },
+      {
+        "operationNumber": "4",
+        "departureTime": "6:15",
+        "arrivalTime": "8:05",
+        "departureName": "장양리시내버스공영정류장",
+        "arrivalName": "귀래,운남,용암",
+        "category": "공통",
+        "note": "단강"
+      },
+      {
+        "operationNumber": "5",
+        "departureTime": "6:55",
+        "arrivalTime": "8:55",
+        "departureName": "장양리시내버스공영정류장",
+        "arrivalName": "귀래,운남,용암",
+        "category": "공통",
+        "note": ""
+      },
+      {
+        "operationNumber": "6",
+        "departureTime": "7:40",
+        "arrivalTime": "9:30",
+        "departureName": "장양리시내버스공영정류장",
+        "arrivalName": "귀래,운남,용암",
+        "category": "공통",
+        "note": ""
+      },
+      {
+        "operationNumber": "7",
+        "departureTime": "8:00",
+        "arrivalTime": "10:02",
+        "departureName": "장양리시내버스공영정류장",
+        "arrivalName": "귀래,운남,용암",
+        "category": "공통",
+        "note": "귀래3리 경유"
+      },
+      {
+        "operationNumber": "8",
+        "departureTime": "9:10",
+        "arrivalTime": "11:02",
+        "departureName": "장양리시내버스공영정류장",
+        "arrivalName": "귀래,운남,용암",
+        "category": "공통",
+        "note": ""
+      },
+      {
+        "operationNumber": "9",
+        "departureTime": "10:00",
+        "arrivalTime": "11:45",
+        "departureName": "장양리시내버스공영정류장",
+        "arrivalName": "귀래,운남,용암",
+        "category": "공통",
+        "note": ""
+      },
+      {
+        "operationNumber": "10",
+        "departureTime": "10:20",
+        "arrivalTime": "12:20",
+        "departureName": "장양리시내버스공영정류장",
+        "arrivalName": "귀래,운남,용암",
+        "category": "공통",
+        "note": "운남, 운남발)원주역 경유"
+      },
+      {
+        "operationNumber": "11",
+        "departureTime": "11:00",
+        "arrivalTime": "13:05",
+        "departureName": "장양리시내버스공영정류장",
+        "arrivalName": "귀래,운남,용암",
+        "category": "공통",
+        "note": ""
+      },
+      {
+        "operationNumber": "12",
+        "departureTime": "11:30",
+        "arrivalTime": "13:30",
+        "departureName": "장양리시내버스공영정류장",
+        "arrivalName": "귀래,운남,용암",
+        "category": "공통",
+        "note": "귀래3리 경유"
+      },
+      {
+        "operationNumber": "13",
+        "departureTime": "12:45",
+        "arrivalTime": "14:30",
+        "departureName": "장양리시내버스공영정류장",
+        "arrivalName": "귀래,운남,용암",
+        "category": "공통",
+        "note": ""
+      },
+      {
+        "operationNumber": "14",
+        "departureTime": "13:35",
+        "arrivalTime": "15:40",
+        "departureName": "장양리시내버스공영정류장",
+        "arrivalName": "귀래,운남,용암",
+        "category": "공통",
+        "note": ""
+      },
+      {
+        "operationNumber": "15",
+        "departureTime": "14:20",
+        "arrivalTime": "16:35",
+        "departureName": "장양리시내버스공영정류장",
+        "arrivalName": "귀래,운남,용암",
+        "category": "공통",
+        "note": ""
+      },
+      {
+        "operationNumber": "16",
+        "departureTime": "14:55",
+        "arrivalTime": "17:05",
+        "departureName": "장양리시내버스공영정류장",
+        "arrivalName": "귀래,운남,용암",
+        "category": "공통",
+        "note": "귀래3리 경유"
+      },
+      {
+        "operationNumber": "17",
+        "departureTime": "15:40",
+        "arrivalTime": "17:40",
+        "departureName": "장양리시내버스공영정류장",
+        "arrivalName": "귀래,운남,용암",
+        "category": "공통",
+        "note": ""
+      },
+      {
+        "operationNumber": "18",
+        "departureTime": "16:00",
+        "arrivalTime": "18:05",
+        "departureName": "장양리시내버스공영정류장",
+        "arrivalName": "귀래,운남,용암",
+        "category": "공통",
+        "note": "단강"
+      },
+      {
+        "operationNumber": "19",
+        "departureTime": "16:42",
+        "arrivalTime": "18:35",
+        "departureName": "장양리시내버스공영정류장",
+        "arrivalName": "귀래,운남,용암",
+        "category": "공통",
+        "note": "운남, 장양리발)귀래3리 경유"
+      },
+      {
+        "operationNumber": "20",
+        "departureTime": "17:40",
+        "arrivalTime": "19:45",
+        "departureName": "장양리시내버스공영정류장",
+        "arrivalName": "귀래,운남,용암",
+        "category": "공통",
+        "note": "용암"
+      },
+      {
+        "operationNumber": "21",
+        "departureTime": "19:05",
+        "arrivalTime": "21:00",
+        "departureName": "장양리시내버스공영정류장",
+        "arrivalName": "귀래,운남,용암",
+        "category": "공통",
+        "note": ""
+      },
+      {
+        "operationNumber": "22",
+        "departureTime": "19:50",
+        "arrivalTime": "-",
+        "departureName": "장양리시내버스공영정류장",
+        "arrivalName": "귀래,운남,용암",
+        "category": "공통",
+        "note": ""
+      }
+    ]
+  },
   "31(방학,휴일)": {
     "routeInfo": {
       "routeNumber": "31(방학,휴일)",
@@ -6193,6 +7234,271 @@
         "arrivalTime": "-",
         "departureName": "장양리시내버스공영정류장",
         "arrivalName": "귀래,운남,용암",
+        "category": "공통",
+        "note": ""
+      }
+    ]
+  },
+  "34(평일)": {
+    "routeInfo": {
+      "routeNumber": "34(평일)",
+      "origin": "장양리시내버스공영정류장",
+      "destination": "연세대",
+      "firstBusTime": "06:25",
+      "lastBusTime": "21:05",
+      "operationCount": "25.5회",
+      "interval": "평균40분"
+    },
+    "operationInfo": [
+      {
+        "operationNumber": "1",
+        "departureTime": "통학1번",
+        "arrivalTime": "-",
+        "departureName": "장양리시내버스공영정류장",
+        "arrivalName": "연세대",
+        "category": "공통",
+        "note": ""
+      },
+      {
+        "operationNumber": "2",
+        "departureTime": "통학11번",
+        "arrivalTime": "8:45",
+        "departureName": "장양리시내버스공영정류장",
+        "arrivalName": "연세대",
+        "category": "공통",
+        "note": ""
+      },
+      {
+        "operationNumber": "3",
+        "departureTime": "-",
+        "arrivalTime": "6:32",
+        "departureName": "장양리시내버스공영정류장",
+        "arrivalName": "연세대",
+        "category": "공통",
+        "note": ""
+      },
+      {
+        "operationNumber": "4",
+        "departureTime": "6:25",
+        "arrivalTime": "7:40",
+        "departureName": "장양리시내버스공영정류장",
+        "arrivalName": "연세대",
+        "category": "공통",
+        "note": ""
+      },
+      {
+        "operationNumber": "5",
+        "departureTime": "6:45",
+        "arrivalTime": "8:15",
+        "departureName": "장양리시내버스공영정류장",
+        "arrivalName": "연세대",
+        "category": "공통",
+        "note": ""
+      },
+      {
+        "operationNumber": "6",
+        "departureTime": "7:15",
+        "arrivalTime": "8:35",
+        "departureName": "장양리시내버스공영정류장",
+        "arrivalName": "연세대",
+        "category": "공통",
+        "note": ""
+      },
+      {
+        "operationNumber": "7",
+        "departureTime": "8:15",
+        "arrivalTime": "9:33",
+        "departureName": "장양리시내버스공영정류장",
+        "arrivalName": "연세대",
+        "category": "공통",
+        "note": ""
+      },
+      {
+        "operationNumber": "8",
+        "departureTime": "8:42",
+        "arrivalTime": "10:08",
+        "departureName": "장양리시내버스공영정류장",
+        "arrivalName": "연세대",
+        "category": "공통",
+        "note": ""
+      },
+      {
+        "operationNumber": "9",
+        "departureTime": "9:37",
+        "arrivalTime": "10:58",
+        "departureName": "장양리시내버스공영정류장",
+        "arrivalName": "연세대",
+        "category": "공통",
+        "note": ""
+      },
+      {
+        "operationNumber": "10",
+        "departureTime": "10:30",
+        "arrivalTime": "11:48",
+        "departureName": "장양리시내버스공영정류장",
+        "arrivalName": "연세대",
+        "category": "공통",
+        "note": ""
+      },
+      {
+        "operationNumber": "11",
+        "departureTime": "10:50",
+        "arrivalTime": "12:18",
+        "departureName": "장양리시내버스공영정류장",
+        "arrivalName": "연세대",
+        "category": "공통",
+        "note": "연세대발)원주역"
+      },
+      {
+        "operationNumber": "12",
+        "departureTime": "11:20",
+        "arrivalTime": "12:43",
+        "departureName": "장양리시내버스공영정류장",
+        "arrivalName": "연세대",
+        "category": "공통",
+        "note": ""
+      },
+      {
+        "operationNumber": "13",
+        "departureTime": "11:55",
+        "arrivalTime": "13:18",
+        "departureName": "장양리시내버스공영정류장",
+        "arrivalName": "연세대",
+        "category": "공통",
+        "note": ""
+      },
+      {
+        "operationNumber": "14",
+        "departureTime": "12:20",
+        "arrivalTime": "13:48",
+        "departureName": "장양리시내버스공영정류장",
+        "arrivalName": "연세대",
+        "category": "공통",
+        "note": ""
+      },
+      {
+        "operationNumber": "15",
+        "departureTime": "13:00",
+        "arrivalTime": "14:18",
+        "departureName": "장양리시내버스공영정류장",
+        "arrivalName": "연세대",
+        "category": "공통",
+        "note": ""
+      },
+      {
+        "operationNumber": "16",
+        "departureTime": "13:25",
+        "arrivalTime": "14:43",
+        "departureName": "장양리시내버스공영정류장",
+        "arrivalName": "연세대",
+        "category": "공통",
+        "note": ""
+      },
+      {
+        "operationNumber": "17",
+        "departureTime": "13:55",
+        "arrivalTime": "15:15",
+        "departureName": "장양리시내버스공영정류장",
+        "arrivalName": "연세대",
+        "category": "공통",
+        "note": "연세대발)원주역"
+      },
+      {
+        "operationNumber": "18",
+        "departureTime": "14:42",
+        "arrivalTime": "16:13",
+        "departureName": "장양리시내버스공영정류장",
+        "arrivalName": "연세대",
+        "category": "공통",
+        "note": ""
+      },
+      {
+        "operationNumber": "19",
+        "departureTime": "15:17",
+        "arrivalTime": "16:38",
+        "departureName": "장양리시내버스공영정류장",
+        "arrivalName": "연세대",
+        "category": "공통",
+        "note": ""
+      },
+      {
+        "operationNumber": "20",
+        "departureTime": "16:20",
+        "arrivalTime": "17:43",
+        "departureName": "장양리시내버스공영정류장",
+        "arrivalName": "연세대",
+        "category": "공통",
+        "note": ""
+      },
+      {
+        "operationNumber": "21",
+        "departureTime": "16:55",
+        "arrivalTime": "18:23",
+        "departureName": "장양리시내버스공영정류장",
+        "arrivalName": "연세대",
+        "category": "공통",
+        "note": ""
+      },
+      {
+        "operationNumber": "22",
+        "departureTime": "18:02",
+        "arrivalTime": "19:28",
+        "departureName": "장양리시내버스공영정류장",
+        "arrivalName": "연세대",
+        "category": "공통",
+        "note": ""
+      },
+      {
+        "operationNumber": "23",
+        "departureTime": "18:25",
+        "arrivalTime": "19:53",
+        "departureName": "장양리시내버스공영정류장",
+        "arrivalName": "연세대",
+        "category": "공통",
+        "note": ""
+      },
+      {
+        "operationNumber": "24",
+        "departureTime": "18:50",
+        "arrivalTime": "20:13",
+        "departureName": "장양리시내버스공영정류장",
+        "arrivalName": "연세대",
+        "category": "공통",
+        "note": "연세대발)원주역"
+      },
+      {
+        "operationNumber": "25",
+        "departureTime": "19:30",
+        "arrivalTime": "20:53",
+        "departureName": "장양리시내버스공영정류장",
+        "arrivalName": "연세대",
+        "category": "공통",
+        "note": ""
+      },
+      {
+        "operationNumber": "26",
+        "departureTime": "20:35",
+        "arrivalTime": "-",
+        "departureName": "장양리시내버스공영정류장",
+        "arrivalName": "연세대",
+        "category": "공통",
+        "note": ""
+      },
+      {
+        "operationNumber": "27",
+        "departureTime": "20:55",
+        "arrivalTime": "-",
+        "departureName": "장양리시내버스공영정류장",
+        "arrivalName": "연세대",
+        "category": "공통",
+        "note": ""
+      },
+      {
+        "operationNumber": "28",
+        "departureTime": "21:05",
+        "arrivalTime": "-",
+        "departureName": "장양리시내버스공영정류장",
+        "arrivalName": "연세대",
         "category": "공통",
         "note": ""
       }
@@ -6413,6 +7719,334 @@
         "arrivalTime": "-",
         "departureName": "장양리시내버스공영정류장",
         "arrivalName": "연세대",
+        "category": "공통",
+        "note": ""
+      }
+    ]
+  },
+  "34-1(평일)": {
+    "routeInfo": {
+      "routeNumber": "34-1(평일)",
+      "origin": "장양리시내버스공영정류장",
+      "destination": "회촌",
+      "firstBusTime": "06:05",
+      "lastBusTime": "20:22",
+      "operationCount": "33회",
+      "interval": "평균25분"
+    },
+    "operationInfo": [
+      {
+        "operationNumber": "1",
+        "departureTime": "-",
+        "arrivalTime": "6:33",
+        "departureName": "장양리시내버스공영정류장",
+        "arrivalName": "회촌",
+        "category": "공통",
+        "note": ""
+      },
+      {
+        "operationNumber": "2",
+        "departureTime": "6:05",
+        "arrivalTime": "7:38",
+        "departureName": "장양리시내버스공영정류장",
+        "arrivalName": "회촌",
+        "category": "공통",
+        "note": ""
+      },
+      {
+        "operationNumber": "3",
+        "departureTime": "6:35",
+        "arrivalTime": "8:13",
+        "departureName": "장양리시내버스공영정류장",
+        "arrivalName": "회촌",
+        "category": "공통",
+        "note": ""
+      },
+      {
+        "operationNumber": "4",
+        "departureTime": "7:05",
+        "arrivalTime": "8:48",
+        "departureName": "장양리시내버스공영정류장",
+        "arrivalName": "회촌",
+        "category": "공통",
+        "note": ""
+      },
+      {
+        "operationNumber": "5",
+        "departureTime": "7:27",
+        "arrivalTime": "9:08",
+        "departureName": "장양리시내버스공영정류장",
+        "arrivalName": "회촌",
+        "category": "공통",
+        "note": ""
+      },
+      {
+        "operationNumber": "6",
+        "departureTime": "7:50",
+        "arrivalTime": "9:30",
+        "departureName": "장양리시내버스공영정류장",
+        "arrivalName": "회촌",
+        "category": "공통",
+        "note": ""
+      },
+      {
+        "operationNumber": "7",
+        "departureTime": "8:37",
+        "arrivalTime": "10:08",
+        "departureName": "장양리시내버스공영정류장",
+        "arrivalName": "회촌",
+        "category": "공통",
+        "note": ""
+      },
+      {
+        "operationNumber": "8",
+        "departureTime": "8:55",
+        "arrivalTime": "10:33",
+        "departureName": "장양리시내버스공영정류장",
+        "arrivalName": "회촌",
+        "category": "공통",
+        "note": ""
+      },
+      {
+        "operationNumber": "9",
+        "departureTime": "9:25",
+        "arrivalTime": "11:03",
+        "departureName": "장양리시내버스공영정류장",
+        "arrivalName": "회촌",
+        "category": "공통",
+        "note": ""
+      },
+      {
+        "operationNumber": "10",
+        "departureTime": "9:50",
+        "arrivalTime": "11:25",
+        "departureName": "장양리시내버스공영정류장",
+        "arrivalName": "회촌",
+        "category": "공통",
+        "note": ""
+      },
+      {
+        "operationNumber": "11",
+        "departureTime": "10:10",
+        "arrivalTime": "11:43",
+        "departureName": "장양리시내버스공영정류장",
+        "arrivalName": "회촌",
+        "category": "공통",
+        "note": ""
+      },
+      {
+        "operationNumber": "12",
+        "departureTime": "10:40",
+        "arrivalTime": "12:23",
+        "departureName": "장양리시내버스공영정류장",
+        "arrivalName": "회촌",
+        "category": "공통",
+        "note": ""
+      },
+      {
+        "operationNumber": "13",
+        "departureTime": "11:10",
+        "arrivalTime": "12:53",
+        "departureName": "장양리시내버스공영정류장",
+        "arrivalName": "회촌",
+        "category": "공통",
+        "note": ""
+      },
+      {
+        "operationNumber": "14",
+        "departureTime": "11:42",
+        "arrivalTime": "13:28",
+        "departureName": "장양리시내버스공영정류장",
+        "arrivalName": "회촌",
+        "category": "공통",
+        "note": ""
+      },
+      {
+        "operationNumber": "15",
+        "departureTime": "12:07",
+        "arrivalTime": "13:58",
+        "departureName": "장양리시내버스공영정류장",
+        "arrivalName": "회촌",
+        "category": "공통",
+        "note": ""
+      },
+      {
+        "operationNumber": "16",
+        "departureTime": "12:32",
+        "arrivalTime": "14:18",
+        "departureName": "장양리시내버스공영정류장",
+        "arrivalName": "회촌",
+        "category": "공통",
+        "note": ""
+      },
+      {
+        "operationNumber": "17",
+        "departureTime": "13:12",
+        "arrivalTime": "14:53",
+        "departureName": "장양리시내버스공영정류장",
+        "arrivalName": "회촌",
+        "category": "공통",
+        "note": ""
+      },
+      {
+        "operationNumber": "18",
+        "departureTime": "13:45",
+        "arrivalTime": "15:23",
+        "departureName": "장양리시내버스공영정류장",
+        "arrivalName": "회촌",
+        "category": "공통",
+        "note": ""
+      },
+      {
+        "operationNumber": "19",
+        "departureTime": "14:07",
+        "arrivalTime": "15:38",
+        "departureName": "장양리시내버스공영정류장",
+        "arrivalName": "회촌",
+        "category": "공통",
+        "note": ""
+      },
+      {
+        "operationNumber": "20",
+        "departureTime": "14:30",
+        "arrivalTime": "16:13",
+        "departureName": "장양리시내버스공영정류장",
+        "arrivalName": "회촌",
+        "category": "공통",
+        "note": ""
+      },
+      {
+        "operationNumber": "21",
+        "departureTime": "15:05",
+        "arrivalTime": "16:48",
+        "departureName": "장양리시내버스공영정류장",
+        "arrivalName": "회촌",
+        "category": "공통",
+        "note": ""
+      },
+      {
+        "operationNumber": "22",
+        "departureTime": "15:30",
+        "arrivalTime": "17:08",
+        "departureName": "장양리시내버스공영정류장",
+        "arrivalName": "회촌",
+        "category": "공통",
+        "note": ""
+      },
+      {
+        "operationNumber": "23",
+        "departureTime": "15:50",
+        "arrivalTime": "17:43",
+        "departureName": "장양리시내버스공영정류장",
+        "arrivalName": "회촌",
+        "category": "공통",
+        "note": ""
+      },
+      {
+        "operationNumber": "24",
+        "departureTime": "16:10",
+        "arrivalTime": "18:00",
+        "departureName": "장양리시내버스공영정류장",
+        "arrivalName": "회촌",
+        "category": "공통",
+        "note": ""
+      },
+      {
+        "operationNumber": "25",
+        "departureTime": "16:30",
+        "arrivalTime": "18:23",
+        "departureName": "장양리시내버스공영정류장",
+        "arrivalName": "회촌",
+        "category": "공통",
+        "note": ""
+      },
+      {
+        "operationNumber": "26",
+        "departureTime": "17:10",
+        "arrivalTime": "18:48",
+        "departureName": "장양리시내버스공영정류장",
+        "arrivalName": "회촌",
+        "category": "공통",
+        "note": ""
+      },
+      {
+        "operationNumber": "27",
+        "departureTime": "17:25",
+        "arrivalTime": "19:08",
+        "departureName": "장양리시내버스공영정류장",
+        "arrivalName": "회촌",
+        "category": "공통",
+        "note": ""
+      },
+      {
+        "operationNumber": "28",
+        "departureTime": "17:50",
+        "arrivalTime": "19:28",
+        "departureName": "장양리시내버스공영정류장",
+        "arrivalName": "회촌",
+        "category": "공통",
+        "note": ""
+      },
+      {
+        "operationNumber": "29",
+        "departureTime": "18:15",
+        "arrivalTime": "19:53",
+        "departureName": "장양리시내버스공영정류장",
+        "arrivalName": "회촌",
+        "category": "공통",
+        "note": ""
+      },
+      {
+        "operationNumber": "30",
+        "departureTime": "18:37",
+        "arrivalTime": "20:28",
+        "departureName": "장양리시내버스공영정류장",
+        "arrivalName": "회촌",
+        "category": "공통",
+        "note": ""
+      },
+      {
+        "operationNumber": "31",
+        "departureTime": "19:17",
+        "arrivalTime": "20:58",
+        "departureName": "장양리시내버스공영정류장",
+        "arrivalName": "회촌",
+        "category": "공통",
+        "note": ""
+      },
+      {
+        "operationNumber": "32",
+        "departureTime": "19:40",
+        "arrivalTime": "21:18",
+        "departureName": "장양리시내버스공영정류장",
+        "arrivalName": "회촌",
+        "category": "공통",
+        "note": ""
+      },
+      {
+        "operationNumber": "33",
+        "departureTime": "20:00",
+        "arrivalTime": "-",
+        "departureName": "장양리시내버스공영정류장",
+        "arrivalName": "회촌",
+        "category": "공통",
+        "note": ""
+      },
+      {
+        "operationNumber": "34",
+        "departureTime": "20:10",
+        "arrivalTime": "-",
+        "departureName": "장양리시내버스공영정류장",
+        "arrivalName": "회촌",
+        "category": "공통",
+        "note": ""
+      },
+      {
+        "operationNumber": "35",
+        "departureTime": "20:22",
+        "arrivalTime": "-",
+        "departureName": "장양리시내버스공영정류장",
+        "arrivalName": "회촌",
         "category": "공통",
         "note": ""
       }
@@ -7060,7 +8694,7 @@
       "routeNumber": "51(평일)",
       "origin": "관설동종점",
       "destination": "문막읍",
-      "firstBusTime": "06:20",
+      "firstBusTime": "06:15",
       "lastBusTime": "19:10",
       "operationCount": "10.5회",
       "interval": "평균 75분"
@@ -7077,7 +8711,7 @@
       },
       {
         "operationNumber": "2",
-        "departureTime": "6:20",
+        "departureTime": "6:15",
         "arrivalTime": "7:45",
         "departureName": "관설동종점",
         "arrivalName": "문막읍",
@@ -8221,7 +9855,7 @@
         "departureName": "관설동종점",
         "arrivalName": "부론",
         "category": "공통",
-        "note": "관설동발)면허시험장미경유 복)면허시험장경유 ※경동대미경유"
+        "note": "부론발) 면허시험장 경유"
       },
       {
         "operationNumber": "2",
@@ -8230,7 +9864,7 @@
         "departureName": "관설동종점",
         "arrivalName": "부론",
         "category": "공통",
-        "note": "※경동대 ※ 방학,토,일,공휴일 경동대 미경유"
+        "note": "관설동발) 경동대 경유"
       },
       {
         "operationNumber": "3",
@@ -8239,7 +9873,7 @@
         "departureName": "관설동종점",
         "arrivalName": "부론",
         "category": "공통",
-        "note": "면허시험장, 경동대 경유 ※ 방학,토,일,공휴일 경동대 미경유"
+        "note": "면허시험장 경유, 관설동발)경동대 경유"
       },
       {
         "operationNumber": "4",
@@ -8248,7 +9882,7 @@
         "departureName": "관설동종점",
         "arrivalName": "부론",
         "category": "공통",
-        "note": "경동대 경유 ※ 방학,토,일,공휴일 경동대 미경유"
+        "note": "관설동발) 경동대 경유"
       },
       {
         "operationNumber": "5",
@@ -8257,7 +9891,7 @@
         "departureName": "관설동종점",
         "arrivalName": "부론",
         "category": "공통",
-        "note": "면허시험장, 경동대 경유 ※ 방학,토,일,공휴일 경동대 미경유"
+        "note": "면허시험장 경유, 관설동발)경동대 경유"
       },
       {
         "operationNumber": "6",
@@ -8266,7 +9900,7 @@
         "departureName": "관설동종점",
         "arrivalName": "부론",
         "category": "공통",
-        "note": "경동대 경유, 부론발)면허시험장경유※ 방학,토,일,공휴일 경동대 미경유"
+        "note": "관설동발)경동대 경유, 부론발)면허시험장 경유"
       },
       {
         "operationNumber": "7",
@@ -8275,7 +9909,7 @@
         "departureName": "관설동종점",
         "arrivalName": "부론",
         "category": "공통",
-        "note": "면허시험장, 경동대 경유 ※ 방학,토,일,공휴일 경동대 미경유"
+        "note": "면허시험장 경유 관설동발)경동대 경유"
       },
       {
         "operationNumber": "8",
@@ -8284,16 +9918,16 @@
         "departureName": "관설동종점",
         "arrivalName": "부론",
         "category": "공통",
-        "note": "경동대 경유 ※ 방학,토,일,공휴일 경동대 미경유"
+        "note": "관설동발) 경동대 경유"
       },
       {
         "operationNumber": "9",
-        "departureTime": "16:15",
-        "arrivalTime": "18:05",
+        "departureTime": "16:25",
+        "arrivalTime": "18:15",
         "departureName": "관설동종점",
         "arrivalName": "부론",
         "category": "공통",
-        "note": "경동대 경유 ※ 방학,토,일,공휴일 경동대 미경유"
+        "note": "관설동발) 경동대 경유"
       },
       {
         "operationNumber": "10",
@@ -8302,16 +9936,16 @@
         "departureName": "관설동종점",
         "arrivalName": "부론",
         "category": "공통",
-        "note": "면허시험장경유 관설동발)경동대경유 부론발)경동대미경유 ※ 방학,토,일,공휴일 경동대 미경유"
+        "note": "면허시험장 경유 관설동발)경동대"
       },
       {
         "operationNumber": "11",
-        "departureTime": "19:15",
+        "departureTime": "19:20",
         "arrivalTime": "-",
         "departureName": "관설동종점",
         "arrivalName": "부론",
         "category": "공통",
-        "note": "※면허시험장경유 ※경동대미경유 ※부론면소재지,노림경유문막2리종료※ 방학,토,일,공휴일 경동대 미경유"
+        "note": "면허시험장 경유, 부론→문막새마을금고종료"
       },
       {
         "operationNumber": "12",
@@ -8320,7 +9954,7 @@
         "departureName": "관설동종점",
         "arrivalName": "부론",
         "category": "공통",
-        "note": "※경동대미경유 ※부론면소재지, 노림경유, 문막2리종료 ※ 방학,토,일,공휴일 경동대 미경유"
+        "note": "부론→문막새마을금고 종료"
       }
     ]
   },
@@ -8342,7 +9976,7 @@
         "departureName": "관설동종점",
         "arrivalName": "부론",
         "category": "공통",
-        "note": "관설동발)면허시험장 미경유, 부론발)면허시험장경유 ※방학,토,일,공휴일 경동대 미경유"
+        "note": "부론발) 면허시험장 경유"
       },
       {
         "operationNumber": "2",
@@ -8351,7 +9985,7 @@
         "departureName": "관설동종점",
         "arrivalName": "부론",
         "category": "공통",
-        "note": "면허시험장 경유 ※방학,토,일,공휴일 경동대 미경유"
+        "note": "면허시험장 경유"
       },
       {
         "operationNumber": "3",
@@ -8360,7 +9994,7 @@
         "departureName": "관설동종점",
         "arrivalName": "부론",
         "category": "공통",
-        "note": "※방학,토,일,공휴일 경동대 미경유"
+        "note": ""
       },
       {
         "operationNumber": "4",
@@ -8369,7 +10003,7 @@
         "departureName": "관설동종점",
         "arrivalName": "부론",
         "category": "공통",
-        "note": "부론발)면허시험장 경유 ※방학,토,일,공휴일 경동대 미경유"
+        "note": "부론발) 면허시험장 경유"
       },
       {
         "operationNumber": "5",
@@ -8378,7 +10012,7 @@
         "departureName": "관설동종점",
         "arrivalName": "부론",
         "category": "공통",
-        "note": "면허시험장 경유 ※방학,토,일,공휴일 경동대 미경유"
+        "note": "면허시험장 경유"
       },
       {
         "operationNumber": "6",
@@ -8387,7 +10021,7 @@
         "departureName": "관설동종점",
         "arrivalName": "부론",
         "category": "공통",
-        "note": "※방학,토,일,공휴일 경동대 미경유"
+        "note": ""
       },
       {
         "operationNumber": "7",
@@ -8396,7 +10030,7 @@
         "departureName": "관설동종점",
         "arrivalName": "부론",
         "category": "공통",
-        "note": "※방학,토,일,공휴일 경동대 미경유"
+        "note": ""
       },
       {
         "operationNumber": "8",
@@ -8405,7 +10039,7 @@
         "departureName": "관설동종점",
         "arrivalName": "부론",
         "category": "공통",
-        "note": "면허시험장 경유 ※방학,토,일,공휴일 경동대 미경유"
+        "note": "면허시험장 경유"
       },
       {
         "operationNumber": "9",
@@ -8414,7 +10048,7 @@
         "departureName": "관설동종점",
         "arrivalName": "부론",
         "category": "공통",
-        "note": "※면허시험장 경유 ※부론면소재지,노림경유,문막2리종료※ 방학,토,일,공휴일 경동대 미경유"
+        "note": "면허시험장 경유, 부론→문막새마을금고종료"
       },
       {
         "operationNumber": "10",
@@ -8423,7 +10057,7 @@
         "departureName": "관설동종점",
         "arrivalName": "부론",
         "category": "공통",
-        "note": "※부론면소재지,노림경유,문막2리종료 ※방학,토,일,공휴일 경동대 미경유"
+        "note": "부론→문막새마을금고 종료"
       }
     ]
   },
@@ -8445,25 +10079,25 @@
         "departureName": "관설동종점",
         "arrivalName": "부론",
         "category": "공통",
-        "note": "경동대 미경유, 구만이 경유"
+        "note": ""
       },
       {
         "operationNumber": "2",
-        "departureTime": "10:00",
-        "arrivalTime": "11:50",
+        "departureTime": "10:05",
+        "arrivalTime": "12:00",
         "departureName": "관설동종점",
         "arrivalName": "부론",
         "category": "공통",
-        "note": "경동대 경유, 구만이 경유 ※토요일, 방학 경동대 미경유"
+        "note": "관설동발) 경동대 경유"
       },
       {
         "operationNumber": "3",
-        "departureTime": "14:20",
-        "arrivalTime": "16:15",
+        "departureTime": "14:35",
+        "arrivalTime": "16:30",
         "departureName": "관설동종점",
         "arrivalName": "부론",
         "category": "공통",
-        "note": "경동대 경유, 구만이 경유 ※토요일, 방학 경동대 미경유"
+        "note": "관설동발) 경동대 경유"
       },
       {
         "operationNumber": "4",
@@ -8472,7 +10106,7 @@
         "departureName": "관설동종점",
         "arrivalName": "부론",
         "category": "공통",
-        "note": "경동대 미경유, 구만이 경유, 부론면,노림,문막2리종료"
+        "note": "부론→문막새마을금고 종료"
       }
     ]
   },
@@ -8481,7 +10115,7 @@
       "routeNumber": "55-1(일,공휴일)",
       "origin": "관설동종점",
       "destination": "부론",
-      "firstBusTime": "06:30",
+      "firstBusTime": "06:45",
       "lastBusTime": "16:25",
       "operationCount": "2회",
       "interval": "1일 2회"
@@ -8489,12 +10123,12 @@
     "operationInfo": [
       {
         "operationNumber": "1",
-        "departureTime": "6:30",
-        "arrivalTime": "8:35",
+        "departureTime": "6:45",
+        "arrivalTime": "8:40",
         "departureName": "관설동종점",
         "arrivalName": "부론",
         "category": "공통",
-        "note": "구만이 경유, 면허시험장 미경유, 경동대 미경유"
+        "note": ""
       },
       {
         "operationNumber": "2",
@@ -8503,7 +10137,7 @@
         "departureName": "관설동종점",
         "arrivalName": "부론",
         "category": "공통",
-        "note": "구만이 경유, 면허시험장 미경유, 경동대 미경유"
+        "note": ""
       }
     ]
   },
@@ -8850,19 +10484,19 @@
   "100-2": {
     "routeInfo": {
       "routeNumber": "100-2",
-      "origin": "중흥2단지",
+      "origin": "당둔지승강장",
       "destination": "기업도시",
-      "firstBusTime": "06:20",
-      "lastBusTime": "21:20",
-      "operationCount": "15회",
-      "interval": "평균 65분"
+      "firstBusTime": "06:10",
+      "lastBusTime": "20:00",
+      "operationCount": "11.5회",
+      "interval": "평균 70분"
     },
     "operationInfo": [
       {
         "operationNumber": "1",
         "departureTime": "-",
-        "arrivalTime": "6:20",
-        "departureName": "중흥2단지",
+        "arrivalTime": "6:10",
+        "departureName": "당둔지승강장",
         "arrivalName": "기업도시",
         "category": "공통",
         "note": ""
@@ -8871,142 +10505,115 @@
         "operationNumber": "2",
         "departureTime": "-",
         "arrivalTime": "7:00",
-        "departureName": "중흥2단지",
+        "departureName": "당둔지승강장",
         "arrivalName": "기업도시",
         "category": "공통",
         "note": ""
       },
       {
         "operationNumber": "3",
-        "departureTime": "6:20",
+        "departureTime": "6:10",
         "arrivalTime": "7:40",
-        "departureName": "중흥2단지",
+        "departureName": "당둔지승강장",
         "arrivalName": "기업도시",
         "category": "공통",
         "note": ""
       },
       {
         "operationNumber": "4",
-        "departureTime": "7:40",
-        "arrivalTime": "9:10",
-        "departureName": "중흥2단지",
+        "departureTime": "7:50",
+        "arrivalTime": "9:35",
+        "departureName": "당둔지승강장",
         "arrivalName": "기업도시",
         "category": "공통",
         "note": ""
       },
       {
         "operationNumber": "5",
-        "departureTime": "8:35",
-        "arrivalTime": "9:55",
-        "departureName": "중흥2단지",
+        "departureTime": "8:30",
+        "arrivalTime": "10:10",
+        "departureName": "당둔지승강장",
         "arrivalName": "기업도시",
         "category": "공통",
         "note": ""
       },
       {
         "operationNumber": "6",
-        "departureTime": "9:20",
-        "arrivalTime": "10:40",
-        "departureName": "중흥2단지",
+        "departureTime": "9:40",
+        "arrivalTime": "11:15",
+        "departureName": "당둔지승강장",
         "arrivalName": "기업도시",
         "category": "공통",
         "note": ""
       },
       {
         "operationNumber": "7",
-        "departureTime": "11:30",
-        "arrivalTime": "12:50",
-        "departureName": "중흥2단지",
+        "departureTime": "12:15",
+        "arrivalTime": "13:50",
+        "departureName": "당둔지승강장",
         "arrivalName": "기업도시",
         "category": "공통",
         "note": ""
       },
       {
         "operationNumber": "8",
-        "departureTime": "12:15",
-        "arrivalTime": "13:35",
-        "departureName": "중흥2단지",
+        "departureTime": "12:55",
+        "arrivalTime": "14:30",
+        "departureName": "당둔지승강장",
         "arrivalName": "기업도시",
         "category": "공통",
         "note": ""
       },
       {
         "operationNumber": "9",
-        "departureTime": "13:00",
-        "arrivalTime": "14:20",
-        "departureName": "중흥2단지",
+        "departureTime": "14:00",
+        "arrivalTime": "15:35",
+        "departureName": "당둔지승강장",
         "arrivalName": "기업도시",
         "category": "공통",
         "note": ""
       },
       {
         "operationNumber": "10",
-        "departureTime": "14:20",
-        "arrivalTime": "15:35",
-        "departureName": "중흥2단지",
+        "departureTime": "15:40",
+        "arrivalTime": "17:20",
+        "departureName": "당둔지승강장",
         "arrivalName": "기업도시",
         "category": "공통",
         "note": ""
       },
       {
         "operationNumber": "11",
-        "departureTime": "15:05",
-        "arrivalTime": "16:20",
-        "departureName": "중흥2단지",
+        "departureTime": "16:15",
+        "arrivalTime": "18:00",
+        "departureName": "당둔지승강장",
         "arrivalName": "기업도시",
         "category": "공통",
         "note": ""
       },
       {
         "operationNumber": "12",
-        "departureTime": "15:50",
-        "arrivalTime": "17:10",
-        "departureName": "중흥2단지",
+        "departureTime": "18:00",
+        "arrivalTime": "-",
+        "departureName": "당둔지승강장",
         "arrivalName": "기업도시",
         "category": "공통",
         "note": ""
       },
       {
         "operationNumber": "13",
-        "departureTime": "18:05",
-        "arrivalTime": "19:30",
-        "departureName": "중흥2단지",
+        "departureTime": "19:15",
+        "arrivalTime": "-",
+        "departureName": "당둔지승강장",
         "arrivalName": "기업도시",
         "category": "공통",
         "note": ""
       },
       {
         "operationNumber": "14",
-        "departureTime": "18:40",
-        "arrivalTime": "20:00",
-        "departureName": "중흥2단지",
-        "arrivalName": "기업도시",
-        "category": "공통",
-        "note": ""
-      },
-      {
-        "operationNumber": "15",
-        "departureTime": "19:30",
-        "arrivalTime": "20:45",
-        "departureName": "중흥2단지",
-        "arrivalName": "기업도시",
-        "category": "공통",
-        "note": ""
-      },
-      {
-        "operationNumber": "16",
-        "departureTime": "20:50",
+        "departureTime": "20:00",
         "arrivalTime": "-",
-        "departureName": "중흥2단지",
-        "arrivalName": "기업도시",
-        "category": "공통",
-        "note": ""
-      },
-      {
-        "operationNumber": "17",
-        "departureTime": "21:20",
-        "arrivalTime": "-",
-        "departureName": "중흥2단지",
+        "departureName": "당둔지승강장",
         "arrivalName": "기업도시",
         "category": "공통",
         "note": ""

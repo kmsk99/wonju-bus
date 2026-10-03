@@ -4,7 +4,7 @@
     "origin": "관설동종점",
     "destination": "-",
     "firstBusTime": "07:20",
-    "lastBusTime": "20:50",
+    "lastBusTime": "21:20",
     "operationCount": "6회",
     "interval": "1일 6회"
   },
@@ -16,52 +16,52 @@
       "departureName": "관설동종점",
       "arrivalName": "-",
       "category": "공통",
-      "note": "한라대발)우미린 경유"
+      "note": "한라대발) 우미린 경유"
     },
     {
       "operationNumber": "2",
-      "departureTime": "9:50",
+      "departureTime": "10:10",
       "arrivalTime": "-",
       "departureName": "관설동종점",
       "arrivalName": "-",
       "category": "공통",
-      "note": "한라대발)우미린 경유"
+      "note": "한라대발) 우미린 경유"
     },
     {
       "operationNumber": "3",
-      "departureTime": "12:30",
+      "departureTime": "12:50",
       "arrivalTime": "-",
       "departureName": "관설동종점",
       "arrivalName": "-",
       "category": "공통",
-      "note": "한라대발)우미린 경유"
+      "note": "한라대발) 우미린 경유"
     },
     {
       "operationNumber": "4",
-      "departureTime": "15:15",
+      "departureTime": "15:40",
       "arrivalTime": "-",
       "departureName": "관설동종점",
       "arrivalName": "-",
       "category": "공통",
-      "note": "한라대발)우미린 경유"
+      "note": "한라대발) 우미린 경유"
     },
     {
       "operationNumber": "5",
-      "departureTime": "18:05",
+      "departureTime": "18:40",
       "arrivalTime": "-",
       "departureName": "관설동종점",
       "arrivalName": "-",
       "category": "공통",
-      "note": "한라대발)우미린 경유"
+      "note": "한라대발) 우미린 경유"
     },
     {
       "operationNumber": "6",
-      "departureTime": "20:50",
+      "departureTime": "21:20",
       "arrivalTime": "-",
       "departureName": "관설동종점",
       "arrivalName": "-",
       "category": "공통",
-      "note": "한라대발)우미린 경유"
+      "note": "한라대 종료"
     }
   ]
 }

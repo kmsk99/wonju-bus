@@ -1,8 +1,7 @@
 import 'dart:async';
 import 'dart:collection';
-import 'dart:convert';
 
-import 'package:flutter/services.dart';
+import 'schedule_source.dart';
 
 import '../models/bus_models.dart';
 import '../utils/day_type_utils.dart';
@@ -57,8 +56,8 @@ class BusRepository {
 
   List<String>? _terminalCache;
   Future<List<BusData>>? _loadAllFuture;
-  bool _isVacation = false;
-  bool _isHoliday = false;
+  final bool _isVacation = false;
+  final bool _isHoliday = false;
 
   /// Returns a snapshot of bus data loaded from all asset files.
   Future<List<BusData>> loadAllBusData() {
@@ -68,22 +67,22 @@ class BusRepository {
 
   /// Internal loader that walks through every bus data file.
   Future<List<BusData>> _loadAllBusDataInternal() async {
-    final fileNames = await _resolveBusFileList();
+    final snapshot = await ScheduleSource().load();
+    final fileNames = snapshot.keys.toList()..sort();
 
     final results = <BusData>[];
 
     for (final fileName in fileNames) {
       try {
         final fileInfo = parseBusFileName(fileName);
-        final assetPath = 'assets/data/${fileInfo.fileName}';
-        final rawBus = await rootBundle.loadString(assetPath);
-        final busData = BusData.decode(rawBus)
-          ..fileName = fileInfo.fileName
-          ..operatesToday = isDayTypeMatch(
-            fileInfo.dayTypeGroup,
-            isVacation: _isVacation,
-            isHoliday: _isHoliday,
-          );
+        final busData =
+            BusData.fromJson(snapshot[fileName] as Map<String, dynamic>)
+              ..fileName = fileInfo.fileName
+              ..operatesToday = isDayTypeMatch(
+                fileInfo.dayTypeGroup,
+                isVacation: _isVacation,
+                isHoliday: _isHoliday,
+              );
 
         final actualRoute = busData.routeInfo.routeNumber;
         results.add(busData);
@@ -187,13 +186,19 @@ class BusRepository {
       for (final operation in bus.operationInfo) {
         if (operation.departureName != '-') {
           terminalSet.add(operation.departureName);
-          routeCount.update(operation.departureName, (value) => value + 1,
-              ifAbsent: () => 1);
+          routeCount.update(
+            operation.departureName,
+            (value) => value + 1,
+            ifAbsent: () => 1,
+          );
         }
         if (operation.arrivalName != '-') {
           terminalSet.add(operation.arrivalName);
-          routeCount.update(operation.arrivalName, (value) => value + 1,
-              ifAbsent: () => 1);
+          routeCount.update(
+            operation.arrivalName,
+            (value) => value + 1,
+            ifAbsent: () => 1,
+          );
         }
       }
     }
@@ -203,9 +208,7 @@ class BusRepository {
       ..addAll(routeCount);
 
     final sortedTerminals = terminalSet.toList()
-      ..sort(
-        (a, b) => (routeCount[b] ?? 0).compareTo(routeCount[a] ?? 0),
-      );
+      ..sort((a, b) => (routeCount[b] ?? 0).compareTo(routeCount[a] ?? 0));
 
     _terminalCache = sortedTerminals;
     return sortedTerminals;
@@ -226,8 +229,9 @@ class BusRepository {
     final matching = <String>[];
 
     for (final bus in allData) {
-      final hasDeparture = bus.operationInfo
-          .any((op) => op.departureName.trim() == terminalName);
+      final hasDeparture = bus.operationInfo.any(
+        (op) => op.departureName.trim() == terminalName,
+      );
       if (hasDeparture) {
         matching.add(bus.routeInfo.routeNumber);
       }
@@ -247,8 +251,9 @@ class BusRepository {
     final matching = <String>[];
 
     for (final bus in allData) {
-      final hasArrival = bus.operationInfo
-          .any((op) => op.arrivalName.trim() == terminalName);
+      final hasArrival = bus.operationInfo.any(
+        (op) => op.arrivalName.trim() == terminalName,
+      );
       if (hasArrival) {
         matching.add(bus.routeInfo.routeNumber);
       }
@@ -260,7 +265,8 @@ class BusRepository {
 
   /// Aggregates departure entries for a stop combining departures and arrivals.
   Future<List<DepartureRecord>> getAllDepartureTimesFromStop(
-      String stopName) async {
+    String stopName,
+  ) async {
     final departureRoutes = await loadRoutesByTerminal(stopName);
     final arrivalRoutes = await loadRoutesToTerminal(stopName);
     final allRoutes = <String>{...departureRoutes, ...arrivalRoutes};
@@ -333,9 +339,8 @@ class BusRepository {
     }
 
     results.sort(
-      (a, b) => _toMinutes(a.departureTime).compareTo(
-        _toMinutes(b.departureTime),
-      ),
+      (a, b) =>
+          _toMinutes(a.departureTime).compareTo(_toMinutes(b.departureTime)),
     );
 
     return results;
@@ -343,7 +348,8 @@ class BusRepository {
 
   /// Groups departure information by route similar to the React implementation.
   Future<Map<String, GroupedDeparture>> groupDeparturesByRoute(
-      String stopName) async {
+    String stopName,
+  ) async {
     final departures = await getAllDepartureTimesFromStop(stopName);
     final grouped = SplayTreeMap<String, GroupedDeparture>();
 
@@ -351,11 +357,11 @@ class BusRepository {
 
     for (final route in routes) {
       final routeDepartures =
-          departures.where((d) => d.routeNumber == route).toList()
-            ..sort(
-              (a, b) => _toMinutes(a.departureTime)
-                  .compareTo(_toMinutes(b.departureTime)),
-            );
+          departures.where((d) => d.routeNumber == route).toList()..sort(
+            (a, b) => _toMinutes(
+              a.departureTime,
+            ).compareTo(_toMinutes(b.departureTime)),
+          );
 
       final remainingToday = routeDepartures
           .where((d) => !d.isNextDay && d.nextDepartureMinutes >= 0)
@@ -376,8 +382,9 @@ class BusRepository {
 
       grouped[route] = GroupedDeparture(
         nextDeparture: nextDeparture,
-        remainingCount:
-            operatesToday ? remainingToday.length : 0, // matches web behavior
+        remainingCount: operatesToday
+            ? remainingToday.length
+            : 0, // matches web behavior
         operatesToday: operatesToday,
       );
     }
@@ -397,10 +404,7 @@ class BusRepository {
     return hours * 60 + minutes;
   }
 
-  static DateTime _scheduleDateTime(
-    String timeText, {
-    DateTime? reference,
-  }) {
+  static DateTime _scheduleDateTime(String timeText, {DateTime? reference}) {
     final now = reference ?? DateTime.now();
 
     final cleaned = timeText.trim();
@@ -412,27 +416,5 @@ class BusRepository {
     final hours = int.tryParse(parts[0]) ?? 0;
     final minutes = parts.length > 1 ? int.tryParse(parts[1]) ?? 0 : 0;
     return DateTime(now.year, now.month, now.day, hours, minutes);
-  }
-
-  Future<List<String>> _resolveBusFileList() async {
-    try {
-      final raw = await rootBundle.loadString('assets/data/bus-files.json');
-      final decoded = jsonDecode(raw) as List<dynamic>;
-      return decoded.map((value) => value as String).toList(growable: false);
-    } catch (_) {
-      final manifestContent = await rootBundle.loadString('AssetManifest.json');
-      final manifestMap = jsonDecode(manifestContent) as Map<String, dynamic>;
-      final allAssets = manifestMap.keys;
-      final dataFiles = allAssets
-          .where(
-            (asset) =>
-                asset.startsWith('assets/data/wonju-bus-') &&
-                asset.endsWith('.json'),
-          )
-          .map((asset) => asset.replaceFirst('assets/data/', ''))
-          .toList(growable: false);
-      dataFiles.sort();
-      return dataFiles;
-    }
   }
 }
