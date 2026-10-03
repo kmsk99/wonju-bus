@@ -1,0 +1,49 @@
+{
+  "routeInfo": {
+    "routeNumber": "24",
+    "origin": "장양리시내버스공영정류장",
+    "destination": "운학",
+    "firstBusTime": "09:25",
+    "lastBusTime": "17:55",
+    "operationCount": "3.5회",
+    "interval": "1일 3.5회"
+  },
+  "operationInfo": [
+    {
+      "operationNumber": "1",
+      "departureTime": "-",
+      "arrivalTime": "7:15",
+      "departureName": "장양리시내버스공영정류장",
+      "arrivalName": "운학",
+      "category": "공통",
+      "note": ""
+    },
+    {
+      "operationNumber": "2",
+      "departureTime": "9:25",
+      "arrivalTime": "11:20",
+      "departureName": "장양리시내버스공영정류장",
+      "arrivalName": "운학",
+      "category": "공통",
+      "note": ""
+    },
+    {
+      "operationNumber": "3",
+      "departureTime": "13:30",
+      "arrivalTime": "15:40",
+      "departureName": "장양리시내버스공영정류장",
+      "arrivalName": "운학",
+      "category": "공통",
+      "note": ""
+    },
+    {
+      "operationNumber": "4",
+      "departureTime": "17:55",
+      "arrivalTime": "19:30",
+      "departureName": "장양리시내버스공영정류장",
+      "arrivalName": "운학",
+      "category": "공통",
+      "note": "운학발)신림종료"
+    }
+  ]
+}

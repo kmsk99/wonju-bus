@@ -1,0 +1,49 @@
+{
+  "routeInfo": {
+    "routeNumber": "52",
+    "origin": "관설동종점",
+    "destination": "간현",
+    "firstBusTime": "10:15",
+    "lastBusTime": "19:30",
+    "operationCount": "3.5회",
+    "interval": "1일 3.5회"
+  },
+  "operationInfo": [
+    {
+      "operationNumber": "1",
+      "departureTime": "-",
+      "arrivalTime": "6:40",
+      "departureName": "관설동종점",
+      "arrivalName": "간현",
+      "category": "공통",
+      "note": ""
+    },
+    {
+      "operationNumber": "2",
+      "departureTime": "10:15",
+      "arrivalTime": "11:50",
+      "departureName": "관설동종점",
+      "arrivalName": "간현",
+      "category": "공통",
+      "note": ""
+    },
+    {
+      "operationNumber": "3",
+      "departureTime": "13:50",
+      "arrivalTime": "15:30",
+      "departureName": "관설동종점",
+      "arrivalName": "간현",
+      "category": "공통",
+      "note": ""
+    },
+    {
+      "operationNumber": "4",
+      "departureTime": "19:30",
+      "arrivalTime": "20:55",
+      "departureName": "관설동종점",
+      "arrivalName": "간현",
+      "category": "공통",
+      "note": ""
+    }
+  ]
+}

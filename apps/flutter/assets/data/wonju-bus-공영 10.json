@@ -1,0 +1,67 @@
+{
+  "routeInfo": {
+    "routeNumber": "공영 10",
+    "origin": "흥업면 행정복지센터",
+    "destination": "대안리",
+    "firstBusTime": "08:10",
+    "lastBusTime": "19:30",
+    "operationCount": "4.5회",
+    "interval": "1일 5.5회"
+  },
+  "operationInfo": [
+    {
+      "operationNumber": "1",
+      "departureTime": "-",
+      "arrivalTime": "6:30",
+      "departureName": "흥업면 행정복지센터",
+      "arrivalName": "대안리",
+      "category": "공통",
+      "note": ""
+    },
+    {
+      "operationNumber": "2",
+      "departureTime": "8:10",
+      "arrivalTime": "순환",
+      "departureName": "흥업면 행정복지센터",
+      "arrivalName": "대안리",
+      "category": "공통",
+      "note": ""
+    },
+    {
+      "operationNumber": "3",
+      "departureTime": "11:00",
+      "arrivalTime": "순환",
+      "departureName": "흥업면 행정복지센터",
+      "arrivalName": "대안리",
+      "category": "공통",
+      "note": ""
+    },
+    {
+      "operationNumber": "4",
+      "departureTime": "14:10",
+      "arrivalTime": "순환",
+      "departureName": "흥업면 행정복지센터",
+      "arrivalName": "대안리",
+      "category": "공통",
+      "note": ""
+    },
+    {
+      "operationNumber": "5",
+      "departureTime": "16:30",
+      "arrivalTime": "순환",
+      "departureName": "흥업면 행정복지센터",
+      "arrivalName": "대안리",
+      "category": "공통",
+      "note": ""
+    },
+    {
+      "operationNumber": "6",
+      "departureTime": "19:30",
+      "arrivalTime": "-",
+      "departureName": "흥업면 행정복지센터",
+      "arrivalName": "대안리",
+      "category": "공통",
+      "note": "공영8번 대체운행) 대안리 경유"
+    }
+  ]
+}

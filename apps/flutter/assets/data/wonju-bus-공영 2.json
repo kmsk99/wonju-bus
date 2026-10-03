@@ -1,0 +1,40 @@
+{
+  "routeInfo": {
+    "routeNumber": "공영 2",
+    "origin": "문막읍 행정복지센터",
+    "destination": "밤산골",
+    "firstBusTime": "06:30",
+    "lastBusTime": "11:30",
+    "operationCount": "3회",
+    "interval": "1일 3회"
+  },
+  "operationInfo": [
+    {
+      "operationNumber": "1",
+      "departureTime": "06:30",
+      "arrivalTime": "순환",
+      "departureName": "문막읍 행정복지센터",
+      "arrivalName": "밤산골",
+      "category": "공통",
+      "note": "밤산골 미운행, 진밭 미경유"
+    },
+    {
+      "operationNumber": "2",
+      "departureTime": "09:35",
+      "arrivalTime": "순환",
+      "departureName": "문막읍 행정복지센터",
+      "arrivalName": "밤산골",
+      "category": "공통",
+      "note": ""
+    },
+    {
+      "operationNumber": "3",
+      "departureTime": "11:30",
+      "arrivalTime": "순환",
+      "departureName": "문막읍 행정복지센터",
+      "arrivalName": "밤산골",
+      "category": "공통",
+      "note": ""
+    }
+  ]
+}

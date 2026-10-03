@@ -1,0 +1,31 @@
+{
+  "routeInfo": {
+    "routeNumber": "공영 16",
+    "origin": "태장2동(안흥한의원)",
+    "destination": "태장2동",
+    "firstBusTime": "11:00",
+    "lastBusTime": "13:10",
+    "operationCount": "2회",
+    "interval": "1일 2회"
+  },
+  "operationInfo": [
+    {
+      "operationNumber": "1",
+      "departureTime": "11:00",
+      "arrivalTime": "순환",
+      "departureName": "태장2동(안흥한의원)",
+      "arrivalName": "태장2동",
+      "category": "공통",
+      "note": ""
+    },
+    {
+      "operationNumber": "2",
+      "departureTime": "13:10",
+      "arrivalTime": "순환",
+      "departureName": "태장2동(안흥한의원)",
+      "arrivalName": "태장2동",
+      "category": "공통",
+      "note": "태장2동(안흥한의원)→하초구→흥양초교→태장2동"
+    }
+  ]
+}

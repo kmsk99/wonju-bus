@@ -1,0 +1,31 @@
+{
+  "routeInfo": {
+    "routeNumber": "55-1(일,공휴일)",
+    "origin": "관설동종점",
+    "destination": "부론",
+    "firstBusTime": "06:30",
+    "lastBusTime": "16:25",
+    "operationCount": "2회",
+    "interval": "1일 2회"
+  },
+  "operationInfo": [
+    {
+      "operationNumber": "1",
+      "departureTime": "6:30",
+      "arrivalTime": "8:35",
+      "departureName": "관설동종점",
+      "arrivalName": "부론",
+      "category": "공통",
+      "note": "구만이 경유, 면허시험장 미경유, 경동대 미경유"
+    },
+    {
+      "operationNumber": "2",
+      "departureTime": "16:25",
+      "arrivalTime": "18:15",
+      "departureName": "관설동종점",
+      "arrivalName": "부론",
+      "category": "공통",
+      "note": "구만이 경유, 면허시험장 미경유, 경동대 미경유"
+    }
+  ]
+}
