@@ -2,6 +2,7 @@
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { Clock } from '@/shared/ui/Clock';
+import androidRelease from '@/shared/config/android-release.json';
 
 type Status = { routeCount: number; checkedAt: string };
 export default function Home() {
@@ -87,11 +88,11 @@ export default function Home() {
           <span className="choice-kicker">ANDROID APP</span>
           <h2 id="app-download-title">원주버스를 앱으로 만나보세요</h2>
           <p>한 번 확인한 시간표는 인터넷 연결 없이도 볼 수 있어요.</p>
-          <span className="download-meta">Android 7.0 이상 · v1.0.0 · 약 50 MB</span>
+          <span className="download-meta">Android {androidRelease.minimumAndroid} 이상 · v{androidRelease.version} · 약 {Math.round(androidRelease.sizeBytes / 1_000_000)} MB</span>
         </div>
         <a
           className="download-button"
-          href="https://github.com/kmsk99/wonju-bus/releases/download/android-v1.0.0/wonju-bus-1.0.0.apk"
+          href={androidRelease.url}
         >
           <svg
             width="20"
