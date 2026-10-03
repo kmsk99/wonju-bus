@@ -485,9 +485,12 @@ button {
     padding-bottom: 18px;
   }
   .eyebrow {
-    font-size: 10px;
+    font-size: 9px;
+    letter-spacing: 0.08em;
+    white-space: nowrap;
   }
   .board-tag {
+    white-space: nowrap;
     font-size: 10px;
   }
   .board-body {

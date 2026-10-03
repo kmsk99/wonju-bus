@@ -60,9 +60,7 @@ export default function Home() {
                 종점으로 찾기 <span aria-hidden="true">↗</span>
               </h3>
               <p>
-                관설동, 장양리 등 종점을 선택해
-                <br />
-                출발하는 모든 버스를 확인하세요.
+                관설동, 장양리 등 종점을 선택해 출발하는 모든 버스를 확인하세요.
               </p>
             </div>
             <span className="choice-action">
@@ -76,11 +74,7 @@ export default function Home() {
               <h3>
                 노선 번호로 찾기 <span aria-hidden="true">↗</span>
               </h3>
-              <p>
-                버스 번호를 검색하고
-                <br />
-                방향별 출발 시간표를 확인하세요.
-              </p>
+              <p>버스 번호를 검색하고 방향별 출발 시간표를 확인하세요.</p>
             </div>
             <span className="choice-action">
               노선 목록 열기 <span aria-hidden="true">→</span>
