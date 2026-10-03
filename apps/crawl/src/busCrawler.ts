@@ -226,12 +226,12 @@ export class WonjuBusCrawler {
     if (arrivalIdx === -1) arrivalIdx = 2;
 
     const departureLabel =
-      headerNames[departureIdx]?.replace("발", "").trim() || "출발지";
+      headerNames[departureIdx]?.replace(/발\s*$/, "").trim() || "출발지";
     const arrivalLabel =
-      headerNames[arrivalIdx]?.replace("발", "").trim() || "도착지";
+      headerNames[arrivalIdx]?.replace(/발\s*$/, "").trim() || "도착지";
 
-    const categoryIdx = Math.min(3, headerNames.length - 2);
-    const noteIdx = Math.min(4, headerNames.length - 1);
+    const categoryIdx = headerNames.findIndex(name => /구분|운행일/.test(name));
+    const noteIdx = headerNames.findIndex(name => /비고/.test(name));
 
     const results: BusOperationInfo[] = [];
 
@@ -251,8 +251,8 @@ export class WonjuBusCrawler {
         arrivalTime,
         departureName: departureLabel,
         arrivalName: arrivalLabel,
-        category: $(cells[categoryIdx]).text().trim(),
-        note: $(cells[noteIdx]).text().trim(),
+        category: categoryIdx < 0 ? "공통" : $(cells[categoryIdx]).text().trim() || "공통",
+        note: noteIdx < 0 ? "" : $(cells[noteIdx]).text().trim(),
       });
     });
 

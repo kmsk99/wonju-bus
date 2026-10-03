@@ -19,6 +19,11 @@ async function main() {
   }) as typeof fetch;
   const data = await new WonjuBusCrawler().getBusInfo('2');
   assert.equal(data?.operationInfo[0].departureTime, '06:00');
+  global.fetch = (async (url: unknown) => new Response(String(url).endsWith('bus04.do') ? wrap('<tbody><tr><td>2</td><td>A</td><td>B</td><td>06:00</td><td>22:00</td><td>1</td><td>60</td></tr></tbody>') : wrap('<thead><tr><th>번호</th><th>발산발</th><th>B발</th><th>비고</th></tr></thead><tbody><tr><td>1</td><td>06:00</td><td>07:00</td><td>공휴일 미운행</td></tr></tbody>'))) as typeof fetch;
+  const fourColumns = await new WonjuBusCrawler().getBusInfo('2');
+  assert.equal(fourColumns?.operationInfo[0].category, '공통');
+  assert.equal(fourColumns?.operationInfo[0].note, '공휴일 미운행');
+  assert.equal(fourColumns?.operationInfo[0].departureName, '발산');
   let listAttempts = 0;
   global.fetch = (async () => {
     if (++listAttempts < 3) throw new TypeError('fetch failed');
