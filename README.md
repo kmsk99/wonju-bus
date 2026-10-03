@@ -75,3 +75,17 @@ flutter run --dart-define=BUS_DATA_URL=https://wonju-bus-mason.vercel.app/api/sc
 ```
 
 `pnpm crawl`은 `apps/crawl/data`, `apps/site/data`, `apps/site/public/data`, `apps/flutter/assets/data`의 오프라인 사본을 동기화합니다. 정기 운영 갱신은 Neon만 변경하므로 이 사본은 다음 앱 릴리스 전에 갱신하세요.
+
+## Android APK 배포
+
+홈의 **Android 앱 다운로드** 버튼은 GitHub Release `android-v1.0.0`의 `wonju-bus-1.0.0.apk`로 연결됩니다. APK는 Git에 넣지 않고 Release 자산으로 배포합니다.
+
+릴리스 빌드에는 `apps/flutter/android/key.properties`와 전용 서명 키가 필요합니다. 둘 다 Git에서 제외합니다. 현재 머신의 키 원본은 `~/.config/wonju-bus/android/`에 있습니다. 기존 설치에 업데이트하려면 같은 키를 유지하고 버전 코드를 올려야 합니다.
+
+```sh
+cd apps/flutter
+flutter build apk --release
+# 결과: build/app/outputs/flutter-apk/app-release.apk
+```
+
+새 버전은 `pubspec.yaml`의 버전을 올려 빌드한 뒤 GitHub Release에 APK와 SHA-256 체크섬을 업로드하고, 홈페이지의 버전 및 다운로드 링크를 함께 변경합니다. 배포 전에 `apksigner verify`로 서명을 확인합니다. 디버그 키로 릴리스를 대체하지 않습니다.
