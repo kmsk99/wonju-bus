@@ -25,23 +25,7 @@ const dataCache: {
 };
 
 /**
- * 방학 모드 설정 함수 - 기능 비활성화로 아무 동작도 하지 않음
- */
-export function setVacationMode(isVacation: boolean): void {
-  // 기능 제거로 아무 동작도 하지 않음
-  return;
-}
-
-/**
- * 공휴일 모드 설정 함수 - 기능 비활성화로 아무 동작도 하지 않음
- */
-export function setHolidayMode(isHoliday: boolean): void {
-  // 기능 제거로 아무 동작도 하지 않음
-  return;
-}
-
-/**
- * 데이터 폴더에서 모든 버스 데이터를 로드합니다.
+ * 공용 API를 조회하고 연결 실패 시 내장 snapshot을 읽습니다.
  */
 export async function loadAllBusData(): Promise<BusData[]> {
   try {

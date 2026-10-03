@@ -1,7 +1,9 @@
 graphify-out/
 apps/flutter/
-apps/mobile/
+legacy/
 apps/crawl/
 **/node_modules/
 **/.next/
 .env*
+dist/
+docs/

@@ -1,8 +1,7 @@
 {
   "name": "@wonju-bus/crawl",
   "version": "1.0.0",
-  "description": "\uc6d0\uc8fc\uc2dc \ubc84\uc2a4 \uc815\ubcf4 \ud06c\ub864\ub9c1 \ud504\ub85c\uc81d\ud2b8",
-  "main": "index.js",
+  "description": "원주시 ITS 시간표 수집 및 Neon 게시",
   "scripts": {
     "start": "ts-node src/index.ts",
     "start:route": "ts-node src/crawlSingleRoute.ts",
@@ -22,8 +21,6 @@
     "crawler",
     "cheerio"
   ],
-  "author": "",
-  "license": "ISC",
   "devDependencies": {
     "@types/node": "^20.11.21",
     "ts-node": "^10.9.2",
@@ -32,5 +29,6 @@
   "dependencies": {
     "@neondatabase/serverless": "^1.2.0",
     "cheerio": "^1.2.0"
-  }
+  },
+  "private": true
 }

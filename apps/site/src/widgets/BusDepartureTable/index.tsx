@@ -1,7 +1,6 @@
 "use client";
 
 import Link from "next/link";
-import { useRef } from "react";
 
 import { useDayTypeStore } from "@/entities/bus/model/dayTypeState";
 import { WaitingTime } from "@/shared/ui/WaitingTime";
@@ -33,7 +32,6 @@ export function BusDepartureTable({
   error,
 }: BusDepartureTableProps) {
   const { dayTypeText } = useDayTypeStore();
-  const containerRef = useRef<HTMLDivElement>(null);
 
   // 시간을 분으로 변환하는 유틸리티 함수
   const getTimeMinutes = (time: string) => {
@@ -41,9 +39,6 @@ export function BusDepartureTable({
     return hours * 60 + minutes;
   };
 
-  // 현재 시간을 분으로 계산
-  const now = new Date();
-  const currentMinutes = now.getHours() * 60 + now.getMinutes();
 
   // 시간표 정렬 (운행 예정/운행 완료 기준)
   const sortedDepartures = [...departures].sort((a, b) => {

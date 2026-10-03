@@ -15,12 +15,6 @@ const TEXT_CORRECTIONS: Array<[string, string]> = [
 ];
 
 export interface CrawlerOptions {
-  /** @deprecated Playwright 제거로 더 이상 사용하지 않습니다 */
-  headless?: boolean;
-  /** @deprecated Playwright 제거로 더 이상 사용하지 않습니다 */
-  slowMo?: number;
-  /** @deprecated Playwright 제거로 더 이상 사용하지 않습니다 */
-  timeout?: number;
   outputDirs?: string[];
   maxRetries?: number;
   concurrency?: number;

@@ -3,14 +3,17 @@
   "private": true,
   "packageManager": "pnpm@10.24.0",
   "scripts": {
-    "build": "pnpm -r build",
+    "build": "pnpm --filter @wonju-bus/crawl build && pnpm --filter @wonju-bus/site build",
     "dev": "pnpm --filter @wonju-bus/site dev",
-    "lint": "pnpm -r --if-present lint",
+    "lint": "pnpm --filter @wonju-bus/site lint",
     "crawl": "pnpm --filter @wonju-bus/crawl run sync-site-data",
     "start:crawl": "pnpm --filter @wonju-bus/crawl start",
     "start:site": "pnpm --filter @wonju-bus/site start",
     "crawl:publish": "pnpm --filter @wonju-bus/crawl publish-data",
-    "db:migrate": "pnpm --filter @wonju-bus/crawl db:migrate"
+    "db:migrate": "pnpm --filter @wonju-bus/crawl db:migrate",
+    "test": "pnpm --filter @wonju-bus/crawl test:session && node scripts/check-project.mjs",
+    "check": "pnpm lint && pnpm test && pnpm build",
+    "build:apk": "cd apps/flutter && flutter build apk --release && cd ../.. && node scripts/package-android-release.mjs"
   },
   "pnpm": {
     "overrides": {
@@ -19,5 +22,8 @@
       "@types/react": "19.2.7",
       "@types/react-dom": "19.2.3"
     }
+  },
+  "engines": {
+    "node": ">=22"
   }
 }

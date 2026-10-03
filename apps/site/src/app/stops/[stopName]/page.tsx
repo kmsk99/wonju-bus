@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 import {
     getAllDepartureTimesFromStop, isRouteOperatingToday, loadBusData, loadRoutesByTerminal,
@@ -38,7 +38,6 @@ export default function StopDetailPage() {
   // 노선 데이터 상태
   const [departureRoutes, setDepartureRoutes] = useState<string[]>([]);
   const [arrivalRoutes, setArrivalRoutes] = useState<string[]>([]);
-  const [departureTimes, setDepartureTimes] = useState<DepartureInfo[]>([]);
   const [groupedDepartures, setGroupedDepartures] = useState<
     Record<string, GroupedDeparture>
   >({});
@@ -47,100 +46,20 @@ export default function StopDetailPage() {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [activeTab, setActiveTab] = useState<"all" | "from" | "to">("all");
-  const [isInitialLoad, setIsInitialLoad] = useState(true);
 
   // 클라이언트 사이드에서만 렌더링에 영향을 미치는 상태 추가
   const [clientSideMount, setClientSideMount] = useState(false);
   const [renderReady, setRenderReady] = useState(false);
 
-  // 초기 마운트 후 클라이언트 사이드 상태 업데이트
-  useEffect(() => {
-    setClientSideMount(true);
-    // 강제로 정적 초기 화면 보여줌
-    setTimeout(() => {
-      setRenderReady(true);
-    }, 10); // 매우 짧은 지연으로 렌더링 사이클 보장
-  }, []);
-
-  // 1분마다 현재 시간 및 시간표 업데이트
-  useEffect(() => {
-    // 초기 로드
-    updateDayTypes();
-
-    // Next.js에서는 useEffect 내에서만 window를 참조해야 함
-    if (typeof window !== "undefined") {
-      // 페이지 위치 강제 리셋 (여러 방법으로 시도)
-      window.scrollTo(0, 0);
-
-      // 강제로 뷰포트 맨 위로 스크롤
-      window.scrollTo({
-        top: 0,
-        behavior: "auto",
-      });
-
-      // 스크롤 이벤트 강제 발생
-      const scrollEvent = new Event("scroll");
-      window.dispatchEvent(scrollEvent);
-    }
-
-    // 시간표 업데이트 인터벌 설정
-    const interval = setInterval(() => {
-      updateDayTypes();
-      // 시간표 다시 로드
-      loadDepartureTimes();
-    }, 60000);
-
-    return () => clearInterval(interval);
-  }, [stopName, updateDayTypes]);
-
-  // 출발/도착 노선 로드
-  useEffect(() => {
-    async function fetchRoutesForStop() {
-      try {
-        console.log(`${stopName} 종점의 노선 목록 로딩 시작...`);
-        setIsLoading(true);
-
-        // 비동기 작업을 병렬로 처리
-        const [fromRoutes, toRoutes] = await Promise.all([
-          loadRoutesByTerminal(stopName),
-          loadRoutesToTerminal(stopName),
-        ]);
-
-        setDepartureRoutes(fromRoutes);
-        console.log(`${stopName}에서 출발하는 노선: ${fromRoutes.length}개`);
-
-        setArrivalRoutes(toRoutes);
-        console.log(`${stopName}에 도착하는 노선: ${toRoutes.length}개`);
-
-        // 출발 시간표
-        await loadDepartureTimes();
-      } catch (err) {
-        console.error(`${stopName} 종점 데이터 로딩 중 오류 발생:`, err);
-        setError("버스 노선 데이터를 로드하는 중 오류가 발생했습니다.");
-      } finally {
-        setIsLoading(false);
-        setIsInitialLoad(false);
-        console.log(`${stopName} 종점의 노선 목록 로딩 완료`);
-      }
-    }
-
-    if (stopName) {
-      fetchRoutesForStop();
-    }
-  }, [stopName]);
-
   // 출발 시간표 로드 함수
-  async function loadDepartureTimes() {
+  const loadDepartureTimes = useCallback(async () => {
     try {
       const times = await getAllDepartureTimesFromStop(stopName);
-      setDepartureTimes(times);
       console.log(`${stopName}의 출발 시간표 ${times.length}개 로드 완료`);
 
       // 노선별로 그룹화하고 남은 버스 개수 계산
       const grouped: Record<string, GroupedDeparture> = {};
 
-      // 현재 시간
-      const now = new Date();
 
       // 모든 노선 목록 가져오기
       const uniqueRoutes = Array.from(
@@ -211,11 +130,86 @@ export default function StopDetailPage() {
     } catch (err) {
       console.error(`${stopName} 출발 시간표 로딩 중 오류:`, err);
     }
-  }
+  }, [stopName]);
+
+  // 초기 마운트 후 클라이언트 사이드 상태 업데이트
+  useEffect(() => {
+    setClientSideMount(true);
+    // 강제로 정적 초기 화면 보여줌
+    setTimeout(() => {
+      setRenderReady(true);
+    }, 10); // 매우 짧은 지연으로 렌더링 사이클 보장
+  }, []);
+
+  // 1분마다 현재 시간 및 시간표 업데이트
+  useEffect(() => {
+    // 초기 로드
+    updateDayTypes();
+
+    // Next.js에서는 useEffect 내에서만 window를 참조해야 함
+    if (typeof window !== "undefined") {
+      // 페이지 위치 강제 리셋 (여러 방법으로 시도)
+      window.scrollTo(0, 0);
+
+      // 강제로 뷰포트 맨 위로 스크롤
+      window.scrollTo({
+        top: 0,
+        behavior: "auto",
+      });
+
+      // 스크롤 이벤트 강제 발생
+      const scrollEvent = new Event("scroll");
+      window.dispatchEvent(scrollEvent);
+    }
+
+    // 시간표 업데이트 인터벌 설정
+    const interval = setInterval(() => {
+      updateDayTypes();
+      // 시간표 다시 로드
+      loadDepartureTimes();
+    }, 60000);
+
+    return () => clearInterval(interval);
+  }, [stopName, updateDayTypes, loadDepartureTimes]);
+
+  // 출발/도착 노선 로드
+  useEffect(() => {
+    async function fetchRoutesForStop() {
+      try {
+        console.log(`${stopName} 종점의 노선 목록 로딩 시작...`);
+        setIsLoading(true);
+
+        // 비동기 작업을 병렬로 처리
+        const [fromRoutes, toRoutes] = await Promise.all([
+          loadRoutesByTerminal(stopName),
+          loadRoutesToTerminal(stopName),
+        ]);
+
+        setDepartureRoutes(fromRoutes);
+        console.log(`${stopName}에서 출발하는 노선: ${fromRoutes.length}개`);
+
+        setArrivalRoutes(toRoutes);
+        console.log(`${stopName}에 도착하는 노선: ${toRoutes.length}개`);
+
+        // 출발 시간표
+        await loadDepartureTimes();
+      } catch (err) {
+        console.error(`${stopName} 종점 데이터 로딩 중 오류 발생:`, err);
+        setError("버스 노선 데이터를 로드하는 중 오류가 발생했습니다.");
+      } finally {
+        setIsLoading(false);
+        console.log(`${stopName} 종점의 노선 목록 로딩 완료`);
+      }
+    }
+
+    if (stopName) {
+      fetchRoutesForStop();
+    }
+  }, [stopName, loadDepartureTimes]);
 
   // 필터링된 그룹화 출발 시간표
   const filteredDepartures = Object.entries(groupedDepartures)
-    .filter(([_, data]) => {
+    .filter(([, data]) => {
       if (activeTab === "all") return true;
       if (activeTab === "from") return data.nextDeparture.isFromTerminal;
       if (activeTab === "to") return !data.nextDeparture.isFromTerminal;

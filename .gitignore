@@ -14,3 +14,16 @@ node_modules/
 .DS_Store
 .vercel
 .env*
+
+# Generated outputs and local analysis
+**/.next/
+**/build/
+**/*.tsbuildinfo
+apps/crawl/data/
+dist/
+graphify-out/
+*.apk
+*.aab
+*.jks
+*.keystore
+!**/.env.example

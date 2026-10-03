@@ -14,7 +14,7 @@ async function main() {
       throw new Error(`수집 실패: ${summary.successfulRoutes}/${summary.totalRoutes}, ${summary.failedRoutes.join(', ')}`);
     }
     const snapshot: Record<string, unknown> = {};
-    for (const file of summary.savedFiles) {
+    for (const file of [...summary.savedFiles].sort()) {
       const data = JSON.parse(fs.readFileSync(path.join(staging, file), 'utf8'));
       if (!data.routeInfo?.routeNumber || !Array.isArray(data.operationInfo) || data.operationInfo.length === 0) {
         throw new Error(`시간표 검증 실패: ${file}`);
@@ -26,16 +26,11 @@ async function main() {
       await publishSnapshot(snapshot, Date.now() - started);
       return;
     }
-    const destinations = ['apps/crawl/data', 'apps/site/data', 'apps/site/public/data', 'apps/flutter/assets/data'];
+    const destinations = ['apps/site/public/data', 'apps/flutter/assets/data'];
     for (const relative of destinations) {
       const destination = path.join(repoRoot, relative);
       fs.mkdirSync(destination, { recursive: true });
-      for (const file of fs.readdirSync(destination)) {
-        if (file.endsWith('.json') && (file.startsWith('wonju-bus-') || ['bus-files.json', 'snapshot.json'].includes(file))) {
-          fs.unlinkSync(path.join(destination, file));
-        }
-      }
-      for (const file of fs.readdirSync(staging)) fs.copyFileSync(path.join(staging, file), path.join(destination, file));
+      fs.copyFileSync(path.join(staging, 'snapshot.json'), path.join(destination, 'snapshot.json'));
     }
     console.log(`${summary.successfulRoutes}개 시간표 검증 및 웹·Flutter 동기화 완료`);
   } finally {

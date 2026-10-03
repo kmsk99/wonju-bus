@@ -98,15 +98,9 @@ export default function BusDetailPage() {
     }
   ) as DayType[];
 
-  // 회차 번호를 이용하여 다음날 버스인지 확인
-  const maxOpNum = Math.max(
-    ...filteredOperations.map((op) => parseInt(op.operationNumber))
-  );
-
   // 현재 시간 기준으로 출발 시간 분류 (간단화된 버전)
   function getTimeStatus(
-    timeStr: string,
-    opNumber: string
+    timeStr: string
   ): "past" | "current" | "future" {
     if (timeStr === "-") return "future";
 
@@ -131,11 +125,10 @@ export default function BusDetailPage() {
   // 운행 회차 전체 상태 판별 (간단화된 버전)
   function getOperationStatus(
     departureTime: string,
-    arrivalTime: string,
-    operationNumber: string
+    arrivalTime: string
   ): "current" | "past" | "future" {
-    const departureStatus = getTimeStatus(departureTime, operationNumber);
-    const arrivalStatus = getTimeStatus(arrivalTime, operationNumber);
+    const departureStatus = getTimeStatus(departureTime);
+    const arrivalStatus = getTimeStatus(arrivalTime);
 
     // 현재 운행 중
     if (departureStatus === "current" || arrivalStatus === "current") {
@@ -270,19 +263,15 @@ export default function BusDetailPage() {
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
                 {sortedOperations.map((op, index) => {
                   const departureStatus = getTimeStatus(
-                    op.departureTime,
-                    op.operationNumber
+                    op.departureTime
                   );
                   const arrivalStatus = getTimeStatus(
-                    op.arrivalTime,
-                    op.operationNumber
+                    op.arrivalTime
                   );
                   const operationStatus = getOperationStatus(
                     op.departureTime,
-                    op.arrivalTime,
-                    op.operationNumber
+                    op.arrivalTime
                   );
-                  const isCurrentTimeframe = operationStatus === "current";
                   const isExpanded = expandedCard === index;
 
                   return (

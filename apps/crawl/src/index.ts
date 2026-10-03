@@ -29,6 +29,7 @@ async function main() {
     // console.log(JSON.stringify(busInfo, null, 2));
   } catch (error) {
     console.error("크롤링 중 오류가 발생했습니다:", error);
+    process.exitCode = 1;
   }
 }
 

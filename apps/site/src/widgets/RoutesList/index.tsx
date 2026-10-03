@@ -1,6 +1,5 @@
 import Link from "next/link";
 
-import { useDayTypeStore } from "@/entities/bus/model/dayTypeState";
 
 export interface RouteInfo {
   routeNumber: string;
@@ -18,7 +17,6 @@ export interface RoutesListProps {
  * 노선 목록 위젯 컴포넌트
  */
 export function RoutesList({ routes }: RoutesListProps) {
-  const { dayTypeText } = useDayTypeStore();
 
   // 현재 날짜에 운행하는 노선과 아닌 노선 분리
   const sortedRoutes = [...routes].sort((a, b) => {
