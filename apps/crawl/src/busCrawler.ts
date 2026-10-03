@@ -127,6 +127,18 @@ export class WonjuBusCrawler {
   }
 
   private async extractRouteNumbers(): Promise<BusRouteInfo[]> {
+    for (let attempt = 1; ; attempt++) {
+      try {
+        return await this.fetchRouteNumbers();
+      } catch (error) {
+        if (attempt >= 3) throw error;
+        console.warn(`노선 목록 연결 실패, ${attempt}/3 재시도`);
+        await this.delay(RETRY_DELAY_MS * 2 ** (attempt - 1));
+      }
+    }
+  }
+
+  private async fetchRouteNumbers(): Promise<BusRouteInfo[]> {
     const res = await fetch(BUS_INFO_URL, { signal: AbortSignal.timeout(30_000) });
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
     const html = await res.text();

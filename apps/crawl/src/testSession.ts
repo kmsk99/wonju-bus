@@ -19,6 +19,13 @@ async function main() {
   }) as typeof fetch;
   const data = await new WonjuBusCrawler().getBusInfo('2');
   assert.equal(data?.operationInfo[0].departureTime, '06:00');
+  let listAttempts = 0;
+  global.fetch = (async () => {
+    if (++listAttempts < 3) throw new TypeError('fetch failed');
+    return new Response(wrap('<tbody><tr><td>2</td><td>A</td><td>B</td><td>06:00</td><td>22:00</td><td>1</td><td>60</td></tr></tbody>'));
+  }) as typeof fetch;
+  assert.equal((await new WonjuBusCrawler().getBusRouteNumbers()).length, 1);
+  assert.equal(listAttempts, 3);
   global.fetch = (async () => new Response('Forbidden', { status: 403 })) as typeof fetch;
   await assert.rejects(() => new WonjuBusCrawler().getBusRouteNumbers(), /HTTP 403/);
   global.fetch = (async () => new Response('<html>maintenance</html>')) as typeof fetch;
