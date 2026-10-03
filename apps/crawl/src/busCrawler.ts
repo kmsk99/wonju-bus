@@ -35,6 +35,8 @@ export interface CrawlSummary {
 }
 
 export class WonjuBusCrawler {
+  private csrfToken = '';
+  private cookies = '';
   private readonly outputDirs: string[];
   private readonly maxRetries: number;
   private readonly throttleMs: number;
@@ -140,9 +142,12 @@ export class WonjuBusCrawler {
   }
 
   private async extractRouteNumbers(): Promise<BusRouteInfo[]> {
-    const res = await fetch(BUS_INFO_URL);
+    const res = await fetch(BUS_INFO_URL, { signal: AbortSignal.timeout(30_000) });
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
     const html = await res.text();
     const $ = cheerio.load(html);
+    this.csrfToken = $('input[name="CSRFToken"]').val()?.toString() ?? '';
+    this.cookies = res.headers.getSetCookie().map((value) => value.split(';')[0]).join('; ');
 
     const routes: BusRouteInfo[] = [];
 
@@ -170,10 +175,16 @@ export class WonjuBusCrawler {
   ): Promise<BusInfo | null> {
     try {
       const res = await fetch(BUS_DETAIL_URL, {
+        signal: AbortSignal.timeout(30_000),
         method: "POST",
-        headers: { "Content-Type": "application/x-www-form-urlencoded" },
-        body: `no=${encodeURIComponent(busRouteNumber)}`,
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+          Cookie: this.cookies,
+          Referer: BUS_INFO_URL,
+        },
+        body: new URLSearchParams({ no: busRouteNumber, CSRFToken: this.csrfToken }).toString(),
       });
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
       const html = await res.text();
       const $ = cheerio.load(html);
 
@@ -188,6 +199,7 @@ export class WonjuBusCrawler {
       };
 
       const operationInfo = this.parseOperationTable($);
+      if (operationInfo.length === 0) throw new Error("시간표가 비어 있습니다");
 
       return this.normalizeBusInfo({ routeInfo, operationInfo });
     } catch (error) {

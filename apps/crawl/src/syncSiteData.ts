@@ -1,39 +1,39 @@
-import path from "path";
-
-import { WonjuBusCrawler } from "./busCrawler";
+import fs from 'fs';
+import os from 'os';
+import path from 'path';
+import { WonjuBusCrawler } from './busCrawler';
 
 async function main() {
-  const repoRoot = path.resolve(__dirname, "../../..");
-  const crawlDataDir = path.resolve(repoRoot, "apps/crawl/data");
-  const siteDataDir = path.resolve(repoRoot, "apps/site/data");
-  const sitePublicDataDir = path.resolve(repoRoot, "apps/site/public/data");
-
-  const crawler = new WonjuBusCrawler({
-    outputDirs: [crawlDataDir, siteDataDir, sitePublicDataDir],
-  });
-
-  console.log("원주시 버스 데이터 전체 크롤링 및 동기화를 시작합니다...");
-
-  const summary = await crawler.crawlAllBusInfo();
-
-  console.log(
-    `총 ${summary.totalRoutes}개 노선 중 ${summary.successfulRoutes}개 노선 데이터를 반영했습니다.`
-  );
-
-  if (summary.failedRoutes.length > 0) {
-    console.warn(
-      `수집에 실패한 노선 (${summary.failedRoutes.length}개): ${summary.failedRoutes.join(
-        ", "
-      )}`
-    );
-    process.exitCode = 1;
+  const repoRoot = path.resolve(__dirname, '../../..');
+  const staging = fs.mkdtempSync(path.join(os.tmpdir(), 'wonju-bus-'));
+  try {
+    const summary = await new WonjuBusCrawler({ outputDirs: [staging] }).crawlAllBusInfo();
+    if (summary.totalRoutes === 0 || summary.failedRoutes.length > 0) {
+      throw new Error(`수집 실패: ${summary.successfulRoutes}/${summary.totalRoutes}, ${summary.failedRoutes.join(', ')}`);
+    }
+    const snapshot: Record<string, unknown> = {};
+    for (const file of summary.savedFiles) {
+      const data = JSON.parse(fs.readFileSync(path.join(staging, file), 'utf8'));
+      if (!data.routeInfo?.routeNumber || !Array.isArray(data.operationInfo) || data.operationInfo.length === 0) {
+        throw new Error(`시간표 검증 실패: ${file}`);
+      }
+      snapshot[file] = data;
+    }
+    fs.writeFileSync(path.join(staging, 'snapshot.json'), JSON.stringify(snapshot));
+    const destinations = ['apps/crawl/data', 'apps/site/data', 'apps/site/public/data', 'apps/flutter/assets/data'];
+    for (const relative of destinations) {
+      const destination = path.join(repoRoot, relative);
+      fs.mkdirSync(destination, { recursive: true });
+      for (const file of fs.readdirSync(destination)) {
+        if (file.endsWith('.json') && (file.startsWith('wonju-bus-') || ['bus-files.json', 'snapshot.json'].includes(file))) {
+          fs.unlinkSync(path.join(destination, file));
+        }
+      }
+      for (const file of fs.readdirSync(staging)) fs.copyFileSync(path.join(staging, file), path.join(destination, file));
+    }
+    console.log(`${summary.successfulRoutes}개 시간표 검증 및 웹·Flutter 동기화 완료`);
+  } finally {
+    fs.rmSync(staging, { recursive: true, force: true });
   }
-
-  console.log("동기화가 완료된 디렉터리:");
-  summary.outputDirs.forEach((dir) => console.log(` - ${dir}`));
 }
-
-main().catch((error) => {
-  console.error("크롤링 파이프라인 실행 중 오류가 발생했습니다.", error);
-  process.exitCode = 1;
-});
+main().catch((error) => { console.error(error); process.exitCode = 1; });

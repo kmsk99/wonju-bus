@@ -9,25 +9,36 @@ permissions:
   contents: write
   pull-requests: write
 
+concurrency:
+  group: bus-data-update
+  cancel-in-progress: false
+
 jobs:
   update-bus-data:
     runs-on: ubuntu-latest
+    timeout-minutes: 20
 
     steps:
       - name: 저장소 체크아웃
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
+
+        with:
+          ref: main
 
       - name: pnpm 설치
         uses: pnpm/action-setup@v4
 
       - name: Node.js 설정
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v5
         with:
-          node-version: 20
+          node-version: 22
           cache: 'pnpm'
 
       - name: 의존성 설치
         run: pnpm install --frozen-lockfile
+
+      - name: 크롤러 회귀 검증
+        run: pnpm --filter @wonju-bus/crawl test:session
 
       - name: 버스 데이터 크롤링
         run: pnpm crawl
@@ -35,11 +46,11 @@ jobs:
       - name: 변경 사항 확인
         id: check_changes
         run: |
-          if [ -z "$(git status --porcelain)" ]; then
+          if [ -z "$(git status --porcelain -- apps/crawl/data apps/site/data apps/site/public/data apps/flutter/assets/data)" ]; then
             echo "has_changes=false" >> "$GITHUB_OUTPUT"
           else
             echo "has_changes=true" >> "$GITHUB_OUTPUT"
-            echo "branch_name=data/update-$(date +'%Y%m%d')" >> "$GITHUB_OUTPUT"
+            echo "branch_name=data/update-${{ github.run_id }}-${{ github.run_attempt }}" >> "$GITHUB_OUTPUT"
           fi
 
       - name: 업데이트 브랜치 생성 및 푸시
@@ -49,7 +60,7 @@ jobs:
           git config user.email "github-actions[bot]@users.noreply.github.com"
           BRANCH="${{ steps.check_changes.outputs.branch_name }}"
           git checkout -b "$BRANCH"
-          git add -A
+          git add apps/crawl/data apps/site/data apps/site/public/data apps/flutter/assets/data
           git commit -m "버스 데이터 갱신 $(date +'%Y-%m-%d')"
           git push origin "$BRANCH"
 
@@ -65,3 +76,10 @@ jobs:
             --base main \
             --head "$BRANCH"
           gh pr merge "$BRANCH" --merge --delete-branch
+
+      - name: Vercel 프로덕션 갱신
+        env:
+          DEPLOY_HOOK: ${{ secrets.VERCEL_DEPLOY_HOOK }}
+        run: |
+          test -n "$DEPLOY_HOOK" || { echo 'VERCEL_DEPLOY_HOOK 설정이 필요합니다'; exit 1; }
+          curl --fail --silent --show-error --retry 3 -X POST "$DEPLOY_HOOK" > /dev/null

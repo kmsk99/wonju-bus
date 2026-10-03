@@ -1,17 +1,18 @@
 {
   "name": "@wonju-bus/crawl",
   "version": "1.0.0",
-  "description": "원주시 버스 정보 크롤링 프로젝트",
+  "description": "\uc6d0\uc8fc\uc2dc \ubc84\uc2a4 \uc815\ubcf4 \ud06c\ub864\ub9c1 \ud504\ub85c\uc81d\ud2b8",
   "main": "index.js",
   "scripts": {
     "start": "ts-node src/index.ts",
     "start:route": "ts-node src/crawlSingleRoute.ts",
-    "build": "tsc",
+    "build": "tsc --noEmit",
     "test:basic-info": "ts-node src/testBasicInfoExtract.ts",
     "test:detail": "ts-node src/testBusDetailInfo.ts",
     "test:multi": "ts-node src/testMultipleRoutes.ts",
     "test:route": "ts-node src/testCrawlRoute.ts",
-    "sync-site-data": "ts-node src/syncSiteData.ts"
+    "sync-site-data": "ts-node src/syncSiteData.ts",
+    "test:session": "ts-node --prefer-ts-exts src/testSession.ts"
   },
   "keywords": [
     "wonju",
