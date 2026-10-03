@@ -8,10 +8,7 @@ import '../../widgets/waiting_time_chip.dart';
 enum StopDetailTab { all, from, to }
 
 class StopDetailScreen extends StatefulWidget {
-  const StopDetailScreen({
-    super.key,
-    required this.stopName,
-  });
+  const StopDetailScreen({super.key, required this.stopName});
 
   final String stopName;
 
@@ -34,8 +31,9 @@ class _StopDetailScreenState extends State<StopDetailScreen> {
     final stopName = widget.stopName;
     final departureRoutes = await _repository.loadRoutesByTerminal(stopName);
     final arrivalRoutes = await _repository.loadRoutesToTerminal(stopName);
-    final grouped =
-        await _repository.groupDeparturesByRoute(stopName); // includes summary
+    final grouped = await _repository.groupDeparturesByRoute(
+      stopName,
+    ); // includes summary
 
     return _StopDetailViewData(
       departureRoutes: departureRoutes,
@@ -53,8 +51,7 @@ class _StopDetailScreenState extends State<StopDetailScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final stopName =
-        widget.stopName.isEmpty ? '정류장 상세' : widget.stopName;
+    final stopName = widget.stopName.isEmpty ? '정류장 상세' : widget.stopName;
     return Scaffold(
       appBar: AppBar(
         title: Text(stopName),
@@ -91,9 +88,7 @@ class _StopDetailScreenState extends State<StopDetailScreen> {
                 data.groupedDepartures.isEmpty &&
                     data.departureRoutes.isEmpty &&
                     data.arrivalRoutes.isEmpty) {
-              return const _EmptyState(
-                message: '시간표 정보를 찾을 수 없습니다.',
-              );
+              return const _EmptyState(message: '시간표 정보를 찾을 수 없습니다.');
             }
 
             return RefreshIndicator(
@@ -120,26 +115,23 @@ class _StopDetailScreenState extends State<StopDetailScreen> {
                       ),
                     ),
                   ),
-                  _DepartureSection(
-                    activeTab: _activeTab,
-                    data: data,
-                  ),
+                  _DepartureSection(activeTab: _activeTab, data: data),
                   SliverToBoxAdapter(
                     child: Padding(
-                      padding:
-                          const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 16,
+                        vertical: 12,
+                      ),
                       child: Text(
                         '노선 목록',
                         style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                              fontWeight: FontWeight.bold,
-                            ),
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                     ),
                   ),
                   _RoutesSummarySection(data: data),
-                  const SliverToBoxAdapter(
-                    child: SizedBox(height: 24),
-                  ),
+                  const SliverToBoxAdapter(child: SizedBox(height: 24)),
                 ],
               ),
             );
@@ -252,7 +244,9 @@ class _TabChip extends StatelessWidget {
           vertical: 12,
         ),
         decoration: BoxDecoration(
-          color: isActive ? Theme.of(context).colorScheme.primary : Colors.white,
+          color: isActive
+              ? Theme.of(context).colorScheme.primary
+              : Colors.white,
           borderRadius: BorderRadius.circular(16),
           border: Border.all(
             color: isActive
@@ -273,34 +267,29 @@ class _TabChip extends StatelessWidget {
 }
 
 class _DepartureSection extends StatelessWidget {
-  const _DepartureSection({
-    required this.activeTab,
-    required this.data,
-  });
+  const _DepartureSection({required this.activeTab, required this.data});
 
   final StopDetailTab activeTab;
   final _StopDetailViewData data;
 
   @override
   Widget build(BuildContext context) {
-    final entries = data.groupedDepartures.entries.where((entry) {
-      if (activeTab == StopDetailTab.all) return true;
-      final isFromTerminal = entry.value.nextDeparture.isFromTerminal;
-      if (activeTab == StopDetailTab.from) return isFromTerminal;
-      if (activeTab == StopDetailTab.to) return !isFromTerminal;
-      return true;
-    }).toList()
-      ..sort((a, b) {
-        // Prioritize operating routes, then time
-        if (a.value.operatesToday != b.value.operatesToday) {
-          return a.value.operatesToday ? -1 : 1;
-        }
-        final aMinutes =
-            _timeToMinutes(a.value.nextDeparture.departureTime);
-        final bMinutes =
-            _timeToMinutes(b.value.nextDeparture.departureTime);
-        return aMinutes.compareTo(bMinutes);
-      });
+    final entries =
+        data.groupedDepartures.entries.where((entry) {
+          if (activeTab == StopDetailTab.all) return true;
+          final isFromTerminal = entry.value.nextDeparture.isFromTerminal;
+          if (activeTab == StopDetailTab.from) return isFromTerminal;
+          if (activeTab == StopDetailTab.to) return !isFromTerminal;
+          return true;
+        }).toList()..sort((a, b) {
+          // Prioritize operating routes, then time
+          if (a.value.operatesToday != b.value.operatesToday) {
+            return a.value.operatesToday ? -1 : 1;
+          }
+          final aMinutes = _timeToMinutes(a.value.nextDeparture.departureTime);
+          final bMinutes = _timeToMinutes(b.value.nextDeparture.departureTime);
+          return aMinutes.compareTo(bMinutes);
+        });
 
     if (entries.isEmpty) {
       return const SliverToBoxAdapter(
@@ -312,33 +301,29 @@ class _DepartureSection extends StatelessWidget {
     }
 
     return SliverList(
-      delegate: SliverChildBuilderDelegate(
-        (context, index) {
-          final entry = entries[index];
-          final departure = entry.value.nextDeparture;
-          final summary = entry.value;
-          final isDepartureRoute =
-              data.departureRoutes.contains(entry.key);
-          final isArrivalRoute = data.arrivalRoutes.contains(entry.key);
+      delegate: SliverChildBuilderDelegate((context, index) {
+        final entry = entries[index];
+        final departure = entry.value.nextDeparture;
+        final summary = entry.value;
+        final isDepartureRoute = data.departureRoutes.contains(entry.key);
+        final isArrivalRoute = data.arrivalRoutes.contains(entry.key);
 
-          return Padding(
-            padding: EdgeInsets.fromLTRB(
-              16,
-              index == 0 ? 0 : 12,
-              16,
-              index == entries.length - 1 ? 16 : 0,
-            ),
-            child: _DepartureCard(
-              routeNumber: entry.key,
-              departure: departure,
-              summary: summary,
-              isDepartureRoute: isDepartureRoute,
-              isArrivalRoute: isArrivalRoute,
-            ),
-          );
-        },
-        childCount: entries.length,
-      ),
+        return Padding(
+          padding: EdgeInsets.fromLTRB(
+            16,
+            index == 0 ? 0 : 12,
+            16,
+            index == entries.length - 1 ? 16 : 0,
+          ),
+          child: _DepartureCard(
+            routeNumber: entry.key,
+            departure: departure,
+            summary: summary,
+            isDepartureRoute: isDepartureRoute,
+            isArrivalRoute: isArrivalRoute,
+          ),
+        );
+      }, childCount: entries.length),
     );
   }
 }
@@ -369,7 +354,7 @@ class _DepartureCard extends StatelessWidget {
         border: Border.all(color: Colors.grey.shade200),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.05),
+            color: Colors.black.withValues(alpha: 0.05),
             blurRadius: 12,
             offset: const Offset(0, 6),
           ),
@@ -383,7 +368,7 @@ class _DepartureCard extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                '$routeNumber',
+                routeNumber,
                 style: theme.textTheme.titleLarge?.copyWith(
                   fontWeight: FontWeight.bold,
                 ),
@@ -402,14 +387,10 @@ class _DepartureCard extends StatelessWidget {
               if (departure.tripIndex != null)
                 _infoChip('회차 ${departure.tripIndex}'),
               _infoChip(departure.isFromTerminal ? '기점' : '경유'),
-              if (departure.category.isNotEmpty)
-                _infoChip(departure.category),
-              if (isDepartureRoute && isArrivalRoute)
-                _infoChip('출발 · 도착'),
-              if (isDepartureRoute && !isArrivalRoute)
-                _infoChip('출발 노선'),
-              if (!isDepartureRoute && isArrivalRoute)
-                _infoChip('도착 노선'),
+              if (departure.category.isNotEmpty) _infoChip(departure.category),
+              if (isDepartureRoute && isArrivalRoute) _infoChip('출발 · 도착'),
+              if (isDepartureRoute && !isArrivalRoute) _infoChip('출발 노선'),
+              if (!isDepartureRoute && isArrivalRoute) _infoChip('도착 노선'),
             ],
           ),
           const SizedBox(height: 12),
@@ -426,8 +407,8 @@ class _DepartureCard extends StatelessWidget {
               Text(
                 summary.operatesToday
                     ? (summary.remainingCount > 0
-                        ? '오늘 남은 운행: ${summary.remainingCount}회'
-                        : '오늘 운행 종료')
+                          ? '오늘 남은 운행: ${summary.remainingCount}회'
+                          : '오늘 운행 종료')
                     : '오늘 미운행',
                 style: theme.textTheme.bodyMedium?.copyWith(
                   color: summary.operatesToday
@@ -469,10 +450,7 @@ class _RoutesSummarySection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final routes = {
-      ...data.departureRoutes,
-      ...data.arrivalRoutes,
-    }.toList()
+    final routes = {...data.departureRoutes, ...data.arrivalRoutes}.toList()
       ..sort((a, b) => a.compareTo(b));
 
     if (routes.isEmpty) {
@@ -482,38 +460,35 @@ class _RoutesSummarySection extends StatelessWidget {
     }
 
     return SliverList(
-      delegate: SliverChildBuilderDelegate(
-        (context, index) {
-          final routeNumber = routes[index];
-          final summary = data.groupedDepartures[routeNumber];
-          final isDeparture = data.departureRoutes.contains(routeNumber);
-          final isArrival = data.arrivalRoutes.contains(routeNumber);
-          final operatesToday = summary?.operatesToday ?? false;
-          final remaining = summary?.remainingCount ?? 0;
+      delegate: SliverChildBuilderDelegate((context, index) {
+        final routeNumber = routes[index];
+        final summary = data.groupedDepartures[routeNumber];
+        final isDeparture = data.departureRoutes.contains(routeNumber);
+        final isArrival = data.arrivalRoutes.contains(routeNumber);
+        final operatesToday = summary?.operatesToday ?? false;
+        final remaining = summary?.remainingCount ?? 0;
 
-          return Padding(
-            padding: EdgeInsets.fromLTRB(
-              16,
-              0,
-              16,
-              index == routes.length - 1 ? 16 : 12,
+        return Padding(
+          padding: EdgeInsets.fromLTRB(
+            16,
+            0,
+            16,
+            index == routes.length - 1 ? 16 : 12,
+          ),
+          child: _RouteSummaryCard(
+            routeNumber: routeNumber,
+            isDeparture: isDeparture,
+            isArrival: isArrival,
+            operatesToday: operatesToday,
+            remainingCount: remaining,
+            onTap: () => Navigator.pushNamed(
+              context,
+              AppRoutes.busDetail,
+              arguments: routeNumber,
             ),
-            child: _RouteSummaryCard(
-              routeNumber: routeNumber,
-              isDeparture: isDeparture,
-              isArrival: isArrival,
-              operatesToday: operatesToday,
-              remainingCount: remaining,
-              onTap: () => Navigator.pushNamed(
-                context,
-                AppRoutes.busDetail,
-                arguments: routeNumber,
-              ),
-            ),
-          );
-        },
-        childCount: routes.length,
-      ),
+          ),
+        );
+      }, childCount: routes.length),
     );
   }
 }
@@ -554,7 +529,7 @@ class _RouteSummaryCard extends StatelessWidget {
               width: 48,
               height: 48,
               decoration: BoxDecoration(
-                color: theme.colorScheme.primary.withOpacity(0.12),
+                color: theme.colorScheme.primary.withValues(alpha: 0.12),
                 borderRadius: BorderRadius.circular(12),
               ),
               alignment: Alignment.center,
@@ -576,8 +551,7 @@ class _RouteSummaryCard extends StatelessWidget {
                     spacing: 8,
                     runSpacing: 8,
                     children: [
-                      if (isDeparture)
-                        _badge('출발', theme.colorScheme.primary),
+                      if (isDeparture) _badge('출발', theme.colorScheme.primary),
                       if (isArrival) _badge('도착', Colors.purple),
                       if (!operatesToday)
                         _badge('오늘 미운행', Colors.grey.shade500),
@@ -587,8 +561,8 @@ class _RouteSummaryCard extends StatelessWidget {
                   Text(
                     operatesToday
                         ? (remainingCount > 0
-                            ? '오늘 남은 운행: $remainingCount회'
-                            : '오늘 운행 종료')
+                              ? '오늘 남은 운행: $remainingCount회'
+                              : '오늘 운행 종료')
                         : '오늘 미운행',
                     style: theme.textTheme.bodySmall?.copyWith(
                       color: operatesToday
@@ -611,7 +585,7 @@ class _RouteSummaryCard extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
       decoration: BoxDecoration(
-        color: color.withOpacity(0.15),
+        color: color.withValues(alpha: 0.15),
         borderRadius: BorderRadius.circular(10),
       ),
       child: Text(
@@ -643,10 +617,9 @@ class _EmptyState extends StatelessWidget {
           Text(
             message,
             textAlign: TextAlign.center,
-            style: Theme.of(context)
-                .textTheme
-                .bodyMedium
-                ?.copyWith(color: Colors.grey.shade600),
+            style: Theme.of(
+              context,
+            ).textTheme.bodyMedium?.copyWith(color: Colors.grey.shade600),
           ),
         ],
       ),
@@ -671,10 +644,9 @@ class _ErrorState extends StatelessWidget {
             Text(
               message,
               textAlign: TextAlign.center,
-              style: Theme.of(context)
-                  .textTheme
-                  .bodyMedium
-                  ?.copyWith(color: Colors.redAccent),
+              style: Theme.of(
+                context,
+              ).textTheme.bodyMedium?.copyWith(color: Colors.redAccent),
             ),
             const SizedBox(height: 12),
             ElevatedButton.icon(

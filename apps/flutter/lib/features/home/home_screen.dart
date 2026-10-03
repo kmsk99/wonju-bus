@@ -1,172 +1,194 @@
 import 'package:flutter/material.dart';
-
 import '../../app_routes.dart';
 import '../../widgets/live_clock.dart';
 
-/// Landing screen that mirrors the hero-style entry point from the React site.
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
-
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     return Scaffold(
       appBar: AppBar(
-        title: const Text('원주시 버스 종점 출발 시간'),
-        centerTitle: true,
-        elevation: 0,
-        backgroundColor: theme.colorScheme.primary,
-        foregroundColor: Colors.white,
+        title: const Text('원주버스'),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pushNamed(context, AppRoutes.buses),
+            child: const Text('노선 찾기'),
+          ),
+          const SizedBox(width: 8),
+        ],
       ),
       body: SafeArea(
         child: SingleChildScrollView(
-          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              _HeroBanner(theme: theme),
-              const SizedBox(height: 24),
-              _FeatureCards(theme: theme),
-              const SizedBox(height: 24),
-              _DataInfoCard(theme: theme),
-              const SizedBox(height: 24),
-              _Footer(theme: theme),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class _HeroBanner extends StatelessWidget {
-  const _HeroBanner({required this.theme});
-
-  final ThemeData theme;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        gradient: LinearGradient(
-          colors: [
-            theme.colorScheme.primary,
-            theme.colorScheme.primaryContainer,
-          ],
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-        ),
-        borderRadius: BorderRadius.circular(24),
-        boxShadow: [
-          BoxShadow(
-            color: theme.colorScheme.primary.withOpacity(0.35),
-            blurRadius: 28,
-            offset: const Offset(0, 12),
-          ),
-        ],
-      ),
-      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 28),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Text(
-            '원주시 버스 종점 출발 시간',
-            textAlign: TextAlign.center,
-            style: theme.textTheme.headlineSmall?.copyWith(
-              color: Colors.white,
-              fontWeight: FontWeight.bold,
+          padding: const EdgeInsets.all(20),
+          child: Center(
+            child: ConstrainedBox(
+              constraints: const BoxConstraints(maxWidth: 760),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Container(
+                    padding: const EdgeInsets.all(24),
+                    decoration: BoxDecoration(
+                      color: const Color(0xFF122D37),
+                      borderRadius: BorderRadius.circular(24),
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Text(
+                          'WONJU · DEPARTURES',
+                          style: TextStyle(
+                            color: Color(0xFFB9D5CF),
+                            fontSize: 12,
+                            letterSpacing: 1.4,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                        const Padding(
+                          padding: EdgeInsets.symmetric(vertical: 20),
+                          child: Divider(color: Color(0xFF3C555D), height: 1),
+                        ),
+                        Semantics(
+                          header: true,
+                          child: const Text(
+                            '다음 버스,\n몇 시에 출발할까요?',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 30,
+                              height: 1.3,
+                              letterSpacing: -1,
+                              fontWeight: FontWeight.w700,
+                            ),
+                          ),
+                        ),
+                        const SizedBox(height: 16),
+                        const Text(
+                          '출발할 종점이나 버스 번호를 선택하세요.\n오늘의 시간표와 남은 시간을 알려드려요.',
+                          style: TextStyle(
+                            color: Color(0xFFC3D3D5),
+                            fontSize: 14,
+                            height: 1.7,
+                          ),
+                        ),
+                        const SizedBox(height: 28),
+                        const Text(
+                          '현재 시각 · 한국',
+                          style: TextStyle(
+                            color: Color(0xFFB9D5CF),
+                            fontSize: 12,
+                          ),
+                        ),
+                        const LiveClock(onDark: true),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(height: 28),
+                  Semantics(
+                    header: true,
+                    child: Text(
+                      '시간표 찾기',
+                      style: theme.textTheme.titleLarge?.copyWith(
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 16),
+                  _Choice(
+                    number: '01',
+                    title: '종점으로 찾기',
+                    subtitle: '출발 장소별 버스를 확인하세요.',
+                    icon: Icons.place_outlined,
+                    onTap: () => Navigator.pushNamed(context, AppRoutes.stops),
+                  ),
+                  const SizedBox(height: 14),
+                  _Choice(
+                    number: '02',
+                    title: '노선 번호로 찾기',
+                    subtitle: '버스의 출발 시간을 확인하세요.',
+                    icon: Icons.directions_bus_outlined,
+                    onTap: () => Navigator.pushNamed(context, AppRoutes.buses),
+                  ),
+                  const SizedBox(height: 24),
+                  Container(
+                    padding: const EdgeInsets.all(20),
+                    decoration: BoxDecoration(
+                      color: const Color(0xFFEAF0ED),
+                      borderRadius: BorderRadius.circular(16),
+                    ),
+                    child: const Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          '공식 시간표를 모아두었어요',
+                          style: TextStyle(fontWeight: FontWeight.w700),
+                        ),
+                        SizedBox(height: 8),
+                        Text(
+                          '매주 월요일 시간표 업데이트\n연결이 끊겨도 저장된 시간표를 볼 수 있어요.\n남은 시간은 시간표 기준이며, 실시간 위치 정보는 아닙니다.',
+                          style: TextStyle(
+                            color: Color(0xFF4C655E),
+                            fontSize: 13,
+                            height: 1.8,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(height: 24),
+                  const Text(
+                    '원주시 ITS 시간표 기준\n도로 상황에 따라 실제 출발 시간이 달라질 수 있습니다.',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      color: Color(0xFF526970),
+                      fontSize: 12,
+                      height: 1.7,
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
-          const SizedBox(height: 12),
-          Text(
-            '원주시 버스의 종점 출발 시간을 확인하고 대기 시간을 실시간으로 파악해보세요.',
-            textAlign: TextAlign.center,
-            style: theme.textTheme.bodyMedium?.copyWith(
-              color: Colors.white.withOpacity(0.9),
-            ),
-          ),
-          const SizedBox(height: 24),
-          const LiveClock(),
-        ],
+        ),
       ),
     );
   }
 }
 
-class _FeatureCards extends StatelessWidget {
-  const _FeatureCards({required this.theme});
-
-  final ThemeData theme;
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        _FeatureCard(
-          icon: Icons.location_on_outlined,
-          title: '종점별 조회',
-          description: '출발지 종점별로 버스 노선을 조회하여 원하는 지역의 모든 정보를 확인하세요.',
-          onTap: () => Navigator.pushNamed(context, AppRoutes.stops),
-          theme: theme,
-        ),
-        const SizedBox(height: 12),
-        _FeatureCard(
-          icon: Icons.directions_bus_filled_outlined,
-          title: '노선별 조회',
-          description: '버스 노선별 시간표를 조회하여 특정 버스의 모든 출발 정보를 확인하세요.',
-          onTap: () => Navigator.pushNamed(context, AppRoutes.buses),
-          theme: theme,
-        ),
-      ],
-    );
-  }
-}
-
-class _FeatureCard extends StatelessWidget {
-  const _FeatureCard({
-    required this.icon,
+class _Choice extends StatelessWidget {
+  const _Choice({
+    required this.number,
     required this.title,
-    required this.description,
+    required this.subtitle,
+    required this.icon,
     required this.onTap,
-    required this.theme,
   });
-
+  final String number, title, subtitle;
   final IconData icon;
-  final String title;
-  final String description;
   final VoidCallback onTap;
-  final ThemeData theme;
-
   @override
-  Widget build(BuildContext context) {
-    return InkWell(
+  Widget build(BuildContext context) => Material(
+    color: Colors.white,
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(18),
+      side: const BorderSide(color: Color(0xFFDCE5E1)),
+    ),
+    child: InkWell(
       borderRadius: BorderRadius.circular(18),
       onTap: onTap,
-      child: Ink(
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(18),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withOpacity(0.08),
-              blurRadius: 16,
-              offset: const Offset(0, 10),
-            ),
-          ],
-        ),
+      child: Padding(
         padding: const EdgeInsets.all(20),
         child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Container(
-              decoration: BoxDecoration(
-                color: theme.colorScheme.primary.withOpacity(0.1),
-                borderRadius: BorderRadius.circular(14),
-              ),
-              padding: const EdgeInsets.all(12),
-              child: Icon(
-                icon,
-                size: 32,
-                color: theme.colorScheme.primary,
+            ExcludeSemantics(
+              child: Container(
+                padding: const EdgeInsets.all(12),
+                decoration: BoxDecoration(
+                  color: const Color(0xFFE7F3EE),
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: Icon(icon, color: const Color(0xFF086B64), size: 24),
               ),
             ),
             const SizedBox(width: 16),
@@ -176,110 +198,35 @@ class _FeatureCard extends StatelessWidget {
                 children: [
                   Text(
                     title,
-                    style: theme.textTheme.titleMedium?.copyWith(
-                      fontWeight: FontWeight.bold,
+                    style: const TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.w700,
+                      height: 1.4,
                     ),
                   ),
-                  const SizedBox(height: 8),
+                  const SizedBox(height: 6),
                   Text(
-                    description,
-                    style: theme.textTheme.bodyMedium?.copyWith(
-                      color: Colors.grey.shade700,
+                    subtitle,
+                    style: const TextStyle(
+                      color: Color(0xFF526970),
+                      fontSize: 13,
+                      height: 1.6,
                     ),
                   ),
                 ],
               ),
             ),
-            const Icon(Icons.chevron_right, color: Colors.grey),
+            const SizedBox(width: 8),
+            const ExcludeSemantics(
+              child: Icon(
+                Icons.arrow_forward,
+                size: 18,
+                color: Color(0xFF086B64),
+              ),
+            ),
           ],
         ),
       ),
-    );
-  }
-}
-
-class _DataInfoCard extends StatelessWidget {
-  const _DataInfoCard({required this.theme});
-
-  final ThemeData theme;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        color: theme.colorScheme.primary.withOpacity(0.05),
-        borderRadius: BorderRadius.circular(18),
-        border: Border.all(color: theme.colorScheme.primary.withOpacity(0.1)),
-      ),
-      padding: const EdgeInsets.all(16),
-      child: Row(
-        children: [
-          Container(
-            decoration: BoxDecoration(
-              color: theme.colorScheme.primary,
-              borderRadius: BorderRadius.circular(12),
-            ),
-            padding: const EdgeInsets.all(12),
-            child: const Icon(Icons.info_outline, color: Colors.white),
-          ),
-          const SizedBox(width: 12),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  '데이터 최신화 정보',
-                  style: theme.textTheme.titleMedium?.copyWith(
-                    fontWeight: FontWeight.bold,
-                    color: theme.colorScheme.primary,
-                  ),
-                ),
-                const SizedBox(height: 6),
-                Text(
-                  '모든 버스 시간표 정보는 2025년 10월 10일 기준입니다.\n정기 업데이트: 매년 노선 개편 후',
-                  style: theme.textTheme.bodyMedium?.copyWith(
-                    color: Colors.grey.shade700,
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class _Footer extends StatelessWidget {
-  const _Footer({required this.theme});
-
-  final ThemeData theme;
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Text(
-          '© 2025 원주시 버스 종점 정보 서비스',
-          style: theme.textTheme.bodySmall?.copyWith(color: Colors.grey),
-        ),
-        const SizedBox(height: 6),
-        Text(
-          '@kmsk99',
-          style: theme.textTheme.bodySmall?.copyWith(
-            color: theme.colorScheme.primary,
-            decoration: TextDecoration.underline,
-          ),
-        ),
-        const SizedBox(height: 6),
-        Text(
-          '엄마를 위해 만든 서비스',
-          style: theme.textTheme.bodySmall?.copyWith(
-            color: Colors.grey.withOpacity(0.4),
-            fontStyle: FontStyle.italic,
-          ),
-        ),
-      ],
-    );
-  }
+    ),
+  );
 }

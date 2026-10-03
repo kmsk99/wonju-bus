@@ -16,19 +16,43 @@ class WonjuBusApp extends StatelessWidget {
       title: '원주 버스 시간표',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xFF1976D2)),
-        scaffoldBackgroundColor: const Color(0xFFF4F6FA),
+        colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xFF086B64)),
+        scaffoldBackgroundColor: const Color(0xFFF5F7F6),
         useMaterial3: true,
+        textTheme: const TextTheme(
+          bodyLarge: TextStyle(
+            fontSize: 16,
+            height: 1.6,
+            color: Color(0xFF17343D),
+          ),
+          bodyMedium: TextStyle(
+            fontSize: 14,
+            height: 1.6,
+            color: Color(0xFF17343D),
+          ),
+          titleLarge: TextStyle(
+            fontSize: 22,
+            fontWeight: FontWeight.w700,
+            color: Color(0xFF17343D),
+          ),
+        ),
+        inputDecorationTheme: InputDecorationTheme(
+          filled: true,
+          fillColor: Colors.white,
+          contentPadding: const EdgeInsets.all(16),
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(14),
+            borderSide: const BorderSide(color: Color(0xFFDCE5E1)),
+          ),
+        ),
         appBarTheme: const AppBarTheme(
           backgroundColor: Colors.white,
           foregroundColor: Colors.black87,
           elevation: 0,
-          centerTitle: true,
+          centerTitle: false,
         ),
         textButtonTheme: TextButtonThemeData(
-          style: TextButton.styleFrom(
-            foregroundColor: const Color(0xFF1976D2),
-          ),
+          style: TextButton.styleFrom(foregroundColor: const Color(0xFF086B64)),
         ),
       ),
       initialRoute: AppRoutes.home,
@@ -81,9 +105,7 @@ class _UnknownRouteScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text('페이지를 찾을 수 없습니다')),
-      body: const Center(
-        child: Text('요청하신 페이지가 존재하지 않습니다.'),
-      ),
+      body: const Center(child: Text('요청하신 페이지가 존재하지 않습니다.')),
     );
   }
 }

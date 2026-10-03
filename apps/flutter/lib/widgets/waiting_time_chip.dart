@@ -23,7 +23,7 @@ class WaitingTimeChip extends StatelessWidget {
         borderRadius: BorderRadius.circular(12),
         boxShadow: [
           BoxShadow(
-            color: style.background.withOpacity(0.35),
+            color: style.background.withValues(alpha: 0.35),
             blurRadius: 8,
             offset: const Offset(0, 4),
           ),
@@ -33,11 +33,7 @@ class WaitingTimeChip extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           if (style.icon != null) ...[
-            Icon(
-              style.icon,
-              size: 16,
-              color: style.foreground,
-            ),
+            Icon(style.icon, size: 16, color: style.foreground),
             const SizedBox(width: 6),
           ],
           Text(

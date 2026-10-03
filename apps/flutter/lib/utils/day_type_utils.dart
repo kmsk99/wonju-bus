@@ -23,8 +23,9 @@ BusFileInfo parseBusFileName(String fileName) {
   final withoutPrefix = fileName.replaceFirst(RegExp(r'^wonju-bus-'), '');
   final withoutExtension = withoutPrefix.replaceFirst('.json', '');
 
-  final match =
-      RegExp(r'^(.*?)(?:\((.*?)\))?$').firstMatch(withoutExtension.trim());
+  final match = RegExp(
+    r'^(.*?)(?:\((.*?)\))?$',
+  ).firstMatch(withoutExtension.trim());
 
   final routeNumber = match?.group(1)?.trim() ?? withoutExtension.trim();
   final dayTypeGroup = match?.group(2)?.trim();
@@ -47,8 +48,10 @@ bool isDayTypeMatch(
   }
 
   final groupDayTypes = getDayTypesFromGroup(dayTypeGroup);
-  final currentDayTypes =
-      getCurrentDayTypes(isVacation: isVacation, isHoliday: isHoliday);
+  final currentDayTypes = getCurrentDayTypes(
+    isVacation: isVacation,
+    isHoliday: isHoliday,
+  );
 
   return currentDayTypes.any(groupDayTypes.contains);
 }
@@ -91,10 +94,7 @@ List<DayType> getCurrentDayTypes({
 }
 
 /// Parses human-readable day type text for display.
-String generateDayTypeText({
-  bool isVacation = false,
-  bool isHoliday = false,
-}) {
+String generateDayTypeText({bool isVacation = false, bool isHoliday = false}) {
   final now = DateTime.now();
   final dayOfWeek = now.weekday;
 

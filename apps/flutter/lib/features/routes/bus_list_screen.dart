@@ -48,10 +48,7 @@ class _BusListScreenState extends State<BusListScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('원주 버스 노선'),
-        centerTitle: true,
-      ),
+      appBar: AppBar(title: const Text('원주 버스 노선'), centerTitle: true),
       body: SafeArea(
         child: Column(
           children: [
@@ -87,8 +84,9 @@ class _BusListScreenState extends State<BusListScreen> {
                   final routes = snapshot.data ?? [];
                   final filtered = routes
                       .where(
-                        (route) =>
-                            route.toLowerCase().contains(_searchText.toLowerCase()),
+                        (route) => route.toLowerCase().contains(
+                          _searchText.toLowerCase(),
+                        ),
                       )
                       .toList();
 
@@ -98,17 +96,12 @@ class _BusListScreenState extends State<BusListScreen> {
                     );
                   }
 
-                  return GridView.builder(
+                  return ListView.separated(
                     padding: const EdgeInsets.symmetric(
                       horizontal: 16,
                       vertical: 8,
                     ),
-                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2,
-                      mainAxisSpacing: 12,
-                      crossAxisSpacing: 12,
-                      childAspectRatio: 1.05,
-                    ),
+                    separatorBuilder: (_, index) => const SizedBox(height: 12),
                     itemCount: filtered.length,
                     itemBuilder: (context, index) {
                       final routeNumber = filtered[index];
@@ -139,10 +132,12 @@ class _BusListScreenState extends State<BusListScreen> {
         suffixIcon: _searchText.isEmpty
             ? null
             : IconButton(
+                tooltip: '검색 지우기',
                 icon: const Icon(Icons.clear),
                 onPressed: _searchController.clear,
               ),
-        hintText: '노선 번호 검색...',
+        labelText: '버스 번호',
+        hintText: '예: 2, 16, 100',
         filled: true,
         fillColor: Colors.white,
         border: OutlineInputBorder(
@@ -155,10 +150,7 @@ class _BusListScreenState extends State<BusListScreen> {
 }
 
 class _RouteCard extends StatelessWidget {
-  const _RouteCard({
-    required this.routeNumber,
-    required this.onTap,
-  });
+  const _RouteCard({required this.routeNumber, required this.onTap});
 
   final String routeNumber;
   final VoidCallback onTap;
@@ -175,42 +167,48 @@ class _RouteCard extends StatelessWidget {
           borderRadius: BorderRadius.circular(16),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(0.08),
+              color: Colors.black.withValues(alpha: 0.08),
               blurRadius: 16,
               offset: const Offset(0, 8),
             ),
           ],
         ),
         padding: const EdgeInsets.all(16),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+        child: Row(
           children: [
             Container(
               padding: const EdgeInsets.all(12),
               decoration: BoxDecoration(
-                color: theme.colorScheme.primary.withOpacity(0.12),
-                shape: BoxShape.circle,
+                color: theme.colorScheme.primary.withValues(alpha: 0.1),
+                borderRadius: BorderRadius.circular(12),
               ),
               child: Icon(
-                Icons.directions_bus,
+                Icons.directions_bus_outlined,
                 color: theme.colorScheme.primary,
               ),
             ),
-            const SizedBox(height: 12),
-            Text(
-              routeNumber,
-              textAlign: TextAlign.center,
-              style: theme.textTheme.titleLarge?.copyWith(
-                fontWeight: FontWeight.bold,
+            const SizedBox(width: 16),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    routeNumber,
+                    style: theme.textTheme.titleLarge?.copyWith(
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
+                  const SizedBox(height: 4),
+                  Text(
+                    '출발 시간표 보기',
+                    style: theme.textTheme.bodySmall?.copyWith(
+                      color: theme.colorScheme.primary,
+                    ),
+                  ),
+                ],
               ),
             ),
-            const SizedBox(height: 8),
-            Text(
-              '상세 정보 보기',
-              style: theme.textTheme.bodySmall?.copyWith(
-                color: theme.colorScheme.primary,
-              ),
-            ),
+            const Icon(Icons.chevron_right),
           ],
         ),
       ),
@@ -231,16 +229,18 @@ class _EmptyState extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Icon(Icons.sentiment_dissatisfied,
-                size: 48, color: Colors.grey.shade400),
+            Icon(
+              Icons.sentiment_dissatisfied,
+              size: 48,
+              color: Colors.grey.shade400,
+            ),
             const SizedBox(height: 16),
             Text(
               message,
               textAlign: TextAlign.center,
-              style: Theme.of(context)
-                  .textTheme
-                  .bodyMedium
-                  ?.copyWith(color: Colors.grey.shade600),
+              style: Theme.of(
+                context,
+              ).textTheme.bodyMedium?.copyWith(color: Colors.grey.shade600),
             ),
           ],
         ),
@@ -264,16 +264,12 @@ class _ErrorState extends StatelessWidget {
           Text(
             message,
             textAlign: TextAlign.center,
-            style: Theme.of(context)
-                .textTheme
-                .bodyMedium
-                ?.copyWith(color: Colors.redAccent),
+            style: Theme.of(
+              context,
+            ).textTheme.bodyMedium?.copyWith(color: Colors.redAccent),
           ),
           const SizedBox(height: 12),
-          ElevatedButton(
-            onPressed: onRetry,
-            child: const Text('다시 시도'),
-          ),
+          ElevatedButton(onPressed: onRetry, child: const Text('다시 시도')),
         ],
       ),
     );

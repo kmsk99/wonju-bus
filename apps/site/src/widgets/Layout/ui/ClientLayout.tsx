@@ -1,66 +1,21 @@
-"use client";
-
-import Link from "next/link";
-import { useEffect, useState } from "react";
+'use client';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 
 export function ClientLayout({ children }: { children: React.ReactNode }) {
-  const [scrolled, setScrolled] = useState(false);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      const isScrolled = window.scrollY > 10;
-      if (isScrolled !== scrolled) {
-        setScrolled(isScrolled);
-      }
-    };
-
-    // 이벤트 리스너 등록
-    window.addEventListener("scroll", handleScroll);
-
-    // 초기 스크롤 위치 확인
-    handleScroll();
-
-    // 클린업 함수
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, [scrolled]);
-
-  return (
-    <div className="min-h-screen bg-gray-50">
-      <header
-        className={`bg-primary text-white p-3 sticky top-0 z-50 shadow-lg transition-all duration-300 ${
-          scrolled ? "py-1.5 bg-opacity-95 backdrop-blur-sm" : "py-3"
-        }`}
-      >
-        <div className="container mx-auto px-3">
-          <Link
-            href="/"
-            className="group flex items-center hover:text-blue-100 transition-colors"
-          >
-            <svg
-              className="h-6 w-6 mr-2 text-white group-hover:scale-110 transition-transform"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M8 4H6a2 2 0 00-2 2v12a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-2m-4-1v8m0 0l-4-4m4 4l4-4"
-              />
-            </svg>
-            <h1 className="text-xl font-bold">원주시 버스 종점 정보</h1>
-          </Link>
-        </div>
-      </header>
-      <main className="container mx-auto p-3 relative z-10">{children}</main>
-      <footer className="bg-gray-100 py-3 mt-8 text-xs">
-        <div className="container mx-auto text-center text-gray-600 px-3">
-          <p>© 2025 원주시 버스 종점 정보 서비스</p>
-        </div>
-      </footer>
-    </div>
-  );
+  const pathname = usePathname();
+  return <div className="site-shell">
+    <a href="#main-content" className="skip-link">본문으로 이동</a>
+    <header className="site-header">
+      <div className="header-inner">
+        <Link href="/" className="wordmark"><span className="brand-mark" aria-hidden="true">W</span><span>원주버스<span className="brand-caption">종점 출발 시간표</span></span></Link>
+        <nav aria-label="주 메뉴">
+          <Link href="/stops" aria-current={pathname.startsWith('/stops') ? 'page' : undefined}>종점 찾기</Link>
+          <Link href="/buses" aria-current={pathname.startsWith('/buses') ? 'page' : undefined}>노선 찾기</Link>
+        </nav>
+      </div>
+    </header>
+    <main id="main-content" className="site-main">{children}</main>
+    <footer className="site-footer"><span>원주시 ITS 시간표 기준</span><span>도로 상황에 따라 실제 출발 시간이 달라질 수 있습니다.</span></footer>
+  </div>;
 }

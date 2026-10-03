@@ -39,10 +39,7 @@ class _StopsScreenState extends State<StopsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('원주 버스 종점'),
-        centerTitle: true,
-      ),
+      appBar: AppBar(title: const Text('원주 버스 종점'), centerTitle: true),
       body: SafeArea(
         child: Column(
           children: [
@@ -62,9 +59,7 @@ class _StopsScreenState extends State<StopsScreen> {
                 future: _stopsFuture,
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
-                    return const Center(
-                      child: CircularProgressIndicator(),
-                    );
+                    return const Center(child: CircularProgressIndicator());
                   }
 
                   if (snapshot.hasError) {
@@ -81,8 +76,9 @@ class _StopsScreenState extends State<StopsScreen> {
                   final stops = snapshot.data ?? [];
                   final filtered = stops
                       .where(
-                        (name) =>
-                            name.toLowerCase().contains(_searchText.toLowerCase()),
+                        (name) => name.toLowerCase().contains(
+                          _searchText.toLowerCase(),
+                        ),
                       )
                       .toList();
 
@@ -91,13 +87,17 @@ class _StopsScreenState extends State<StopsScreen> {
                   }
 
                   return ListView.separated(
-                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 16,
+                      vertical: 8,
+                    ),
                     itemCount: filtered.length,
                     separatorBuilder: (_, __) => const SizedBox(height: 12),
                     itemBuilder: (context, index) {
                       final stopName = filtered[index];
-                      final routeCount =
-                          _repository.getRouteCountForTerminal(stopName);
+                      final routeCount = _repository.getRouteCountForTerminal(
+                        stopName,
+                      );
                       return TerminalCard(
                         name: stopName,
                         routeCount: routeCount,
@@ -126,12 +126,14 @@ class _StopsScreenState extends State<StopsScreen> {
         suffixIcon: _searchText.isEmpty
             ? null
             : IconButton(
+                tooltip: '검색 지우기',
                 icon: const Icon(Icons.clear),
                 onPressed: () {
                   _searchController.clear();
                 },
               ),
-        hintText: '종점 이름 검색...',
+        labelText: '출발 종점',
+        hintText: '예: 관설동, 장양리',
         filled: true,
         fillColor: Colors.white,
         border: OutlineInputBorder(
@@ -153,20 +155,16 @@ class _EmptyState extends StatelessWidget {
     return Center(
       child: Text(
         message,
-        style: Theme.of(context)
-            .textTheme
-            .bodyMedium
-            ?.copyWith(color: Colors.grey.shade600),
+        style: Theme.of(
+          context,
+        ).textTheme.bodyMedium?.copyWith(color: Colors.grey.shade600),
       ),
     );
   }
 }
 
 class _ErrorState extends StatelessWidget {
-  const _ErrorState({
-    required this.message,
-    required this.onRetry,
-  });
+  const _ErrorState({required this.message, required this.onRetry});
 
   final String message;
   final VoidCallback onRetry;
@@ -180,16 +178,12 @@ class _ErrorState extends StatelessWidget {
           Text(
             message,
             textAlign: TextAlign.center,
-            style: Theme.of(context)
-                .textTheme
-                .bodyMedium
-                ?.copyWith(color: Colors.redAccent),
+            style: Theme.of(
+              context,
+            ).textTheme.bodyMedium?.copyWith(color: Colors.redAccent),
           ),
           const SizedBox(height: 12),
-          ElevatedButton(
-            onPressed: onRetry,
-            child: const Text('다시 시도'),
-          ),
+          ElevatedButton(onPressed: onRetry, child: const Text('다시 시도')),
         ],
       ),
     );

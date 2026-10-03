@@ -45,7 +45,9 @@ export default function StopsPage() {
       </div>
 
       <div className="mb-4">
+        <label htmlFor="stop-search" className="block mb-2 text-sm font-semibold">출발 종점</label>
         <input
+          id="stop-search"
           type="text"
           placeholder="종점 이름 검색..."
           className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"

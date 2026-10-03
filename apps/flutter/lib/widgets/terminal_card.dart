@@ -27,7 +27,7 @@ class TerminalCard extends StatelessWidget {
           border: Border.all(color: Colors.grey.shade200),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(0.05),
+              color: Colors.black.withValues(alpha: 0.05),
               blurRadius: 12,
               offset: const Offset(0, 6),
             ),
@@ -37,7 +37,7 @@ class TerminalCard extends StatelessWidget {
           children: [
             Container(
               decoration: BoxDecoration(
-                color: theme.colorScheme.primary.withOpacity(0.12),
+                color: theme.colorScheme.primary.withValues(alpha: 0.12),
                 borderRadius: BorderRadius.circular(12),
               ),
               padding: const EdgeInsets.all(10),
@@ -59,9 +59,7 @@ class TerminalCard extends StatelessWidget {
                   ),
                   const SizedBox(height: 6),
                   Text(
-                    routeCount > 0
-                        ? '연결 노선: $routeCount개'
-                        : '노선 정보 없음',
+                    routeCount > 0 ? '연결 노선: $routeCount개' : '노선 정보 없음',
                     style: theme.textTheme.bodyMedium?.copyWith(
                       color: Colors.grey.shade600,
                     ),

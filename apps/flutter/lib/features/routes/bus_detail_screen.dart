@@ -8,10 +8,7 @@ import '../../models/bus_models.dart';
 import '../../widgets/live_clock.dart';
 
 class BusDetailScreen extends StatefulWidget {
-  const BusDetailScreen({
-    super.key,
-    required this.routeNumber,
-  });
+  const BusDetailScreen({super.key, required this.routeNumber});
 
   final String routeNumber;
 
@@ -70,8 +67,9 @@ class _BusDetailScreenState extends State<BusDetailScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final routeNumber =
-        widget.routeNumber.isEmpty ? '노선 상세' : widget.routeNumber;
+    final routeNumber = widget.routeNumber.isEmpty
+        ? '노선 상세'
+        : widget.routeNumber;
     return Scaffold(
       appBar: AppBar(
         title: Text(routeNumber),
@@ -101,9 +99,7 @@ class _BusDetailScreenState extends State<BusDetailScreen> {
 
             final data = snapshot.data;
             if (data == null) {
-              return const _EmptyState(
-                message: '노선 정보를 찾을 수 없습니다.',
-              );
+              return const _EmptyState(message: '노선 정보를 찾을 수 없습니다.');
             }
 
             final activeTab = _activeTab ?? data.defaultTab;
@@ -143,8 +139,8 @@ class _BusDetailScreenState extends State<BusDetailScreen> {
                       child: Text(
                         '운행 시간표 ($activeTab)',
                         style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                              fontWeight: FontWeight.bold,
-                            ),
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                     );
                   }
@@ -179,35 +175,34 @@ class _BusDetailScreenState extends State<BusDetailScreen> {
     List<BusOperationInfo> operations,
     String activeTab,
   ) {
-    final list = operations.where((op) {
-      if (activeTab == '공통') {
-        return op.category.trim() == activeTab;
-      }
-      if (activeTab == '평일') {
-        return op.category.trim() == activeTab || op.category.trim() == '공통';
-      }
-      return op.category.trim() == activeTab;
-    }).toList()
-      ..sort(
-        (a, b) => _parseOperationNumber(a.operationNumber)
-            .compareTo(_parseOperationNumber(b.operationNumber)),
-      );
+    final list =
+        operations.where((op) {
+          if (activeTab == '공통') {
+            return op.category.trim() == activeTab;
+          }
+          if (activeTab == '평일') {
+            return op.category.trim() == activeTab ||
+                op.category.trim() == '공통';
+          }
+          return op.category.trim() == activeTab;
+        }).toList()..sort(
+          (a, b) => _parseOperationNumber(
+            a.operationNumber,
+          ).compareTo(_parseOperationNumber(b.operationNumber)),
+        );
 
     if (list.isEmpty && activeTab != '공통') {
       // fallback to all operations
-      return operations.toList()
-        ..sort(
-          (a, b) => _parseOperationNumber(a.operationNumber)
-              .compareTo(_parseOperationNumber(b.operationNumber)),
-        );
+      return operations.toList()..sort(
+        (a, b) => _parseOperationNumber(
+          a.operationNumber,
+        ).compareTo(_parseOperationNumber(b.operationNumber)),
+      );
     }
     return list;
   }
 
-  OperationStatus _operationStatus(
-    BusOperationInfo operation,
-    DateTime now,
-  ) {
+  OperationStatus _operationStatus(BusOperationInfo operation, DateTime now) {
     final departureTime = _parseTime(operation.departureTime, now);
     final arrivalTime = _parseTime(operation.arrivalTime, now);
 
@@ -244,9 +239,9 @@ class _HeaderSection extends StatelessWidget {
         const SizedBox(height: 12),
         Text(
           '현재 시간: ${_formatTime(currentTime)}',
-          style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                color: Colors.grey.shade600,
-              ),
+          style: Theme.of(
+            context,
+          ).textTheme.bodyMedium?.copyWith(color: Colors.grey.shade600),
         ),
         const SizedBox(height: 16),
       ],
@@ -278,7 +273,7 @@ class _RouteInfoCard extends StatelessWidget {
         border: Border.all(color: Colors.grey.shade200),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.05),
+            color: Colors.black.withValues(alpha: 0.05),
             blurRadius: 12,
             offset: const Offset(0, 6),
           ),
@@ -303,12 +298,7 @@ class _RouteInfoCard extends StatelessWidget {
                 spacing: 12,
                 runSpacing: 12,
                 children: items
-                    .map(
-                      (item) => SizedBox(
-                        width: itemWidth,
-                        child: item,
-                      ),
-                    )
+                    .map((item) => SizedBox(width: itemWidth, child: item))
                     .toList(),
               );
             },
@@ -332,16 +322,16 @@ class _RouteInfoItem extends StatelessWidget {
       children: [
         Text(
           label,
-          style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                color: Colors.grey.shade600,
-              ),
+          style: Theme.of(
+            context,
+          ).textTheme.bodySmall?.copyWith(color: Colors.grey.shade600),
         ),
         const SizedBox(height: 4),
         Text(
           value.isEmpty ? '-' : value,
-          style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                fontWeight: FontWeight.w600,
-              ),
+          style: Theme.of(
+            context,
+          ).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w600),
         ),
       ],
     );
@@ -428,7 +418,7 @@ class _OperationCardState extends State<_OperationCard> {
         boxShadow: [
           if (widget.status == OperationStatus.current)
             BoxShadow(
-              color: statusColor.withOpacity(0.25),
+              color: statusColor.withValues(alpha: 0.25),
               blurRadius: 16,
               offset: const Offset(0, 6),
             ),
@@ -460,7 +450,7 @@ class _OperationCardState extends State<_OperationCard> {
                           vertical: 6,
                         ),
                         decoration: BoxDecoration(
-                          color: statusColor.withOpacity(0.12),
+                          color: statusColor.withValues(alpha: 0.12),
                           borderRadius: BorderRadius.circular(12),
                         ),
                         child: Text(
@@ -533,10 +523,7 @@ class _OperationCardState extends State<_OperationCard> {
                   spacing: 12,
                   runSpacing: 8,
                   children: [
-                    _DetailChip(
-                      icon: Icons.schedule,
-                      label: widget.travelTime,
-                    ),
+                    _DetailChip(icon: Icons.schedule, label: widget.travelTime),
                     _DetailChip(
                       icon: Icons.category_outlined,
                       label: op.category.isEmpty ? '카테고리 없음' : op.category,
@@ -583,7 +570,7 @@ class _StopInfoRow extends StatelessWidget {
         Container(
           padding: const EdgeInsets.all(10),
           decoration: BoxDecoration(
-            color: theme.colorScheme.primary.withOpacity(0.12),
+            color: theme.colorScheme.primary.withValues(alpha: 0.12),
             borderRadius: BorderRadius.circular(12),
           ),
           child: Icon(icon, color: theme.colorScheme.primary),
@@ -603,10 +590,10 @@ class _StopInfoRow extends StatelessWidget {
               GestureDetector(
                 onTap: canNavigate
                     ? () => Navigator.pushNamed(
-                          context,
-                          AppRoutes.stopDetail,
-                          arguments: stopName,
-                        )
+                        context,
+                        AppRoutes.stopDetail,
+                        arguments: stopName,
+                      )
                     : null,
                 child: Text(
                   canNavigate ? stopName : '정보 없음',
@@ -640,10 +627,7 @@ class _StopInfoRow extends StatelessWidget {
 }
 
 class _DetailChip extends StatelessWidget {
-  const _DetailChip({
-    required this.icon,
-    required this.label,
-  });
+  const _DetailChip({required this.icon, required this.label});
 
   final IconData icon;
   final String label;
@@ -687,10 +671,9 @@ class _EmptyState extends StatelessWidget {
         child: Text(
           message,
           textAlign: TextAlign.center,
-          style: Theme.of(context)
-              .textTheme
-              .bodyMedium
-              ?.copyWith(color: Colors.grey.shade600),
+          style: Theme.of(
+            context,
+          ).textTheme.bodyMedium?.copyWith(color: Colors.grey.shade600),
         ),
       ),
     );
@@ -714,10 +697,9 @@ class _ErrorState extends StatelessWidget {
             Text(
               message,
               textAlign: TextAlign.center,
-              style: Theme.of(context)
-                  .textTheme
-                  .bodyMedium
-                  ?.copyWith(color: Colors.redAccent),
+              style: Theme.of(
+                context,
+              ).textTheme.bodyMedium?.copyWith(color: Colors.redAccent),
             ),
             const SizedBox(height: 12),
             ElevatedButton.icon(
@@ -752,20 +734,14 @@ List<String> _extractCategories(BusData busData) {
       .where((category) => category.isNotEmpty)
       .toSet()
       .toList();
-  categories.sort((a, b) => _categoryPriority(a).compareTo(_categoryPriority(b)));
+  categories.sort(
+    (a, b) => _categoryPriority(a).compareTo(_categoryPriority(b)),
+  );
   return categories;
 }
 
 String _chooseDefaultCategory(List<String> categories) {
-  const priority = [
-    '평일',
-    '공통',
-    '토요일',
-    '일요일',
-    '공휴일',
-    '휴일',
-    '방학',
-  ];
+  const priority = ['평일', '공통', '토요일', '일요일', '공휴일', '휴일', '방학'];
 
   for (final item in priority) {
     if (categories.contains(item)) {
@@ -853,7 +829,7 @@ String _calculateTravelTime(String departureTime, String arrivalTime) {
   if (hours == 0) {
     return '$minutes분 소요';
   }
-  return '$hours시간 ${minutes}분 소요';
+  return '$hours시간 $minutes분 소요';
 }
 
 int _parseOperationNumber(String value) {

@@ -77,6 +77,7 @@ export default function BusListPage() {
       </div>
 
       <div className="mb-6 max-w-lg mx-auto">
+        <label htmlFor="route-search" className="block mb-2 text-sm font-semibold">버스 번호</label>
         <div className="relative">
           <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
             <svg
@@ -94,6 +95,8 @@ export default function BusListPage() {
             </svg>
           </div>
           <input
+            id="route-search"
+            aria-label="버스 노선 번호 검색"
             ref={searchInputRef}
             type="text"
             placeholder="노선 번호 검색..."
@@ -103,6 +106,7 @@ export default function BusListPage() {
           />
           {searchTerm && (
             <button
+              aria-label="노선 검색 지우기"
               onClick={clearSearch}
               className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-gray-600"
             >

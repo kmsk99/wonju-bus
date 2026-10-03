@@ -1,28 +1,25 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 
-/// Displays a digital clock that updates every second.
 class LiveClock extends StatefulWidget {
-  const LiveClock({super.key});
-
+  const LiveClock({super.key, this.onDark = false});
+  final bool onDark;
   @override
   State<LiveClock> createState() => _LiveClockState();
 }
 
 class _LiveClockState extends State<LiveClock> {
-  late DateTime _currentTime;
+  DateTime _time = DateTime.now().toUtc().add(const Duration(hours: 9));
   Timer? _timer;
-
   @override
   void initState() {
     super.initState();
-    _currentTime = DateTime.now();
-    _timer = Timer.periodic(const Duration(seconds: 1), (_) {
-      setState(() {
-        _currentTime = DateTime.now();
-      });
-    });
+    _timer = Timer.periodic(
+      const Duration(seconds: 1),
+      (_) => setState(() {
+        _time = DateTime.now().toUtc().add(const Duration(hours: 9));
+      }),
+    );
   }
 
   @override
@@ -33,58 +30,25 @@ class _LiveClockState extends State<LiveClock> {
 
   @override
   Widget build(BuildContext context) {
-    final hours = _currentTime.hour.toString().padLeft(2, '0');
-    final minutes = _currentTime.minute.toString().padLeft(2, '0');
-    final seconds = _currentTime.second.toString().padLeft(2, '0');
-
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-      decoration: BoxDecoration(
-        color: Colors.black.withOpacity(0.7),
-        borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: Colors.white.withOpacity(0.2)),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.3),
-            blurRadius: 8,
-            offset: const Offset(0, 4),
+    final text = [
+      _time.hour,
+      _time.minute,
+      _time.second,
+    ].map((n) => n.toString().padLeft(2, '0')).join(':');
+    return Semantics(
+      label: '현재 한국 시각 $text',
+      child: ExcludeSemantics(
+        child: Text(
+          text,
+          style: TextStyle(
+            color: widget.onDark
+                ? const Color(0xFFF7D88C)
+                : const Color(0xFF17343D),
+            fontSize: 38,
+            fontWeight: FontWeight.w600,
+            height: 1.5,
+            fontFeatures: const [FontFeature.tabularFigures()],
           ),
-        ],
-      ),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          _buildTimeSegment(hours),
-          _buildSeparator(),
-          _buildTimeSegment(minutes),
-          _buildSeparator(),
-          _buildTimeSegment(seconds),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildTimeSegment(String value) {
-    return Text(
-      value,
-      style: const TextStyle(
-        color: Colors.white,
-        fontSize: 28,
-        fontWeight: FontWeight.bold,
-        letterSpacing: 1.2,
-      ),
-    );
-  }
-
-  Widget _buildSeparator() {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 2),
-      child: Text(
-        ':',
-        style: TextStyle(
-          color: Colors.yellowAccent.shade200,
-          fontSize: 28,
-          fontWeight: FontWeight.bold,
         ),
       ),
     );
