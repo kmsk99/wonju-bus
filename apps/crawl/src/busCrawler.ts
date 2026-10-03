@@ -23,6 +23,7 @@ export interface CrawlerOptions {
   timeout?: number;
   outputDirs?: string[];
   maxRetries?: number;
+  concurrency?: number;
   throttleMs?: number;
 }
 
@@ -40,6 +41,7 @@ export class WonjuBusCrawler {
   private readonly outputDirs: string[];
   private readonly maxRetries: number;
   private readonly throttleMs: number;
+  private readonly concurrency: number;
 
   constructor(options: CrawlerOptions = {}) {
     const fallbackOutputDir = path.join(process.cwd(), "data");
@@ -50,7 +52,8 @@ export class WonjuBusCrawler {
 
     this.outputDirs = configuredDirs.map((dir) => path.resolve(dir));
     this.maxRetries = Math.max(1, options.maxRetries ?? DEFAULT_MAX_RETRIES);
-    this.throttleMs = Math.max(0, options.throttleMs ?? 0);
+    this.throttleMs = Math.max(0, options.throttleMs ?? 150);
+    this.concurrency = Math.max(1, Math.min(4, options.concurrency ?? 3));
   }
 
   async getBusRouteNumbers(): Promise<BusRouteInfo[]> {
@@ -84,51 +87,33 @@ export class WonjuBusCrawler {
     const totalRoutes = routeInfoList.length;
     console.log(`총 ${totalRoutes}개의 버스 노선 정보를 크롤링합니다...`);
 
+    if (!totalRoutes) throw new Error('노선 목록이 비어 있습니다');
+    let cursor = 0;
     let completed = 0;
-    for (const routeInfo of routeInfoList) {
-      completed += 1;
-
-      let busInfo: BusInfo | null = null;
-      for (let attempt = 1; attempt <= this.maxRetries; attempt++) {
-        busInfo = await this.fetchBusDetail(
-          routeInfo.routeNumber,
-          routeInfo
-        );
+    const worker = async () => {
+      while (cursor < totalRoutes) {
+        const routeInfo = routeInfoList[cursor++];
+        let busInfo: BusInfo | null = null;
+        for (let attempt = 1; attempt <= this.maxRetries; attempt++) {
+          busInfo = await this.fetchBusDetail(routeInfo.routeNumber, routeInfo);
+          if (busInfo) break;
+          if (attempt < this.maxRetries) {
+            await this.delay(RETRY_DELAY_MS * 2 ** (attempt - 1) + Math.floor(Math.random() * 250));
+          }
+        }
         if (busInfo) {
-          break;
+          const number = busInfo.routeInfo.routeNumber;
+          results[number] = busInfo;
+          savedFiles.push(this.saveBusInfoToJson(number, busInfo));
+        } else {
+          failedRoutes.push(routeInfo.routeNumber);
         }
-
-        console.warn(
-          `[재시도] ${routeInfo.routeNumber} 노선 ${attempt}차 시도 실패`
-        );
-        if (attempt < this.maxRetries) {
-          await this.delay(Math.max(RETRY_DELAY_MS, this.throttleMs));
-        }
-      }
-
-      if (busInfo) {
-        const normalizedRouteNumber = busInfo.routeInfo.routeNumber;
-        results[normalizedRouteNumber] = busInfo;
-        const fileName = this.saveBusInfoToJson(
-          normalizedRouteNumber,
-          busInfo
-        );
-        savedFiles.push(fileName);
-
-        console.log(
-          `[${completed}/${totalRoutes}] ${normalizedRouteNumber} 노선 정보 크롤링 완료`
-        );
-      } else {
-        failedRoutes.push(routeInfo.routeNumber);
-        console.error(
-          `[${completed}/${totalRoutes}] ${routeInfo.routeNumber} 노선 정보 크롤링 실패`
-        );
-      }
-
-      if (this.throttleMs > 0) {
+        completed++;
+        if (completed % 20 === 0 || completed === totalRoutes) console.log(`시간표 수집 ${completed}/${totalRoutes}`);
         await this.delay(this.throttleMs);
       }
-    }
+    };
+    await Promise.all(Array.from({ length: this.concurrency }, () => worker()));
 
     this.writeAggregatedOutputs(results, savedFiles);
 

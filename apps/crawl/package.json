@@ -12,7 +12,9 @@
     "test:multi": "ts-node src/testMultipleRoutes.ts",
     "test:route": "ts-node src/testCrawlRoute.ts",
     "sync-site-data": "ts-node src/syncSiteData.ts",
-    "test:session": "ts-node --prefer-ts-exts src/testSession.ts"
+    "test:session": "ts-node --prefer-ts-exts src/testSession.ts",
+    "publish-data": "ts-node src/syncSiteData.ts --publish",
+    "db:migrate": "ts-node src/database.ts"
   },
   "keywords": [
     "wonju",
@@ -28,6 +30,7 @@
     "typescript": "^5.8.2"
   },
   "dependencies": {
+    "@neondatabase/serverless": "^1.2.0",
     "cheerio": "^1.2.0"
   }
 }

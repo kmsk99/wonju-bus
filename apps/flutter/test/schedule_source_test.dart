@@ -19,7 +19,7 @@ void main() {
   test('online snapshot is cached and used offline', () async {
     final online = ScheduleSource(
       client: MockClient((request) async {
-        expect(request.url.path, '/data/snapshot.json');
+        expect(request.url.path, '/api/schedules');
         return http.Response(snapshot('2'), 200);
       }),
       loadBundled: () async => snapshot('1'),
@@ -33,7 +33,8 @@ void main() {
   });
   test('invalid response preserves last good cache', () async {
     final prefs = await SharedPreferences.getInstance();
-    const key = 'bus_snapshot_v1:https://wonju-bus-mason.vercel.app/data';
+    const key =
+        'bus_snapshot_v1:https://wonju-bus-mason.vercel.app/api/schedules';
     await prefs.setString(key, snapshot('2'));
     final source = ScheduleSource(
       client: MockClient((_) async => http.Response('{}', 200)),
@@ -45,7 +46,7 @@ void main() {
   test('corrupt cache falls back to bundled schedules', () async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setString(
-      'bus_snapshot_v1:https://wonju-bus-mason.vercel.app/data',
+      'bus_snapshot_v1:https://wonju-bus-mason.vercel.app/api/schedules',
       '{bad',
     );
     final source = ScheduleSource(

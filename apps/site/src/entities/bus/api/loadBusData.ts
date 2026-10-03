@@ -1,6 +1,8 @@
 import { getCurrentDayTypes, isDayTypeMatch, parseBusFileName } from "../model/dayTypeUtils";
 import { BusData, DayType } from "../model/types";
 
+let scheduleFiles: Record<string, BusData> = {};
+
 // 전역 캐시 객체 - 데이터를 한 번만 로드하기 위함
 const dataCache: {
   busData: Record<string, BusData>;
@@ -44,18 +46,22 @@ export function setHolidayMode(isHoliday: boolean): void {
 export async function loadAllBusData(): Promise<BusData[]> {
   try {
     console.log("버스 데이터 목록 로드 시작");
-    // 데이터 파일 목록을 가져오는 API 엔드포인트 호출
-    const response = await fetch("/data/bus-files.json");
-    if (!response.ok) {
-      console.error(
-        `버스 파일 목록 가져오기 실패: ${response.status} ${response.statusText}`
-      );
-      throw new Error(
-        `버스 파일 목록을 가져오는데 실패했습니다: ${response.status}`
-      );
+    let snapshot: Record<string, BusData>;
+    try {
+      const response = await fetch('/api/schedules', { signal: AbortSignal.timeout(10_000) });
+      if (!response.ok) throw new Error('시간표 API 연결 실패');
+      snapshot = await response.json();
+      if (!Object.keys(snapshot).length) throw new Error('시간표가 비어 있습니다');
+    } catch {
+      const fallback = await fetch('/data/snapshot.json');
+      if (!fallback.ok) throw new Error('저장된 시간표를 읽을 수 없습니다');
+      snapshot = await fallback.json();
     }
-
-    const busFiles = (await response.json()) as string[];
+    scheduleFiles = snapshot;
+    const busFiles = Object.keys(snapshot);
+    dataCache.busFilesByRoute = {};
+    dataCache.busData = {};
+    dataCache.terminals = null;
     console.log(`버스 파일 목록 로드 완료: ${busFiles.length}개 파일`);
 
     // 노선별 파일 목록 생성
@@ -70,18 +76,7 @@ export async function loadAllBusData(): Promise<BusData[]> {
     // 각 파일의 데이터 가져오기 - 모든 파일을 로드하고 운행 여부만 표시
     const busDataPromises = busFiles.map(async (filename) => {
       try {
-        const fileUrl = `/data/${filename}`;
-        console.log(`파일 로드 중: ${fileUrl}`);
-        const dataResponse = await fetch(fileUrl);
-
-        if (!dataResponse.ok) {
-          console.error(
-            `파일 로드 실패: ${filename}, 상태: ${dataResponse.status}`
-          );
-          throw new Error(`${filename} 데이터를 가져오는데 실패했습니다.`);
-        }
-
-        const data = (await dataResponse.json()) as BusData;
+        const data = snapshot[filename];
         // 파일명 정보 추가
         data.fileName = filename;
 
@@ -175,19 +170,8 @@ export async function loadBusData(
     const fileToLoad = matchingFiles.length > 0 ? matchingFiles[0] : files[0];
     const operatesToday = matchingFiles.length > 0;
 
-    // 파일 로드
-    const fileUrl = `/data/${fileToLoad}`;
-    console.log(`버스 노선 데이터 로드 중: ${fileUrl}`);
-    const response = await fetch(fileUrl);
-
-    if (!response.ok) {
-      console.error(`버스 노선 ${routeNumber} 로드 실패: ${response.status}`);
-      throw new Error(
-        `버스 노선 ${routeNumber} 데이터를 가져오는데 실패했습니다: ${response.status}`
-      );
-    }
-
-    const busData = (await response.json()) as BusData;
+    const busData = scheduleFiles[fileToLoad];
+    if (!busData) throw new Error('시간표를 찾을 수 없습니다');
     // 파일명과 운행 여부 정보 추가
     busData.fileName = fileToLoad;
     busData.operatesToday = operatesToday;

@@ -11,7 +11,7 @@ class ScheduleSource {
     Future<String> Function()? loadBundled,
     this.baseUrl = const String.fromEnvironment(
       'BUS_DATA_URL',
-      defaultValue: 'https://wonju-bus-mason.vercel.app/data',
+      defaultValue: 'https://wonju-bus-mason.vercel.app/api/schedules',
     ),
   }) : _client = client ?? http.Client(),
        _loadBundled =
@@ -32,11 +32,7 @@ class ScheduleSource {
     }
     try {
       final response = await _client
-          .get(
-            Uri.parse(
-              '${baseUrl.replaceFirst(RegExp(r'/+$'), '')}/snapshot.json',
-            ),
-          )
+          .get(Uri.parse(baseUrl))
           .timeout(const Duration(seconds: 8));
       if (response.statusCode != 200) {
         throw const FormatException('HTTP failure');

@@ -2,13 +2,15 @@ import fs from 'fs';
 import os from 'os';
 import path from 'path';
 import { WonjuBusCrawler } from './busCrawler';
+import { publishSnapshot } from './database';
 
 async function main() {
+  const started = Date.now();
   const repoRoot = path.resolve(__dirname, '../../..');
   const staging = fs.mkdtempSync(path.join(os.tmpdir(), 'wonju-bus-'));
   try {
     const summary = await new WonjuBusCrawler({ outputDirs: [staging] }).crawlAllBusInfo();
-    if (summary.totalRoutes === 0 || summary.failedRoutes.length > 0) {
+    if (summary.totalRoutes === 0 || summary.failedRoutes.length > 0 || summary.successfulRoutes !== summary.totalRoutes) {
       throw new Error(`수집 실패: ${summary.successfulRoutes}/${summary.totalRoutes}, ${summary.failedRoutes.join(', ')}`);
     }
     const snapshot: Record<string, unknown> = {};
@@ -20,6 +22,10 @@ async function main() {
       snapshot[file] = data;
     }
     fs.writeFileSync(path.join(staging, 'snapshot.json'), JSON.stringify(snapshot));
+    if (process.argv.includes('--publish')) {
+      await publishSnapshot(snapshot, Date.now() - started);
+      return;
+    }
     const destinations = ['apps/crawl/data', 'apps/site/data', 'apps/site/public/data', 'apps/flutter/assets/data'];
     for (const relative of destinations) {
       const destination = path.join(repoRoot, relative);
